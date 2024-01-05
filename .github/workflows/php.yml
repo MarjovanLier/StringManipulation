@@ -34,6 +34,9 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
+      - name: Run parallel linting
+        run: composer test:lint
+
       - name: Run tests with PHPUnit
         run: composer test:phpunit
 
@@ -42,6 +45,9 @@ jobs:
 
       - name: Run static analysis with psalm
         run: composer test:psalm
+
+      - name: Run rector for code quality
+        run: composer test:rector
 
       - name: Fetch all tags
         run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
