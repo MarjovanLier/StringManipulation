@@ -1,0 +1,38 @@
+{
+    "name": "marjovanlier/stringmanipulation",
+    "description": "A package to do string manipulation",
+    "keywords": [
+        "Marjo van Lier",
+        "String Manipulation"
+    ],
+    "homepage": "https://github.com/marjovanlier/stringmanipulation",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marjo van Lier",
+            "email": "marjo.vanlier@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "MarjovanLier\\StringManipulation\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MarjovanLier\\StringManipulation\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    }
+}
