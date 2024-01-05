@@ -11,7 +11,7 @@ use ReflectionClass;
 /**
  * @internal
  *
- * @covers \App\Utilities\StringManipulation::isValidMinute
+ * @covers StringManipulation::isValidMinute
  */
 final class IsValidMinuteTest extends TestCase
 {

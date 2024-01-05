@@ -11,7 +11,7 @@ use ReflectionClass;
 /**
  * @internal
  *
- * @covers \App\Utilities\StringManipulation::isValidTimePart
+ * @covers StringManipulation::isValidTimePart
  */
 final class IsValidTimePartTest extends TestCase
 {

@@ -11,7 +11,7 @@ use ReflectionClass;
 /**
  * @internal
  *
- * @covers \App\Utilities\StringManipulation::isValidSecond
+ * @covers StringManipulation::isValidSecond
  */
 final class IsValidSecondTest extends TestCase
 {

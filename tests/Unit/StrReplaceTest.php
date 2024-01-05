@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers \App\Utilities\StringManipulation::strReplace
+ * @covers StringManipulation::strReplace
  */
 final class StrReplaceTest extends TestCase
 {

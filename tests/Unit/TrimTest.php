@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers \App\Utilities\StringManipulation::trim
+ * @covers StringManipulation::trim
  */
 final class TrimTest extends TestCase
 {

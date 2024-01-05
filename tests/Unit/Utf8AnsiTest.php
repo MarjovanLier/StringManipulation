@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers \App\Utilities\StringManipulation::utf8Ansi
+ * @covers StringManipulation::utf8Ansi
  */
 final class Utf8AnsiTest extends TestCase
 {
