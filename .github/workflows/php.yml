@@ -46,6 +46,9 @@ jobs:
       - name: Run static analysis with PHPStan
         run: composer test:phpstan
 
+      - name: Run static analysis with phan
+        run: composer test:phan
+
       - name: Run static analysis with psalm
         run: composer test:psalm
 
