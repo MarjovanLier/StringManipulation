@@ -6,7 +6,10 @@ namespace MarjovanLier\StringManipulation;
 
 use DateTime;
 
-final class StringManipulation
+/**
+ * @psalm-suppress UnusedClass
+ */
+class StringManipulation
 {
     use AccentNormalization;
     use UnicodeMappings;
