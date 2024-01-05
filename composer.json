@@ -43,9 +43,11 @@
     },
     "scripts": {
         "test": [
+            "@test:lint",
             "@test:phpunit",
             "@test:phpstan",
-            "@test:psalm"
+            "@test:psalm",
+            "@test:rector"
         ],
         "test:lint": "php -d memory_limit=-1 ./vendor/bin/parallel-lint --exclude vendor --show-deprecated .",
         "test:phpstan": "php -d memory_limit=-1 ./vendor/bin/phpstan analyse --no-progress --no-interaction",
