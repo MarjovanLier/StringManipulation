@@ -57,8 +57,8 @@ jobs:
           MAJOR=$(echo $LATEST_TAG | cut -d. -f1)
           MINOR=$(echo $LATEST_TAG | cut -d. -f2)
           PATCH=$(echo $LATEST_TAG | cut -d. -f3)
-          NEW_MINOR=$((MINOR+1))
-          NEW_TAG="$MAJOR.$NEW_MINOR.$PATCH"
+          NEW_PATCH=$((PATCH+1))
+          NEW_TAG="$MAJOR.$MINOR.$NEW_PATCH"
           echo ::set-output name=new_tag::$NEW_TAG
 
       - name: Create and push new tag
