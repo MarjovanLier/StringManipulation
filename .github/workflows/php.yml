@@ -40,6 +40,9 @@ jobs:
       - name: Run tests with PHPUnit
         run: composer test:phpunit
 
+      - name: Run Mutation Testing
+        run: composer test:infection
+
       - name: Run static analysis with PHPStan
         run: composer test:phpstan
 
