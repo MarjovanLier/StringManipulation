@@ -11,7 +11,7 @@ use ReflectionClass;
 /**
  * @internal
  *
- * @covers StringManipulation::isValidHour
+ * @covers \MarjovanLier\StringManipulation\StringManipulation::isvalidhour
  */
 final class IsValidHourTest extends TestCase
 {

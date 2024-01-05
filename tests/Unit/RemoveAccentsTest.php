@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers StringManipulation::removeAccents
+ * @covers \MarjovanLier\StringManipulation\StringManipulation::removeAccents
  */
 final class RemoveAccentsTest extends TestCase
 {

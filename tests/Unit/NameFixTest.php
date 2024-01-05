@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers StringManipulation::nameFix
+ * @covers \MarjovanLier\StringManipulation\StringManipulation::nameFix
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */

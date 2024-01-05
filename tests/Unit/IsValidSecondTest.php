@@ -11,7 +11,7 @@ use ReflectionClass;
 /**
  * @internal
  *
- * @covers StringManipulation::isValidSecond
+ * @covers \MarjovanLier\StringManipulation\StringManipulation::isValidSecond
  */
 final class IsValidSecondTest extends TestCase
 {

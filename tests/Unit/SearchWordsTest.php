@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers StringManipulation::searchWords
+ * @covers \MarjovanLier\StringManipulation\StringManipulation::searchWords
  */
 final class SearchWordsTest extends TestCase
 {

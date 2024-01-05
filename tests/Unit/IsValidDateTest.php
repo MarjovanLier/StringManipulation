@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers StringManipulation::isValidDate
+ * @covers \MarjovanLier\StringManipulation\StringManipulation::isValidDate
  */
 final class IsValidDateTest extends TestCase
 {
