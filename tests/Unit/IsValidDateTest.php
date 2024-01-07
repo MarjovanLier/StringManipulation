@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MarjovanLier\StringManipulation\Tests\Unit;
 
-
 use MarjovanLier\StringManipulation\StringManipulation;
 use PHPUnit\Framework\TestCase;
 
