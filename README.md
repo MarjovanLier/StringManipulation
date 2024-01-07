@@ -41,7 +41,7 @@ vendor/bin/phpunit
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT Licence (MIT). Please see [Licence File](LICENSE) for more information.
 
 ## Detailed Examples
 
