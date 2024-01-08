@@ -48,7 +48,7 @@
         "vimeo/psalm": "^5.18"
     },
     "scripts": {
-        "test": [
+        "tests": [
             "@test:lint",
             "@test:code-style",
             "@test:phpunit",
