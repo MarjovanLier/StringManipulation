@@ -31,15 +31,14 @@
         "preferred-install": {
             "*": "dist"
         },
+        "optimize-autoloader": true,
+        "classmap-authoritative": true,
         "sort-packages": true,
         "allow-plugins": {
             "infection/extension-installer": true,
             "phpstan/extension-installer": true
         }
     },
-    "optimize-autoloader": true,
-    "classmap-authoritative": true,
-    "sort-packages": true,
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require-dev": {
