@@ -74,14 +74,14 @@
       "@test:psalm",
       "@test:rector"
     ],
-    "test:composer-validate": "composer validate --strict",
     "test:code-style": "php -d memory_limit=-1 ./vendor/bin/pint --test",
+    "test:composer-validate": "composer validate --strict",
     "test:infection": "php -d memory_limit=-1 -d zend_extension=xdebug -d xdebug.mode=coverage ./vendor/bin/infection --threads=4 --show-mutations",
     "test:lint": "php -d memory_limit=-1 ./vendor/bin/parallel-lint --exclude vendor --show-deprecated .",
     "test:phan": "php -d memory_limit=-1 ./vendor/bin/phan --allow-polyfill-parser",
     "test:phpstan": "php -d memory_limit=-1 ./vendor/bin/phpstan analyse --no-progress --no-interaction",
-    "test:psalm": "php -d memory_limit=-1 ./vendor/bin/psalm --no-cache --no-progress --show-info=false",
     "test:phpunit": "php -d memory_limit=-1 ./vendor/bin/phpunit --no-coverage --no-logging",
+    "test:psalm": "php -d memory_limit=-1 ./vendor/bin/psalm --no-cache --no-progress --show-info=false",
     "test:rector": "php -d memory_limit=-1 ./vendor/bin/rector --dry-run",
     "test:vulnerabilities-check": "php -d memory_limit=-1 ./vendor/bin/security-checker security:check"
   }
