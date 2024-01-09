@@ -57,6 +57,18 @@
     "roave/security-advisories": "dev-latest",
     "vimeo/psalm": "^5.18"
   },
+  "scripts-descriptions": {
+    "test:code-style": "Run code style checks",
+    "test:composer-validate": "Validate composer.json",
+    "test:infection": "Run mutation tests",
+    "test:lint": "Run lint checks",
+    "test:phan": "Run static analysis",
+    "test:phpstan": "Run static analysis",
+    "test:phpunit": "Run unit tests",
+    "test:psalm": "Run static analysis",
+    "test:rector": "Run static analysis",
+    "test:vulnerabilities-check": "Check for vulnerabilities"
+  },
   "scripts": {
     "post-update-cmd": [
       "composer validate --strict",
