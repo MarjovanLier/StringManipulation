@@ -39,7 +39,6 @@ jobs:
 
       - name: Install dependencies
         id: composer-install
-        if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run parallel linting
@@ -84,12 +83,12 @@ jobs:
 
       - name: Get latest tag
         id: latest-tag
-        if: steps.fetch-tags.outcome == 'success'
+        if: steps.fetch-tags.outcome == 'success' && steps.rector.outcome == 'success'
         run: echo ::set-output name=tag::$(git tag | sort -V | tail -n1)
 
       - name: Increment the minor version
         id: new-tag
-        if: steps.latest-tag.outputs.tag != ''
+        if: steps.latest-tag.outputs.tag != '' && steps.rector.outcome == 'success'
         run: |
           LATEST_TAG=${{ steps.latest-tag.outputs.tag }}
           MAJOR=$(echo $LATEST_TAG | cut -d. -f1)
@@ -101,7 +100,7 @@ jobs:
 
       - name: Create and push new tag
         id: push-tag
-        if: github.ref == 'refs/heads/main' && steps.new-tag.outputs.new_tag != ''
+        if: github.ref == 'refs/heads/main' && steps.new-tag.outputs.new_tag != '' && steps.rector.outcome == 'success'
         run: |
           NEW_TAG=${{ steps.new-tag.outputs.new_tag }}
           git tag $NEW_TAG
@@ -109,7 +108,7 @@ jobs:
 
       - name: Create release
         id: create_release
-        if: github.ref == 'refs/heads/main' && steps.push-tag.outcome == 'success'
+        if: github.ref == 'refs/heads/main' && steps.push-tag.outcome == 'success' && steps.rector.outcome == 'success'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
