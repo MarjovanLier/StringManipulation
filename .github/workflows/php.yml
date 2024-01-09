@@ -106,6 +106,16 @@ jobs:
           git tag $NEW_TAG
           git push origin $NEW_TAG
 
+      - name: Get commit messages
+        id: get-commits
+        if: github.ref == 'refs/heads/main' && steps.rector.outcome == 'success'
+        run: |
+          LATEST_TAG=${{ steps.latest-tag.outputs.tag }}
+          COMMIT_MESSAGES=$(git log $LATEST_TAG..HEAD --pretty=format:"%h - %s")
+          echo "COMMIT_MESSAGES<<EOF" >> $GITHUB_ENV
+          echo "$COMMIT_MESSAGES" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Create release
         id: create_release
         if: github.ref == 'refs/heads/main' && steps.push-tag.outcome == 'success' && steps.rector.outcome == 'success'
@@ -115,5 +125,8 @@ jobs:
         with:
           tag_name: ${{ steps.new-tag.outputs.new_tag }}
           release_name: Release ${{ steps.new-tag.outputs.new_tag }}
+          body: |
+            Changes included in this release:
+            ${{ env.COMMIT_MESSAGES }}
           draft: false
           prerelease: false
