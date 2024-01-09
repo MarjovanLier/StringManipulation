@@ -84,7 +84,8 @@ jobs:
       - name: Get latest tag
         id: latest-tag
         if: steps.fetch-tags.outcome == 'success' && steps.rector.outcome == 'success'
-        run: echo ::set-output name=tag::$(git tag | sort -V | tail -n1)
+        run: |
+          echo "LATEST_TAG=$(git tag | sort -V | tail -n1)" >> $GITHUB_ENV
 
       - name: Increment the minor version
         id: new-tag
