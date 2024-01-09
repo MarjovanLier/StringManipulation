@@ -17,7 +17,7 @@ efficient, making it ideal for any PHP project that requires string manipulation
 You can install the package via composer:
 
 ```bash
-composer require marjovanlier/string-manipulation
+composer require marjovanlier/stringmanipulation
 ```
 
 ## Usage
