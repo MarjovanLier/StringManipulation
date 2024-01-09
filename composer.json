@@ -58,6 +58,7 @@
   },
   "scripts": {
     "post-update-cmd": [
+      "composer validate --strict",
       "composer outdated -D"
     ],
     "tests": [
