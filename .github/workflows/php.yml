@@ -109,7 +109,6 @@ jobs:
         id: get-commits
         if: github.ref == 'refs/heads/main' && steps.rector.outcome == 'success'
         run: |
-          LATEST_TAG=${{ steps.latest-tag.outputs.tag }}
           COMMIT_MESSAGES=$(git log $LATEST_TAG..HEAD --pretty=format:"%h - %s")
           echo "COMMIT_MESSAGES<<EOF" >> $GITHUB_ENV
           echo "$COMMIT_MESSAGES" >> $GITHUB_ENV
