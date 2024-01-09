@@ -96,7 +96,7 @@ final class IsValidTimePartTest extends TestCase
     /**
      * Tests the isValidTimePart method.
      *
-     * @param array{day: int, hour: int, minute: int, month: int, second: int, year: int} $timeParts
+     * @param array{year?: int, month?: int, day?: int, hour: int, minute: int, second: int} $timeParts
      *
      * @dataProvider provideTimeParts
      */
