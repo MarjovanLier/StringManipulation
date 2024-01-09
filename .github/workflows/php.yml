@@ -89,7 +89,7 @@ jobs:
 
       - name: Increment the minor version
         id: new-tag
-        if: steps.latest-tag.outputs.tag != '' && steps.rector.outcome == 'success'
+        if: env.LATEST_TAG != '' && steps.rector.outcome == 'success'
         run: |
           LATEST_TAG=${{ steps.latest-tag.outputs.tag }}
           MAJOR=$(echo $LATEST_TAG | cut -d. -f1)
