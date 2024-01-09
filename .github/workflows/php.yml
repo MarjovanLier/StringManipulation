@@ -12,18 +12,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        id: checkout
 
       - name: Setup PHP
+        id: setup-php
+        if: steps.checkout.outcome == 'success'
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
           extensions: mbstring, xml, zip, pdo_mysql
 
       - name: Validate composer.json and composer.lock
+        id: composer-validate
+        if: steps.setup-php.outcome == 'success'
         run: composer validate --strict
 
       - name: Cache Composer packages
         id: composer-cache
+        if: steps.composer-validate.outcome == 'success'
         uses: actions/cache@v3
         with:
           path: vendor
@@ -32,38 +38,58 @@ jobs:
             ${{ runner.os }}-php-
 
       - name: Install dependencies
+        id: composer-install
+        if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run parallel linting
+        id: parallel-lint
+        if: steps.composer-install.outcome == 'success'
         run: composer test:lint
 
       - name: Run tests with PHPUnit
+        id: phpunit
+        if: steps.parallel-lint.outcome == 'success'
         run: composer test:phpunit
 
       - name: Run Mutation Testing
+        id: infection
+        if: steps.phpunit.outcome == 'success'
         run: composer test:infection
 
       - name: Run static analysis with PHPStan
+        id: phpstan
+        if: steps.infection.outcome == 'success'
         run: composer test:phpstan
 
       - name: Run static analysis with phan
+        id: phan
+        if: steps.phpstan.outcome == 'success'
         run: composer test:phan
 
       - name: Run static analysis with psalm
+        id: psalm
+        if: steps.phan.outcome == 'success'
         run: composer test:psalm
 
       - name: Run rector for code quality
+        id: rector
+        if: steps.psalm.outcome == 'success'
         run: composer test:rector
 
       - name: Fetch all tags
+        id: fetch-tags
+        if: steps.rector.outcome == 'success'
         run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
       - name: Get latest tag
         id: latest-tag
+        if: steps.fetch-tags.outcome == 'success'
         run: echo ::set-output name=tag::$(git tag | sort -V | tail -n1)
 
       - name: Increment the minor version
         id: new-tag
+        if: steps.latest-tag.outputs.tag != ''
         run: |
           LATEST_TAG=${{ steps.latest-tag.outputs.tag }}
           MAJOR=$(echo $LATEST_TAG | cut -d. -f1)
@@ -74,14 +100,16 @@ jobs:
           echo ::set-output name=new_tag::$NEW_TAG
 
       - name: Create and push new tag
-        if: github.ref == 'refs/heads/main'
+        id: push-tag
+        if: github.ref == 'refs/heads/main' && steps.new-tag.outputs.new_tag != ''
         run: |
           NEW_TAG=${{ steps.new-tag.outputs.new_tag }}
           git tag $NEW_TAG
           git push origin $NEW_TAG
 
       - name: Create release
-        if: github.ref == 'refs/heads/main'
+        id: create_release
+        if: github.ref == 'refs/heads/main' && steps.push-tag.outcome == 'success'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
