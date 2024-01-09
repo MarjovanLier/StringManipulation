@@ -9,7 +9,7 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Marjo van Lier",
+            "name": "Marjo Wenzel van Lier",
             "email": "marjo.vanlier@gmail.com",
             "role": "Developer"
         }
@@ -53,6 +53,7 @@
         "psalm/plugin-phpunit": "^0.18.4",
         "rector/rector": "^0.19",
         "roave/no-floaters": "^1.10",
+        "roave/security-advisories": "dev-latest",
         "vimeo/psalm": "^5.18"
     },
     "scripts": {
