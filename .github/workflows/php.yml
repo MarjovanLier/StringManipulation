@@ -121,8 +121,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.new-tag.outputs.new_tag }}
-          release_name: Release ${{ steps.new-tag.outputs.new_tag }}
+          tag_name: ${{ env.NEW_TAG }}
+          release_name: Release ${{ env.NEW_TAG }}
           body: |
             Changes included in this release:
             ${{ env.COMMIT_MESSAGES }}
