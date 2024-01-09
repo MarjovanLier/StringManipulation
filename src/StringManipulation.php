@@ -39,16 +39,16 @@ class StringManipulation
             return null;
         }
 
-        $words = self::nameFix($words);
+        $words = static::nameFix($words);
 
         if ($words !== null) {
             $words = strtolower(
-                self::strReplace(['{', '}', '(', ')', '/', '\\', '@', ':', '"', '?', ',', '.'], ' ', $words),
+                static::strReplace(['{', '}', '(', ')', '/', '\\', '@', ':', '"', '?', ',', '.'], ' ', $words),
             );
         }
 
-        $words = self::removeAccents(($words ?? ''));
-        $words = self::strReplace('_', ' ', $words);
+        $words = static::removeAccents(($words ?? ''));
+        $words = static::strReplace('_', ' ', $words);
 
         return trim((preg_replace('# {2,}#', ' ', $words) ?? ''));
     }
@@ -79,8 +79,8 @@ class StringManipulation
             return null;
         }
 
-        $lastName = trim(self::utf8Ansi($lastName));
-        $lastName = self::removeAccents($lastName);
+        $lastName = trim(static::utf8Ansi($lastName));
+        $lastName = static::removeAccents($lastName);
 
         $lastName = (preg_replace('# {2,}#', ' ', $lastName) ?? '');
 
@@ -88,14 +88,14 @@ class StringManipulation
         $lowerLastName = strtolower($lastName);
         if (preg_match('#mc(?! )#', $lowerLastName) === 1) {
             $mcFix = true;
-            $lastName = self::strReplace('mc', 'mc ', $lowerLastName);
+            $lastName = static::strReplace('mc', 'mc ', $lowerLastName);
         }
 
         $macFix = false;
         $lowerLastName = strtolower($lastName);
         if (preg_match('#mac(?! )#', $lowerLastName) === 1) {
             $macFix = true;
-            $lastName = self::strReplace('mac', 'mac ', $lowerLastName);
+            $lastName = static::strReplace('mac', 'mac ', $lowerLastName);
         }
 
         $lastName = implode('-', array_map('ucwords', explode('-', strtolower($lastName))));
@@ -127,11 +127,11 @@ class StringManipulation
         );
 
         if ($mcFix) {
-            $lastName = self::strReplace('Mc ', 'Mc', ($lastName ?? ''));
+            $lastName = static::strReplace('Mc ', 'Mc', ($lastName ?? ''));
         }
 
         if ($macFix) {
-            return self::strReplace('Mac ', 'Mac', ($lastName ?? ''));
+            return static::strReplace('Mac ', 'Mac', ($lastName ?? ''));
         }
 
         return $lastName;
@@ -177,7 +177,7 @@ class StringManipulation
      */
     public static function removeAccents(string $str): string
     {
-        return self::strReplace([...self::REMOVE_ACCENTS_FROM, '  '], [...self::REMOVE_ACCENTS_TO, ' '], $str);
+        return static::strReplace([...self::REMOVE_ACCENTS_FROM, '  '], [...self::REMOVE_ACCENTS_TO, ' '], $str);
     }
 
 
