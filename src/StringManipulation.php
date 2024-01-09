@@ -145,8 +145,7 @@ class StringManipulation
      *
      * @return string The converted string.
      *
-     * @psalm-suppress PossiblyUnusedMethod
-     * @psalm-suppress UnusedParam
+     * @psalm-suppress PossiblyUnusedMethod,UnusedParam
      */
     public static function utf8Ansi(?string $valor = ''): string
     {
@@ -188,8 +187,7 @@ class StringManipulation
      * @param string|string[] $replace The replacement value(s) to replace found search values.
      * @param string $subject The string being searched and replaced on.
      *
-     * @psalm-suppress PossiblyUnusedMethod - This method might be used in contexts not detected by Psalm.
-     * @psalm-suppress UnusedParam - Parameters are used by the underlying `str_replace` function.
+     * @psalm-suppress PossiblyUnusedMethod,UnusedParam
      */
     public static function strReplace(array|string $search, array|string $replace, string $subject): string
     {
