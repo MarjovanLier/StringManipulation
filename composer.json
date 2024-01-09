@@ -60,6 +60,7 @@
             "composer outdated -D"
         ],
         "tests": [
+            "@test:composer-validate",
             "@test:lint",
             "@test:code-style",
             "@test:phpunit",
@@ -69,6 +70,7 @@
             "@test:psalm",
             "@test:rector"
         ],
+        "test:composer-validate": "composer validate --strict",
         "test:code-style": "php -d memory_limit=-1 ./vendor/bin/pint --test",
         "test:infection": "php -d memory_limit=-1 -d zend_extension=xdebug -d xdebug.mode=coverage ./vendor/bin/infection --threads=4 --show-mutations",
         "test:lint": "php -d memory_limit=-1 ./vendor/bin/parallel-lint --exclude vendor --show-deprecated .",
