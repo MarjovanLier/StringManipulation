@@ -7,6 +7,7 @@
   ],
   "homepage": "https://github.com/marjovanlier/stringmanipulation",
   "license": "MIT",
+  "type": "library",
   "authors": [
     {
       "name": "Marjo Wenzel van Lier",
@@ -37,7 +38,6 @@
     }
   },
   "minimum-stability": "stable",
-  "prefer-stable": true,
   "require": {
     "php": "^8.2"
   },
