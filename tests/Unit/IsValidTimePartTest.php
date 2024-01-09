@@ -20,11 +20,7 @@ final class IsValidTimePartTest extends TestCase
      *
      * @return array<int, array<int, array<string, int>|bool>>
      *
-     * @psalm-return list{list{array{hour: 0, minute: 0, second: 0}, true}, list{array{hour: 23, minute: 59, second:
-     *     59}, true}, list{array{hour: -1, minute: 0, second: 0}, false}, list{array{hour: 24, minute: 0, second: 0},
-     *     false}, list{array{hour: 0, minute: -1, second: 0}, false}, list{array{hour: 0, minute: 60, second: 0},
-     *     false}, list{array{hour: 0, minute: 0, second: -1}, false}, list{array{hour: 0, minute: 0, second: 60},
-     *     false}}
+     * @psalm-return list<array{0: array{hour: int, minute: int, second: int}, 1: bool}>
      */
     public static function provideTimeParts(): array
     {
@@ -100,7 +96,7 @@ final class IsValidTimePartTest extends TestCase
     /**
      * Tests the isValidTimePart method.
      *
-     * @param array{year: int, month: int, day: int, hour: int, minute: int, second: int} $timeParts
+     * @param array{day: int, hour: int, minute: int, month: int, second: int, year: int} $timeParts
      *
      * @dataProvider provideTimeParts
      */

@@ -71,15 +71,7 @@ final class IsValidDateTest extends TestCase
      *
      * @return array<array<string>>
      *
-     * @psalm-return list{list{'2023-09-06 12:30:00', 'Y-m-d'}, list{'2023-09-06', 'd-m-Y'}, list{'06-09-2023',
-     *     'Y-m-d'}, list{'2012-02-30 12:12:12', 'Y-m-d H:i:s'}, list{'2012-02-30 25:12:12', 'Y-m-d H:i:s'},
-     *     list{'24:00:00', 'H:i:s'}, list{'23:60:00', 'H:i:s'}, list{'23:59:60', 'H:i:s'}, list{'30-02-2012',
-     *     'd-m-Y'}, list{'31-04-2023', 'd-m-Y'}, list{'2012-02-30 12:12:12', 'Y-m-d H:i:s'}, list{'2012-02-28
-     *     24:12:12', 'Y-m-d H:i:s'}, list{'2012-02-28 23:60:12', 'Y-m-d H:i:s'}, list{'2012-02-28 23:59:60', 'Y-m-d
-     *     H:i:s'}, list{'0000-00-00 12:30:00', 'Y-m-d H:i:s'}, list{'2023-09-06 12:61:12', 'Y-m-d H:i:s'},
-     *     list{'2023-09-06 12:59:61', 'Y-m-d H:i:s'}, list{'2023-09-06 25:30:00', 'Y-m-d H:i:s'}, list{'2023-02-30
-     *     12:30:00', 'Y-m-d H:i:s'}, list{'2023-02-30', 'Y-m-d'}, list{'25:30:00', 'H:i:s'}, list{'12:61:00',
-     *     'H:i:s'}, list{'12:59:61', 'H:i:s'}}
+     * @psalm-return list<array{0: string, 1: string}>
      */
     public static function provideInvalidDates(): array
     {
