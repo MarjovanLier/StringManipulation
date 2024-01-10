@@ -55,7 +55,7 @@
     "rector/rector": "^0.19",
     "roave/no-floaters": "^1.10",
     "roave/security-advisories": "dev-latest",
-    "vimeo/psalm": "^5.18"
+    "vimeo/psalm": "^5.19"
   },
   "scripts-descriptions": {
     "test:code-style": "Run code style checks",
