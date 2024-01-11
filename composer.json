@@ -64,6 +64,7 @@
     "test:infection": "Run mutation tests",
     "test:lint": "Run lint checks",
     "test:phan": "Run static analysis",
+    "test:phpmd": "Run static analysis",
     "test:phpstan": "Run static analysis",
     "test:phpunit": "Run unit tests",
     "test:psalm": "Run static analysis",
