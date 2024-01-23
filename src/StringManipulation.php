@@ -188,6 +188,7 @@ class StringManipulation
 
     /**
      * Replace all occurrences of the search string(s) with the corresponding replacement string(s) in the subject.
+     * This is a strict version of the built-in str_replace function.
      *
      * @param string|string[] $search The value(s) being searched for in the subject.
      * @param string|string[] $replace The replacement value(s) to replace found search values.
@@ -245,7 +246,7 @@ class StringManipulation
 
 
     /**
-     * Trims characters from the beginning and end of a string.
+     * Trims characters from the beginning and end of a string. This is a strict version of the built-in trim function.
      *
      * @param string $string The input string.
      * @param string $characters Optional characters to trim, defaults to space or blank characters.
