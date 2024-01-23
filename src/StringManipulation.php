@@ -7,6 +7,11 @@ namespace MarjovanLier\StringManipulation;
 use DateTime;
 
 /**
+ * String Manipulation class for various string operations.
+ *
+ * This class provides multiple static methods to perform various string operations like
+ * string transformation, accent removal, string replacement, date validation, etc.
+ *
  * @psalm-suppress UnusedClass
  */
 class StringManipulation
@@ -81,11 +86,11 @@ class StringManipulation
 
         $lastName = trim(static::utf8Ansi($lastName));
         $lastName = static::removeAccents($lastName);
-
         $lastName = (preg_replace('# {2,}#', ' ', $lastName) ?? '');
 
         $mcFix = false;
         $lowerLastName = strtolower($lastName);
+
         if (preg_match('#mc(?! )#', $lowerLastName) === 1) {
             $mcFix = true;
             $lastName = static::strReplace('mc', 'mc ', $lowerLastName);
@@ -93,6 +98,7 @@ class StringManipulation
 
         $macFix = false;
         $lowerLastName = strtolower($lastName);
+
         if (preg_match('#mac(?! )#', $lowerLastName) === 1) {
             $macFix = true;
             $lastName = static::strReplace('mac', 'mac ', $lowerLastName);
@@ -283,6 +289,8 @@ class StringManipulation
     /**
      * Check if the given hour is valid.
      *
+     * @param int $hour The hour to be validated.
+     *
      * @return bool Returns true if the hour is valid, false otherwise.
      */
     private static function isValidHour(int $hour): bool
@@ -294,6 +302,8 @@ class StringManipulation
     /**
      * Check if the given minute is valid.
      *
+     * @param int $minute The minute to be validated.
+     *
      * @return bool Returns true if the minute is valid, false otherwise.
      */
     private static function isValidMinute(int $minute): bool
@@ -304,6 +314,8 @@ class StringManipulation
 
     /**
      * Check if the given second is valid.
+     *
+     * @param int $second The second to be validated.
      *
      * @return bool Returns true if the second is valid, false otherwise.
      */
