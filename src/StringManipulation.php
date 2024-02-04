@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MarjovanLier\StringManipulation;
 
 use DateTime;
+use SensitiveParameter;
 
 /**
  * String Manipulation class for various string operations.
@@ -78,7 +79,7 @@ class StringManipulation
      *
      * @return null|string The fixed last name according to the standards, or null if the input was null.
      */
-    public static function nameFix(?string $lastName): ?string
+    public static function nameFix(#[SensitiveParameter] ?string $lastName): ?string
     {
         if ($lastName === null) {
             return null;
@@ -228,11 +229,7 @@ class StringManipulation
     {
         $dateTime = DateTime::createFromFormat($format, $date);
 
-        if (!$dateTime instanceof DateTime) {
-            return false;
-        }
-
-        if ($dateTime->format($format) !== $date) {
+        if (!$dateTime instanceof DateTime || $dateTime->format($format) !== $date) {
             return false;
         }
 
@@ -275,11 +272,7 @@ class StringManipulation
      */
     private static function isValidTimePart(array $dateParts): bool
     {
-        if (!self::isValidHour($dateParts['hour'])) {
-            return false;
-        }
-
-        if (!self::isValidMinute($dateParts['minute'])) {
+        if (!self::isValidHour($dateParts['hour']) || !self::isValidMinute($dateParts['minute'])) {
             return false;
         }
 
