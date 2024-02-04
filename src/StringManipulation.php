@@ -8,10 +8,23 @@ use DateTime;
 use SensitiveParameter;
 
 /**
- * String Manipulation class for various string operations.
+ * Class StringManipulation.
  *
- * This class provides multiple static methods to perform various string operations like
- * string transformation, accent removal, string replacement, date validation, etc.
+ * This class provides a collection of static methods for various string operations.
+ * These operations include, but are not limited to:
+ * - String transformation: Changing the format or structure of a string.
+ * - Accent removal: Removing accents from characters within a string.
+ * - String replacement: Replacing certain substrings within a string with other substrings.
+ * - Date validation: Checking if a given date string is valid according to a specified format.
+ *
+ * Each method in this class is designed to perform a specific operation and can be used independently of the others.
+ * This makes the class a versatile tool for any tasks involving string manipulation or validation.
+ *
+ * Note: This class is suppressed from UnusedClass warning from Psalm static analysis tool.
+ * It means that
+ * the class is not directly instantiated or invoked in the codebase.
+ * However, it is intended to be used
+ * wherever necessary, hence the suppression.
  *
  * @psalm-suppress UnusedClass
  */
@@ -35,9 +48,16 @@ class StringManipulation
      *
      * For example, a string like "John_Doe@Example.com" will be transformed to "john doe example com".
      *
+     * This function is useful when preparing a string for database search operations, where the string needs to be
+     * in a standardized format to ensure accurate search results.
+     *
      * @param null|string $words The input string to be transformed for search. If null, the function will return null.
      *
      * @return null|string The transformed string suitable for database search, or null if the input was null.
+     *
+     * @example
+     * searchWords('John_Doe@Example.com'); // Returns 'john doe example com'
+     * searchWords(null); // Returns null
      */
     public static function searchWords(?string $words): ?string
     {
@@ -64,8 +84,8 @@ class StringManipulation
      * Fixes a given last name to conform to specific naming standards.
      *
      * This function performs several transformations on the input last name:
-     * - Uses the `utf8Ansi` function, which might convert the string from UTF-8 to ANSI encoding.
-     * - Removes any accents or special characters.
+     * - Converts the string from UTF-8 to ANSI encoding using the `utf8Ansi` function.
+     * - Removes any accents or special characters using the `removeAccents` function.
      * - Reduces multiple spaces to a single space.
      * - Fixes names starting with 'mc' (without a following space) by adding a space after the prefix.
      * - Similarly, fixes names starting with 'mac' (without a following space).
@@ -78,6 +98,11 @@ class StringManipulation
      * @param null|string $lastName The last name to be fixed. If null, the function will return null.
      *
      * @return null|string The fixed last name according to the standards, or null if the input was null.
+     *
+     * @example
+     * nameFix('mcdonald'); // Returns 'McDonald'
+     * nameFix('van der waals'); // Returns 'van der Waals'
+     * nameFix(null); // Returns null
      */
     public static function nameFix(#[SensitiveParameter] ?string $lastName): ?string
     {
@@ -148,9 +173,21 @@ class StringManipulation
     /**
      * Converts UTF-8 encoded characters to their ANSI counterparts.
      *
-     * @param null|string $valor The input string.
+     * This function takes a string as an input, which should be encoded in UTF-8. It then converts each UTF-8 encoded
+     * character in the string to its corresponding ANSI encoded character.
      *
-     * @return string The converted string.
+     * The function uses the predefined constant UTF8_ANSI2 as a mapping array for character conversion. Each key in
+     * this array is a UTF-8 encoded character, and its corresponding value is the ANSI encoded character.
+     *
+     * For example, the UTF-8 encoded character 'é' will be converted to the ANSI encoded character 'e'.
+     *
+     * This function is useful when you need to convert a string from UTF-8 encoding to ANSI encoding, especially when
+     * processing text for storage in a database or file system that does not support UTF-8 encoding.
+     *
+     * @param null|string $valor The input string to be converted from UTF-8 to ANSI. If null, the function will return
+     *                           an empty string.
+     *
+     * @return string The converted string in ANSI encoding.
      *
      * @psalm-suppress PossiblyUnusedMethod,UnusedParam
      */
@@ -165,14 +202,17 @@ class StringManipulation
 
 
     /**
-     * Removes accents and special characters from a given string.
+     * Removes accents and special characters from a string.
      *
-     * This function uses predefined constants REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO
+     * This function uses the predefined constants REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO
      * as mapping arrays for character replacement. It replaces each character in the
      * REMOVE_ACCENTS_FROM array with its corresponding character in the REMOVE_ACCENTS_TO array.
      *
      * For example, accented characters like 'À', 'Á', 'Â', etc., will be replaced by 'A',
      * and special characters like '*', '?', '’', etc., will be replaced by spaces or other characters.
+     *
+     * This function is useful when you need to remove accents and special characters from a string,
+     * especially when processing text for comparison or storage in a standardized format.
      *
      * @param string $str The input string from which accents and special characters need to be removed.
      *
@@ -189,11 +229,25 @@ class StringManipulation
 
     /**
      * Replace all occurrences of the search string(s) with the corresponding replacement string(s) in the subject.
-     * This is a strict version of the built-in str_replace function.
+     *
+     * This function is a stricter version of the built-in PHP str_replace function. It takes three parameters:
+     * - $search: The value(s) being searched for in the subject. This can be a single string or an array of strings.
+     * - $replace: The replacement value(s) to replace found search values. This can be a single string or an array of
+     * strings.
+     * - $subject: The string being searched and replaced on.
+     *
+     * The function returns a new string where all occurrences of each search value have been replaced by the
+     * corresponding replacement value.
+     *
+     * This function is useful when you need to replace multiple different substrings within a string, or when you need
+     * to perform the same set of replacements on multiple strings.
      *
      * @param string|string[] $search The value(s) being searched for in the subject.
      * @param string|string[] $replace The replacement value(s) to replace found search values.
      * @param string $subject The string being searched and replaced on.
+     *
+     * @return string Returns a string where all occurrences of each search value have been replaced by the
+     *                corresponding replacement value.
      *
      * @psalm-suppress PossiblyUnusedMethod,UnusedParam
      */
@@ -212,8 +266,12 @@ class StringManipulation
      * month, and year.  It then checks if these constitute a valid date using checkdate(). If they do, it
      * returns true; otherwise, it returns false.
      *
-     * @param string $date The date string to validate.
-     * @param string $format The expected date format. Default is 'Y-m-d H:i:s'.
+     * This function is useful when validating date inputs, where the date needs to be checked for both format and
+     * logical validity.
+     *
+     * @param string $date The date string to validate. This should be a string representing a date.
+     * @param string $format The expected date format. Default is 'Y-m-d H:i:s'. This should be a string representing
+     *                       the expected format of the date.
      *
      * @return bool Returns true if the date string matches the format and is logically valid, false otherwise.
      *
@@ -243,12 +301,25 @@ class StringManipulation
 
 
     /**
-     * Trims characters from the beginning and end of a string. This is a strict version of the built-in trim function.
+     * Trims characters from the beginning and end of a string.
      *
-     * @param string $string The input string.
-     * @param string $characters Optional characters to trim, defaults to space or blank characters.
+     * This function is a stricter version of the built-in PHP trim function. It takes a string and an optional string
+     * of characters as inputs. The function trims the specified characters from the beginning and end of the input
+     * string. If no characters are specified, it trims whitespace characters by default. The characters that are
+     * trimmed by default are: " " (ASCII 32 (0x20)), an ordinary space.
+     * "\t" (ASCII 9 (0x09)), a tab.
+     * "\n" (ASCII 10 (0x0A)), a new line (line feed).
+     * "\r" (ASCII 13 (0x0D)), a carriage return.
+     * "\0" (ASCII 0 (0x00)), the NUL-byte.
+     * "\x0B" (ASCII 11 (0x0B)), a vertical tab.
      *
-     * @return string The trimmed string.
+     * This function is useful when you need to remove certain characters from the start and end of a string,
+     * especially when cleaning up user input or processing text.
+     *
+     * @param string $string The input string from which characters will be trimmed.
+     * @param string $characters Optional. The characters to be trimmed from the string. Defaults to " \t\n\r\0\x0B".
+     *
+     * @return string Returns the trimmed string.
      */
     public static function trim(string $string, string $characters = " \t\n\r\0\x0B"): string
     {
@@ -259,6 +330,16 @@ class StringManipulation
     /**
      * Check if the time part of a date is valid.
      *
+     * This function takes an associative array as an input, which represents the different parts of a time.
+     * The array should contain the following keys: 'year', 'month', 'day', 'hour', 'minute', and 'second'.
+     * Each key should have an integer value representing the corresponding part of a time.
+     *
+     * The function checks if the 'hour', 'minute', and 'second' parts of the time are within their valid ranges.
+     * If all these parts are within their valid ranges, the function returns true; otherwise, it returns false.
+     *
+     * This function is useful when validating date and time inputs, where the time part needs to be checked for
+     * validity.
+     *
      * @param array{
      *     year: int,
      *     month: int,
@@ -266,9 +347,10 @@ class StringManipulation
      *     hour: int,
      *     minute: int,
      *     second: int
-     * } $dateParts An array containing the date and time parts.
+     * } $dateParts An associative array containing the date and time parts. Each key should have an integer value.
      *
-     * @return bool Returns true if the time part is valid, false otherwise.
+     * @return bool Returns true if the time part is valid (i.e., 'hour' is within the range 0-23, 'minute' is within
+     *              the range 0-59, and 'second' is within the range 0-59), false otherwise.
      */
     private static function isValidTimePart(array $dateParts): bool
     {
@@ -283,9 +365,15 @@ class StringManipulation
     /**
      * Check if the given hour is valid.
      *
-     * @param int $hour The hour to be validated.
+     * This function takes an integer as an input, which represents the hour part of a time.
+     * It checks if the given hour is within the valid range for hours (0-23).
+     * If the hour is within this range, the function returns true; otherwise, it returns false.
      *
-     * @return bool Returns true if the hour is valid, false otherwise.
+     * This function is useful when validating time inputs, where the hour part needs to be checked for validity.
+     *
+     * @param int $hour The hour to be validated. This should be an integer representing the hour part of a time.
+     *
+     * @return bool Returns true if the hour is valid (i.e., within the range 0-23), false otherwise.
      */
     private static function isValidHour(int $hour): bool
     {
@@ -296,9 +384,15 @@ class StringManipulation
     /**
      * Check if the given minute is valid.
      *
-     * @param int $minute The minute to be validated.
+     * This function takes an integer as an input, which represents the minutes part of a time.
+     * It checks if the given minute is within the valid range for minutes (0-59).
+     * If the minute is within this range, the function returns true; otherwise, it returns false.
      *
-     * @return bool Returns true if the minute is valid, false otherwise.
+     * This function is useful when validating time inputs, where the minutes part needs to be checked for validity.
+     *
+     * @param int $minute The minute to be validated. This should be an integer representing the minutes part of a time.
+     *
+     * @return bool Returns true if the minute is valid (i.e., within the range 0-59), false otherwise.
      */
     private static function isValidMinute(int $minute): bool
     {
@@ -309,9 +403,15 @@ class StringManipulation
     /**
      * Check if the given second is valid.
      *
-     * @param int $second The second to be validated.
+     * This function takes an integer as an input, which represents the seconds part of a time.
+     * It checks if the given second is within the valid range for seconds (0-59).
+     * If the second is within this range, the function returns true; otherwise, it returns false.
      *
-     * @return bool Returns true if the second is valid, false otherwise.
+     * This function is useful when validating time inputs, where the seconds part needs to be checked for validity.
+     *
+     * @param int $second The second to be validated. This should be an integer representing the seconds part of a time.
+     *
+     * @return bool Returns true if the second is valid (i.e., within the range 0-59), false otherwise.
      */
     private static function isValidSecond(int $second): bool
     {

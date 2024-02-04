@@ -4,9 +4,27 @@ declare(strict_types=1);
 
 namespace MarjovanLier\StringManipulation;
 
+/**
+ * Trait UnicodeMappings.
+ *
+ * This trait provides a mapping of Unicode characters to their ANSI counterparts.
+ * It defines a constant: UTF8_ANSI2, which is an associative array where each key is a Unicode character
+ * and the corresponding value is the ANSI character.
+ *
+ * The trait does not provide any methods, but the constant can be used in conjunction with string manipulation
+ * functions such as strtr() to convert a string from Unicode to ANSI.
+ *
+ * Example usage:
+ * $converted = strtr($unicodeString, UTF8_ANSI2);
+ *
+ * Note: This trait is intended to be used in a class that requires Unicode to ANSI conversion functionality.
+ */
 trait UnicodeMappings
 {
     /**
+     * An associative array mapping Unicode characters to their ANSI counterparts.
+     * The keys of the array are Unicode characters, and the values are the corresponding ANSI characters.
+     *
      * @var array<string, string>
      */
     private const UTF8_ANSI2 = [

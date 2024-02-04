@@ -4,9 +4,28 @@ declare(strict_types=1);
 
 namespace MarjovanLier\StringManipulation;
 
+/**
+ * Trait AccentNormalization.
+ *
+ * This trait provides a set of constants and methods for normalizing accents in a string.
+ * It defines two constants: REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO, which are arrays of characters.
+ * The REMOVE_ACCENTS_FROM array contains characters with accents, and the REMOVE_ACCENTS_TO array contains
+ * the corresponding characters without accents.
+ *
+ * The trait does not provide any methods, but the constants can be used in conjunction with string manipulation
+ * functions such as str_replace() to remove accents from a string.
+ *
+ * Example usage:
+ * $normalized = str_replace(REMOVE_ACCENTS_FROM, REMOVE_ACCENTS_TO, $stringWithAccents);
+ *
+ * Note: This trait is intended to be used in a class that requires accent normalization functionality.
+ */
 trait AccentNormalization
 {
     /**
+     * An array of characters with accents and special characters. These characters are intended to be replaced
+     * in a string to normalize it.
+     *
      * @var string[]
      */
     private const REMOVE_ACCENTS_FROM = [
@@ -250,6 +269,9 @@ trait AccentNormalization
     ];
 
     /**
+     * An array of characters without accents. These characters correspond to the characters in the
+     * REMOVE_ACCENTS_FROM array and are used to replace them in a string.
+     *
      * @var string[]
      */
     private const REMOVE_ACCENTS_TO = [
