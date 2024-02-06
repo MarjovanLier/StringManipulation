@@ -40,14 +40,6 @@ $result = StringManipulation::searchWords('Hello_World');
 echo $result; // Outputs: 'hello world'
 ```
 
-## Testing
-
-Run the tests with:
-
-```bash
-vendor/bin/phpunit
-```
-
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
@@ -70,6 +62,14 @@ use MarjovanLier\StringManipulation\StringManipulation;
 
 $ansiString = StringManipulation::utf8Ansi('Äpfel');
 echo $ansiString; // Outputs: 'Äpfel' in ANSI format
+```
+
+## Testing
+
+Run the tests with:
+
+```bash
+composer rests tests
 ```
 
 ## Requirements
