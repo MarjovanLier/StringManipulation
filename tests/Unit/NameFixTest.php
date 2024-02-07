@@ -226,4 +226,85 @@ final class NameFixTest extends TestCase
         $result = StringManipulation::nameFix($inputName);
         self::assertEquals('MacDonald', $result);
     }
+
+
+    // Test basic nameFix functionality with common prefixes and accents
+    public function testBasicNameFixFunctionality(): void
+    {
+        $lastName = 'mcdonald';
+        $result = StringManipulation::nameFix($lastName);
+        self::assertEquals('McDonald', $result);
+
+        $lastName = 'macarthur';
+        $result = StringManipulation::nameFix($lastName);
+        self::assertEquals('MacArthur', $result);
+
+        $lastName = 'van der saar';
+        $result = StringManipulation::nameFix($lastName);
+        self::assertEquals('van der Saar', $result);
+
+        $lastName = 'de la hoya';
+        $result = StringManipulation::nameFix($lastName);
+        self::assertEquals('de la Hoya', $result);
+
+        $lastName = 'o’reilly';
+        $result = StringManipulation::nameFix($lastName);
+        self::assertEquals("O'reilly", $result);
+
+        $lastName = 'de la tòrré';
+        $result = StringManipulation::nameFix($lastName);
+        self::assertEquals('de la Torre', $result);
+
+        $lastName = 'mcdónald';
+        $result = StringManipulation::nameFix($lastName);
+        self::assertEquals('McDonald', $result);
+    }
+
+
+    // Test nameFix with uppercase input
+    public function testNameFixWithUppercaseInput(): void
+    {
+        $lastName = 'MCDONALD';
+        $result = StringManipulation::nameFix($lastName);
+        self::assertEquals('McDonald', $result);
+
+        $lastName = 'VAN LIER';
+        $result = StringManipulation::nameFix($lastName);
+        self::assertEquals('van Lier', $result);
+    }
+
+
+    // Test nameFix with mixed case hyphenated input
+    public function testNameFixWithMixedCaseHyphenatedInput(): void
+    {
+        $inputName = 'mACdonald-sMith-jOnes';
+        $result = StringManipulation::nameFix($inputName);
+        self::assertEquals('MacDonald-Smith-Jones', $result);
+    }
+
+
+    // Test nameFix with null input
+    public function testNameFixWithNullInput(): void
+    {
+        $result = StringManipulation::nameFix(null);
+        self::assertNull($result);
+    }
+
+
+    // Test nameFix with numeric input
+    public function testNameFixWithNumericInput(): void
+    {
+        $lastName = '12345';
+        $result = StringManipulation::nameFix($lastName);
+        self::assertEquals('12345', $result);
+    }
+
+
+    // Test nameFix with special character input
+    public function testNameFixWithSpecialCharacterInput(): void
+    {
+        $lastName = '!@#$%';
+        $result = StringManipulation::nameFix($lastName);
+        self::assertEquals('!@#$%', $result);
+    }
 }
