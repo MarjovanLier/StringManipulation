@@ -175,7 +175,7 @@ jobs:
           release_name: Release ${{ env.NEW_TAG }}
           body: |
             Changes included in this release:
-            ${{ env.GIT_LOG_OUTPUT }}"
+            ${{ env.GIT_LOG_OUTPUT }}
 
             View changes: ${{ env.COMPARISON_LINK }}
           draft: false
