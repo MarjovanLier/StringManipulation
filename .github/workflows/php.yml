@@ -154,6 +154,11 @@ jobs:
           COMMIT_MESSAGES="${COMMIT_MESSAGES//$'\n'/'%0A'}"
           COMMIT_MESSAGES="${COMMIT_MESSAGES//$'\r'/'%0D'}"
           echo "COMMIT_MESSAGES=${COMMIT_MESSAGES}" >> $GITHUB_ENV
+      - name: Create comparison link
+        id: comparison-link
+        if: env.LATEST_TAG != '' && steps.rector.outcome == 'success'
+        run: |
+          echo "COMPARISON_LINK=https://github.com/MarjovanLier/StringManipulation/compare/${LATEST_TAG}...${NEW_TAG}" >> $GITHUB_ENV
 
       # This step creates a new release with the new tag and the commit messages as the body.
       - name: Create release
@@ -168,5 +173,7 @@ jobs:
           body: |
             Changes included in this release:
             ${{ env.COMMIT_MESSAGES }}
+
+            View changes: ${{ env.COMPARISON_LINK }}
           draft: false
           prerelease: false
