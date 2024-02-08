@@ -149,9 +149,7 @@ jobs:
         id: get-commits
         if: github.ref == 'refs/heads/main' && steps.rector.outcome == 'success'
         run: |
-          echo "COMMIT_MESSAGES<<EOF" >> $GITHUB_ENV
-          git log $LATEST_TAG..HEAD --pretty=format:"%h - %s" | sed ':a;N;$!ba;s/\n/\\n/g' >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGES=$(git log $LATEST_TAG..HEAD --pretty=format:'%h - %s' | sed ':a;N;$!ba;s/\n/\\n/g')" >> $GITHUB_ENV
 
       - name: Create comparison link
         id: comparison-link
