@@ -149,7 +149,7 @@ jobs:
         id: get-commits
         if: github.ref == 'refs/heads/main' && steps.rector.outcome == 'success'
         run: |
-          echo "COMMIT_MESSAGES=$(git log $LATEST_TAG..HEAD --pretty=format:'%h - %s' | sed ':a;N;$!ba;s/\n/\\n/g')" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGES=$(git log $LATEST_TAG..HEAD --pretty=format:'%h - %s')" >> $GITHUB_ENV
 
       - name: Create comparison link
         id: comparison-link
@@ -169,7 +169,7 @@ jobs:
           release_name: Release ${{ env.NEW_TAG }}
           body: |
             Changes included in this release:
-            $(echo "${{ env.COMMIT_MESSAGES }}" | sed 's/\\n/\n/g')
+            ${{ env.COMMIT_MESSAGES }}"
 
             View changes: ${{ env.COMPARISON_LINK }}
           draft: false
