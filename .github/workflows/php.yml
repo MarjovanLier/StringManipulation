@@ -175,7 +175,7 @@ jobs:
           release_name: Release ${{ env.NEW_TAG }}
           body: |
             Changes included in this release:
-            ${{ env.COMMIT_MESSAGES }}
+            ${{ env.FORMATTED_COMMIT_MESSAGES }}
 
             View changes: ${{ env.COMPARISON_LINK }}
           draft: false
