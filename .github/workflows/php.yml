@@ -150,7 +150,10 @@ jobs:
         if: github.ref == 'refs/heads/main' && steps.rector.outcome == 'success'
         run: |
           COMMIT_MESSAGES=$(git log $LATEST_TAG..HEAD --pretty=format:"%h - %s")
-          echo "COMMIT_MESSAGES=$COMMIT_MESSAGES" >> $GITHUB_ENV
+          COMMIT_MESSAGES="${COMMIT_MESSAGES//'%'/'%25'}"
+          COMMIT_MESSAGES="${COMMIT_MESSAGES//$'\n'/'%0A'}"
+          COMMIT_MESSAGES="${COMMIT_MESSAGES//$'\r'/'%0D'}"
+          echo "COMMIT_MESSAGES=${COMMIT_MESSAGES}" >> $GITHUB_ENV
 
       # This step creates a new release with the new tag and the commit messages as the body.
       - name: Create release
