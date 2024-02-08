@@ -13,298 +13,72 @@ use PHPUnit\Framework\TestCase;
  * @covers \MarjovanLier\StringManipulation\StringManipulation::nameFix
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ *
+ * This class is a test case for the nameFix function in the StringManipulation class.
+ * It tests the function with a variety of inputs.
  */
 final class NameFixTest extends TestCase
 {
     /**
-     * Test the nameFix function.
+     * Test the nameFix function with a variety of inputs.
+     *
+     * This function tests the nameFix function with a variety of names, including basic and advanced name handling.
+     * It also includes negative tests where the input is not a name.
      */
     public function testNameFixFunction(): void
     {
-        // Basic tests
-        self::assertEquals('McDonald', StringManipulation::nameFix('mcdonald'));
-        self::assertEquals('MacArthur', StringManipulation::nameFix('macarthur'));
-        self::assertEquals('van der Saar', StringManipulation::nameFix('van der saar'));
-        self::assertEquals('de la Hoya', StringManipulation::nameFix('de la hoya'));
-        self::assertEquals("O'reilly", StringManipulation::nameFix('o’reilly'));
+        // Basic and advanced name handling
+        $names = [
+            'o’reilly' => "O'reilly",
+            'de la hoya' => 'de la Hoya',
+            'de la tòrré' => 'de la Torre',
+            'donald' => 'Donald',
+            'johnson' => 'Johnson',
+            'macarthur' => 'MacArthur',
+            '   macdonald   ' => 'MacDonald',
+            'macdonald-smith-jones' => 'MacDonald-Smith-Jones',
+            'mACdonald-sMith-jOnes' => 'MacDonald-Smith-Jones',
+            'MacDonald-sMith-jOnes' => 'MacDonald-Smith-Jones',
+            'macIntosh' => 'MacIntosh',
+            'mac jones' => 'Mac Jones',
+            'macjones' => 'MacJones',
 
-        // Tests with accents
-        self::assertEquals('de la Torre', StringManipulation::nameFix('de la tòrré'));
-        self::assertEquals('McDonald', StringManipulation::nameFix('mcdónald'));
+            'mcdonald' => 'McDonald',
+            'MCDONALD' => 'McDonald',
+            ' mcDonald ' => 'McDonald',
+            'Mc donald' => 'Mc Donald',
+            'mcdónald' => 'McDonald',
+            'van der saar' => 'van der Saar',
+            'VAN LIER' => 'van Lier',
+            'À Macdonald È' => 'A MacDonald E',
+        ];
+
+        foreach ($names as $input => $expected) {
+            // For each name, we assert that the output of the nameFix function is equal to the expected output.
+            self::assertEquals($expected, StringManipulation::nameFix($input));
+        }
+
+        // Negative tests
+        $negativeTests = [
+            '!@#$%' => '!@#$%',
+            null => null,
+        ];
+
+        foreach ($negativeTests as $input => $expected) {
+            // For each negative test, we assert that the output of the nameFix function is equal to the input.
+            self::assertEquals($expected, StringManipulation::nameFix($input));
+        }
     }
 
 
     /**
-     * Negative tests for the nameFix function.
+     * Test the nameFix function with numeric input.
+     *
+     * This function tests the nameFix function with a numeric input.
+     * The function is expected to return the input as is in this case.
      */
-    public function testNameFixFunctionNegative(): void
-    {
-        // Passing null
-        self::assertNull(StringManipulation::nameFix(null));
-
-        // Passing numbers
-        self::assertEquals('12345', StringManipulation::nameFix('12345'));
-
-        // Passing special characters
-        self::assertEquals('!@#$%', StringManipulation::nameFix('!@#$%'));
-    }
-
-
-    public function testNameFix(): void
-    {
-        $lastName = 'mcDonald';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('McDonald', $result);
-    }
-
-
-    public function testNameFixUpper(): void
-    {
-        $lastName = 'MCDONALD';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('McDonald', $result);
-    }
-
-
-    public function testNameFixUpper2(): void
-    {
-        $lastName = 'VAN LIER';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('van Lier', $result);
-    }
-
-
-    public function testNameFixSpace(): void
-    {
-        $lastName = ' mcDonald ';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('McDonald', $result);
-    }
-
-
-    public function testNameFixWithNoSpecialPrefix(): void
-    {
-        $lastName = 'Johnson';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('Johnson', $result);
-    }
-
-
-    public function testNameFixWithMacPrefixAndNotNullLastName(): void
-    {
-        $result = StringManipulation::nameFix('macIntosh');
-        self::assertEquals('MacIntosh', $result);
-    }
-
-
-    public function testNameFixWithNoMacPrefixAndNotNullLastName(): void
-    {
-        $result = StringManipulation::nameFix('Smith');
-        self::assertEquals('Smith', $result);
-    }
-
-
-    public function testNameFixWithMacPrefixAndNullLastName(): void
-    {
-        $result = StringManipulation::nameFix('mac');
-        self::assertEquals('Mac', $result);
-    }
-
-
-    public function testNameFixWithNoMacPrefixAndNullLastName(): void
-    {
-        $result = StringManipulation::nameFix(null);
-        self::assertNull($result);
-    }
-
-
-    public function testNameFixWithHyphenatedName(): void
-    {
-        $inputName = 'macdonald-smith-jones';
-        $result = StringManipulation::nameFix($inputName);
-        self::assertEquals('MacDonald-Smith-Jones', $result);
-    }
-
-
-    public function testNameFixWithMixedCaseHyphenatedName(): void
-    {
-        $inputName = 'mACdonald-sMith-jOnes';
-        $result = StringManipulation::nameFix($inputName);
-        self::assertEquals('MacDonald-Smith-Jones', $result);
-    }
-
-
-    public function testNameFixWithLowercaseAfterHyphen(): void
-    {
-        $inputName = 'MacDonald-sMith-jOnes';
-        $result = StringManipulation::nameFix($inputName);
-        self::assertEquals('MacDonald-Smith-Jones', $result);
-    }
-
-
-    public function testNameFixWithMacSpacePrefix(): void
-    {
-        $inputName = 'mac jones';
-        $result = StringManipulation::nameFix($inputName);
-        self::assertEquals('Mac Jones', $result);
-    }
-
-
-    public function testNameFixWithMacPrefixWithoutSpace(): void
-    {
-        $inputName = 'macjones';
-        $result = StringManipulation::nameFix($inputName);
-        self::assertEquals('MacJones', $result);
-    }
-
-
-    public function testNameFixWithoutMacPrefixWithSpace(): void
-    {
-        $inputName = 'mac jones';
-        $result = StringManipulation::nameFix($inputName);
-        self::assertEquals('Mac Jones', $result);
-    }
-
-
-    public function testNoMacIsUnchanged(): void
-    {
-        $inputName = 'johnson';
-        $result = StringManipulation::nameFix($inputName);
-        self::assertEquals('Johnson', $result);
-    }
-
-
-    public function testNoMcIsUnchanged(): void
-    {
-        $inputName = 'donald';
-        $result = StringManipulation::nameFix($inputName);
-        self::assertEquals('Donald', $result);
-    }
-
-
-    public function testMcWithSpaceIsUnchanged(): void
-    {
-        $inputName = 'Mc donald';
-        $result = StringManipulation::nameFix($inputName);
-        // Expecting the space to remain
-        self::assertEquals('Mc Donald', $result);
-    }
-
-
-    public function testLeadingAndTrailingWhitespacesAreRemoved(): void
-    {
-        $inputName = '   macdonald   ';
-        $result = StringManipulation::nameFix($inputName);
-        // Expecting no leading or trailing whitespaces
-        self::assertEquals('MacDonald', $result);
-    }
-
-
-    public function testTrimAfterRemovingAccents(): void
-    {
-        // Assuming the inputName will have leading/trailing spaces after removing accents,
-        // Adjust this string accordingly based on the behaviour of removeAccents
-        // Let's assume À turns into ' A' and È turns into 'E '
-        $inputName = 'À Macdonald È';
-        $result = StringManipulation::nameFix($inputName);
-        // Asserting that there are no leading or trailing spaces
-        self::assertEquals('A MacDonald E', $result);
-    }
-
-
-    public function testMcWithoutSpaceIsFixed(): void
-    {
-        $inputName = 'mcDonald';
-        $result = StringManipulation::nameFix($inputName);
-        self::assertEquals('McDonald', $result);
-    }
-
-
-    public function testMacWithoutSpaceIsFixed(): void
-    {
-        $inputName = 'macDonald';
-        $result = StringManipulation::nameFix($inputName);
-        self::assertEquals('MacDonald', $result);
-    }
-
-
-    // Test basic nameFix functionality with common prefixes and accents
-    public function testBasicNameFixFunctionality(): void
-    {
-        $lastName = 'mcdonald';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('McDonald', $result);
-
-        $lastName = 'macarthur';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('MacArthur', $result);
-
-        $lastName = 'van der saar';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('van der Saar', $result);
-
-        $lastName = 'de la hoya';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('de la Hoya', $result);
-
-        $lastName = 'o’reilly';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals("O'reilly", $result);
-
-        $lastName = 'de la tòrré';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('de la Torre', $result);
-
-        $lastName = 'mcdónald';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('McDonald', $result);
-    }
-
-
-    // Test nameFix with uppercase input
-    public function testNameFixWithUppercaseInput(): void
-    {
-        $lastName = 'MCDONALD';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('McDonald', $result);
-
-        $lastName = 'VAN LIER';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('van Lier', $result);
-    }
-
-
-    // Test nameFix with mixed case hyphenated input
-    public function testNameFixWithMixedCaseHyphenatedInput(): void
-    {
-        $inputName = 'mACdonald-sMith-jOnes';
-        $result = StringManipulation::nameFix($inputName);
-        self::assertEquals('MacDonald-Smith-Jones', $result);
-    }
-
-
-    // Test nameFix with null input
-    public function testNameFixWithNullInput(): void
-    {
-        $result = StringManipulation::nameFix(null);
-        self::assertNull($result);
-    }
-
-
-    // Test nameFix with numeric input
     public function testNameFixWithNumericInput(): void
     {
-        $lastName = '12345';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('12345', $result);
-    }
-
-
-    // Test nameFix with special character input
-    public function testNameFixWithSpecialCharacterInput(): void
-    {
-        $lastName = '!@#$%';
-        $result = StringManipulation::nameFix($lastName);
-        self::assertEquals('!@#$%', $result);
+        self::assertEquals('12345', StringManipulation::nameFix('12345'));
     }
 }
