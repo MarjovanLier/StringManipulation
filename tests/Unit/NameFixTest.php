@@ -42,7 +42,6 @@ final class NameFixTest extends TestCase
             'macIntosh' => 'MacIntosh',
             'mac jones' => 'Mac Jones',
             'macjones' => 'MacJones',
-
             'mcdonald' => 'McDonald',
             'MCDONALD' => 'McDonald',
             ' mcDonald ' => 'McDonald',
