@@ -157,15 +157,6 @@ jobs:
         run: |
           echo "COMPARISON_LINK=https://github.com/MarjovanLier/StringManipulation/compare/${LATEST_TAG}...${NEW_TAG}" >> $GITHUB_ENV
 
-      - name: Format commit messages
-        id: format_commit_messages
-        run: |
-          echo "${{ env.COMMIT_MESSAGES }}" | sed 's/\\n/\n/g' > commit_messages.txt
-          echo "formatted=$(cat commit_messages.txt)" >> $GITHUB_OUTPUT
-        env:
-          COMMIT_MESSAGES: ${{ env.COMMIT_MESSAGES }}
-          GITHUB_OUTPUT: ${{ github.output }}
-
       # This step creates a new release with the new tag and the commit messages as the body.
       - name: Create release
         id: create_release
@@ -178,7 +169,7 @@ jobs:
           release_name: Release ${{ env.NEW_TAG }}
           body: |
             Changes included in this release:
-            ${{ steps.format_commit_messages.outputs.formatted }}
+            $(echo "${{ env.COMMIT_MESSAGES }}" | sed 's/\\n/\n/g')
 
             View changes: ${{ env.COMPARISON_LINK }}
           draft: false
