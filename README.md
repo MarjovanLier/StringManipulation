@@ -1,7 +1,6 @@
-# String Manipulation
+# String Manipulation Library for PHP
 
-This is a PHP library that provides various string manipulation utilities. It is designed to be easy to use and
-efficient, making it ideal for any PHP project that requires string manipulation.
+Welcome to the `StringManipulation` library, a robust and efficient PHP toolkit designed to enhance string handling in your PHP projects. With its user-friendly interface and performance-oriented design, this library is an essential addition for developers looking to perform complex string manipulations with ease.
 
 [![Packagist Version](https://img.shields.io/packagist/v/marjovanlier/stringmanipulation)](https://packagist.org/packages/marjovanlier/stringmanipulation)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/marjovanlier/stringmanipulation)](https://packagist.org/packages/marjovanlier/stringmanipulation)
@@ -14,16 +13,16 @@ efficient, making it ideal for any PHP project that requires string manipulation
 
 ## Features
 
-- **Search Words**: Transforms a string into a format suitable for database searching.
-- **Name Fix**: Fixes a given last name to conform to specific naming standards.
-- **UTF-8 to ANSI**: Converts UTF-8 encoded characters to their ANSI counterparts.
-- **Remove Accents**: Removes accents and special characters from a given string.
-- **Date Validation**: Validates a date string against a specified format and checks for logical errors.
-- **Time Part Validation**: Checks if the time part of a date is valid.
+- **Search Words**: Transform strings into a search-optimized format for database queries.
+- **Name Fix**: Standardize last names to adhere to conventional naming formats.
+- **UTF-8 to ANSI**: Convert UTF-8 encoded characters to their ANSI equivalents.
+- **Remove Accents**: Strip accents and special characters from strings to normalize text.
+- **Date Validation**: Ensure date strings conform to specified formats and check for logical consistency.
+- **Time Part Validation**: Validate the time components within date strings for accuracy.
 
 ## Installation
 
-You can install the package via composer:
+Install the package via Composer with the following command:
 
 ```bash
 composer require marjovanlier/stringmanipulation
@@ -31,7 +30,7 @@ composer require marjovanlier/stringmanipulation
 
 ## Usage
 
-Here is a basic example of how to use the `searchWords` function:
+To use the `searchWords` function and format a string for database searching:
 
 ```php
 use MarjovanLier\StringManipulation\StringManipulation;
@@ -42,11 +41,11 @@ echo $result; // Outputs: 'hello world'
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+This library is licensed under the MIT License. For more information, please refer to the [License File](LICENSE).
 
 ## Detailed Examples
 
-### Name Fix
+### Name Standardization
 
 ```php
 use MarjovanLier\StringManipulation\StringManipulation;
@@ -69,14 +68,14 @@ echo $ansiString; // Outputs: 'Äpfel' in ANSI format
 Run the tests with:
 
 ```bash
-composer rests tests
+composer tests
 ```
 
-## Requirements
+## System Requirements
 
-- PHP 8.2 or higher.
+- PHP 8.2 or later.
 
 ## Support
 
-For support, issues, or questions, please open an issue on the GitHub repository.
+For support, please open an issue on our [GitHub repository](https://github.com/MarjovanLier/StringManipulation/issues).
 
