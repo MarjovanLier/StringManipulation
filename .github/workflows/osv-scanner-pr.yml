@@ -1,6 +1,5 @@
 name: OSV-Scanner PR Scan
 
-# Change "main" to your default branch if you use a different name, i.e. "master"
 on:
   push:
     branches: [main]
@@ -15,4 +14,26 @@ permissions:
 
 jobs:
   scan-pr:
-    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v1.6.2-beta1"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: mbstring, xml, zip, pdo_mysql
+
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          command: install --prefer-dist --no-progress --no-suggest
+
+      - name: Update dependencies
+        uses: php-actions/composer@v6
+        with:
+          command: update
+
+      - name: Run OSV Scanner
+        uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v1.6.2-beta1"
