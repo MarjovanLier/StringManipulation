@@ -57,10 +57,18 @@ jobs:
         if: steps.composer-install.outcome == 'success'
         run: composer test:vulnerabilities-check
 
+      - name: Run OSV-Scanner
+        uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v0.1.0
+        id: osv-scanner
+        if: steps.vulnerabilities-check.outcome == 'success'
+        with:
+          scan-args: |
+             --lockfile=osv-scanner:composer.lock
+
       # This step runs linting in parallel to speed up the process.
       - name: Run parallel linting
         id: parallel-lint
-        if: steps.vulnerabilities-check.outcome == 'success'
+        if: steps.osv-scanner.outcome == 'success'
         run: composer test:lint
 
       # This step checks the code style with Pint.
