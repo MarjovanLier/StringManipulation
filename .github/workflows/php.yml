@@ -20,9 +20,6 @@ jobs:
           fetch-depth: 0
         id: checkout
 
-      - name: Install osv-scanner
-        run: sudo apt-get install osv-scanner -y
-
       # This step sets up PHP environment for the job.
       - name: Setup PHP
         id: setup-php
@@ -53,6 +50,12 @@ jobs:
       - name: Install dependencies
         id: composer-install
         run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Install and run osv-scanner
+        run: |
+            sudo apt install golang-go -y
+            go install github.com/google/osv-scanner/cmd/osv-scanner@v1
+            osv-scanner --lockfile=composer.lock
 
       # This step checks for vulnerabilities in the project dependencies.
       - name: Check for vulnerabilities
