@@ -67,7 +67,7 @@ final class IsValidHourTest extends TestCase
      *
      * @dataProvider provideHours
      */
-    public function testIsValidHour(int $Hour, bool $expectedResult): void
+    public function testIsValidHour(int $hour, bool $expectedResult): void
     {
         $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidHour');
 
@@ -78,7 +78,7 @@ final class IsValidHourTest extends TestCase
          */
         $reflectionMethod->setAccessible(true);
 
-        $result = $reflectionMethod->invoke(null, $Hour);
+        $result = $reflectionMethod->invoke(null, $hour);
 
         self::assertSame($expectedResult, $result);
     }
