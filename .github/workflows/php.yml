@@ -60,7 +60,7 @@ jobs:
         run: go install github.com/google/osv-scanner/cmd/osv-scanner@v1
 
       - name: Scan composer.lock for vulnerabilities
-        run: osv-scanner scan composer.lock
+        run: scan --no-ignore composer.lock
 
       # This step checks for vulnerabilities in the project dependencies.
       - name: Check for vulnerabilities
