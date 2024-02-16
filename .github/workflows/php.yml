@@ -9,12 +9,6 @@ on:
     branches: [main]
 
 jobs:
-  vulnerability-scan:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-
   build:
     # The job runs on the latest version of Ubuntu.
     runs-on: ubuntu-latest
@@ -64,12 +58,11 @@ jobs:
         run: composer test:vulnerabilities-check
 
       - name: Run OSV-Scanner
-        uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v0.1.0
+        uses: ./.github/workflows/osv-scanner-reusable.yml@main
         id: osv-scanner
         if: steps.vulnerabilities-check.outcome == 'success'
         with:
-          scan-args: |
-             --lockfile=osv-scanner:composer.lock
+          lockfile: composer.lock
 
       # This step runs linting in parallel to speed up the process.
       - name: Run parallel linting
