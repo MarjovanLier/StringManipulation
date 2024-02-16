@@ -20,6 +20,9 @@ jobs:
           fetch-depth: 0
         id: checkout
 
+      - name: Install osv-scanner
+        run: sudo apt-get osv-scanner -y
+
       # This step sets up PHP environment for the job.
       - name: Setup PHP
         id: setup-php
