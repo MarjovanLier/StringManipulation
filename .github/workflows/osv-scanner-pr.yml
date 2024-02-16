@@ -13,13 +13,13 @@ permissions:
   contents: read
 
 jobs:
-  scan-pr:
+  setup-and-scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup PHP
+      - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
@@ -35,5 +35,7 @@ jobs:
         with:
           command: update
 
-      - name: Run OSV Scanner
-        uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v1.6.2-beta1"
+  scan-pr:
+    needs: setup-and-scan
+    name: Run OSV Scanner
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v1.6.2-beta1
