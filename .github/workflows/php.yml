@@ -21,7 +21,7 @@ jobs:
         id: checkout
 
       - name: Install osv-scanner
-        run: sudo apt-get osv-scanner -y
+        run: sudo apt-get install osv-scanner -y
 
       # This step sets up PHP environment for the job.
       - name: Setup PHP
