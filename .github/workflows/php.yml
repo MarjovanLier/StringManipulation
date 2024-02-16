@@ -9,6 +9,12 @@ on:
     branches: [main]
 
 jobs:
+  vulnerability-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+
   build:
     # The job runs on the latest version of Ubuntu.
     runs-on: ubuntu-latest
