@@ -54,7 +54,7 @@
     "phpunit/phpunit": ">=10.5.10",
     "psalm/plugin-phpunit": ">=0.18.4",
     "rector/rector": ">=1.0.1",
-    "roave/no-floaters": ">=1.11",
+    "roave/no-floaters": ">=1.11.0",
     "roave/security-advisories": "dev-latest",
     "vimeo/psalm": ">=5.22.1"
   },
