@@ -92,12 +92,6 @@ jobs:
         if: steps.phpmd.outcome == 'success'
         run: composer test:phpunit
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        env:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: MarjovanLier/StringManipulation
-
       # This step runs mutation testing with Infection.
       - name: Run Mutation Testing
         id: infection
