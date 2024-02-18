@@ -10,6 +10,7 @@ Welcome to the `StringManipulation` library, a robust and efficient PHP toolkit 
 [![PHPStan Enabled](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://phpstan.org/)
 [![Phan Enabled](https://img.shields.io/badge/Phan-enabled-brightgreen.svg?style=flat)](https://github.com/phan/phan/)
 [![Psalm Enabled](https://img.shields.io/badge/Psalm-enabled-brightgreen.svg?style=flat)](https://psalm.dev/)
+[![codecov](https://codecov.io/github/MarjovanLier/StringManipulation/graph/badge.svg?token=lBTpWlSq37)](https://codecov.io/github/MarjovanLier/StringManipulation)
 
 ## Features
 
