@@ -61,21 +61,29 @@ class StringManipulation
      */
     public static function searchWords(?string $words): ?string
     {
+        // If the input string is null, return null
         if ($words === null) {
             return null;
         }
 
+        // Apply the name fixing standards to the input string
         $words = static::nameFix($words);
 
+        // If the name fixed string is not null, perform further transformations.
         if ($words !== null) {
+            // Replace various special characters with spaces and convert the string to lowercase
             $words = strtolower(
                 static::strReplace(['{', '}', '(', ')', '/', '\\', '@', ':', '"', '?', ',', '.'], ' ', $words),
             );
         }
 
+        // Remove accents from characters within the string
         $words = static::removeAccents(($words ?? ''));
+
+        // Replace underscores with spaces
         $words = static::strReplace('_', ' ', $words);
 
+        // Reduce spaces to a single space and return the transformed string.
         return trim((preg_replace('# {2,}#', ' ', $words) ?? ''));
     }
 
