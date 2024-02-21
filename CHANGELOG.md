@@ -1,3 +1,8 @@
+## 2024-02-21
+
+### Changed
+- Updated several development dependencies in the `composer.json` file to ensure compatibility and stability with the latest versions. The updates include `infection/infection`, `laravel/pint`, and `phpstan/phpstan`. This change contributes to the project's overall quality and security.
+
 ## 2024-02-18
 
 ### Added
