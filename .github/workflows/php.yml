@@ -129,9 +129,16 @@ jobs:
     runs-on: ubuntu-latest
     if: success()
     steps:
+      # This step checks out a copy of your repository.
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+        id: checkout
+
       # This step fetches all tags from the repository.
       - name: Fetch all tags
         id: fetch-tags
+        if: steps.checkout.outcome == 'success'
         run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
       # This step gets the latest tag from the repository.
