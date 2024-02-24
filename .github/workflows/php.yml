@@ -179,7 +179,7 @@ jobs:
       # This step gets the commit messages between the latest tag and the HEAD.
       - name: Get commit messages
         id: get-commits
-        if: github.ref == 'refs/heads/main' && steps.compare-link.outcome == 'success'
+        if: github.ref == 'refs/heads/main' && steps.comparison-link.outcome == 'success'
         run: |
           # Capture the output of git log command
           GIT_LOG_OUTPUT=$(git log $LATEST_TAG..HEAD --pretty=format:'%h - %s')
@@ -192,7 +192,7 @@ jobs:
       # This step creates a new release with the new tag and the commit messages as the body.
       - name: Create release
         id: create_release
-        if: github.ref == 'refs/heads/main' && steps.push-tag.outcome == 'success' && steps.get-commits.outcome == 'success'
+        if: github.ref == 'refs/heads/main' && steps.get-commits.outcome == 'success'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
