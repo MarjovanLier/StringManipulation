@@ -1,6 +1,11 @@
 ## 2024-02-24
 
 ### Changed
+- Updated the `.pr_agent.toml` configuration to enhance the incremental review process and manage changelog updates more cautiously. The thresholds for incremental reviews have been adjusted and automatic pushing of changelog changes has been disabled.
+
+## 2024-02-24
+
+### Changed
 - Removed PHP 8.4 from the testing matrix due to compatibility issues, ensuring the project's stability and compatibility with supported PHP versions.
 - Updated the "vimeo/psalm" dependency to version "5.22.2", enhancing compatibility and stability.
 - Simplified script executions in `composer.json`, improving readability and maintainability by removing unnecessary PHP calls and memory limit flags.
