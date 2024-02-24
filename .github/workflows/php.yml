@@ -125,7 +125,7 @@ jobs:
         run: composer test:rector
 
   release:
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     if: success()
     steps:
