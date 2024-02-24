@@ -1,15 +1,5 @@
 ## 2024-02-24
 
-### Added
-- Included PHP version "8.4" in the CI testing matrix to ensure compatibility with the latest PHP version.
-
-### Changed
-- Updated the `vimeo/psalm` dependency to version ">=5.22.2" for improved static analysis capabilities.
-- Enhanced CI workflow readability and consistency through minor syntax adjustments and added comments for each step.
-- Simplified scripts by removing redundant PHP calls and memory limit flags, improving readability and maintainability.
-
-## 2024-02-24
-
 ### Fixed
 - Corrected the conditions for invoking the 'Create Release' step in the GitHub workflow. The step now triggers only when the 'Get Commits' step is successful, enhancing the reliability of the release process.
 - Fixed a misnamed step reference in the 'Get commit messages' step, changing 'compare-link' to 'comparison-link.outcome', ensuring it triggers correctly.
