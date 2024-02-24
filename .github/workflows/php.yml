@@ -12,6 +12,10 @@ jobs:
   build:
     # The job runs on the latest version of Ubuntu.
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['8.2', '8.3']
 
     steps:
       # This step checks out a copy of your repository.
@@ -26,7 +30,7 @@ jobs:
         if: steps.checkout.outcome == 'success'
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: ${{ matrix.php-versions }}
           extensions: mbstring, xml, zip, pdo_mysql
 
       # This step caches the Composer packages for faster execution.
@@ -54,7 +58,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
-          go-version: '1.22'
+          go-version: "1.22"
 
       - name: Install osv-scanner
         run: go install github.com/google/osv-scanner/cmd/osv-scanner@v1
@@ -65,7 +69,7 @@ jobs:
       # This step checks for vulnerabilities in the project dependencies.
       - name: Check for vulnerabilities
         id: vulnerabilities-check
-        if: steps.composer-install.outcome == 'success'
+        if: steps.composer-install.outcome =='success'
         run: composer test:vulnerabilities-check
 
       # This step runs linting in parallel to speed up the process.
@@ -122,10 +126,21 @@ jobs:
         if: steps.psalm.outcome == 'success'
         run: composer test:rector
 
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      # This step checks out a copy of your repository.
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+        id: checkout
+
       # This step fetches all tags from the repository.
       - name: Fetch all tags
         id: fetch-tags
-        if: steps.rector.outcome == 'success'
+        if: steps.checkout.outcome == 'success'
         run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
       # This step gets the latest tag from the repository.
