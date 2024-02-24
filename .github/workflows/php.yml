@@ -13,6 +13,7 @@ jobs:
     # The job runs on the latest version of Ubuntu.
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         php-versions: ['8.2', '8.3']
 
@@ -68,6 +69,7 @@ jobs:
       # This step checks for vulnerabilities in the project dependencies.
       - name: Check for vulnerabilities
         id: vulnerabilities-check
+        if: steps.composer-install.outcome =='success'
         run: composer test:vulnerabilities-check
 
       # This step runs linting in parallel to speed up the process.
