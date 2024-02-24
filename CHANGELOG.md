@@ -1,3 +1,9 @@
+## 2024-02-24
+
+### Changed
+- Enhanced the GitHub Actions workflow to support testing against multiple PHP versions ('8.2' and '8.3') using a matrix strategy, improving compatibility testing across different PHP environments.
+- Adjusted the 'release' job in the GitHub Actions workflow to depend on the 'build' job's success, ensuring more reliable releases based on thoroughly vetted builds.
+
 ## 2024-02-21
 
 ### Changed
