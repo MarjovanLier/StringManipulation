@@ -1,6 +1,12 @@
 ## 2024-02-24
 
 ### Changed
+- Refactored conditions in several GitHub workflow steps to ensure accurate execution flow. This change enhances the reliability and efficiency of the CI/CD pipeline by aligning execution conditions with the expected workflow progression.
+- Improved the readability and maintainability of the workflow file by ensuring conditionals are logically structured and directly relevant to their respective steps.
+
+## 2024-02-24
+
+### Changed
 - Enhanced the GitHub Actions workflow to support testing against multiple PHP versions ('8.2' and '8.3') using a matrix strategy, improving compatibility testing across different PHP environments.
 - Adjusted the 'release' job in the GitHub Actions workflow to depend on the 'build' job's success, ensuring more reliable releases based on thoroughly vetted builds.
 
