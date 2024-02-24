@@ -1,5 +1,11 @@
 ## 2024-02-24
 
+### Fixed
+- Corrected the conditions for invoking the 'Create Release' step in the GitHub workflow. The step now triggers only when the 'Get Commits' step is successful, enhancing the reliability of the release process.
+- Fixed a misnamed step reference in the 'Get commit messages' step, changing 'compare-link' to 'comparison-link.outcome', ensuring it triggers correctly.
+
+## 2024-02-24
+
 ### Changed
 - Refactored conditions in several GitHub workflow steps to ensure accurate execution flow. This change enhances the reliability and efficiency of the CI/CD pipeline by aligning execution conditions with the expected workflow progression.
 - Improved the readability and maintainability of the workflow file by ensuring conditionals are logically structured and directly relevant to their respective steps.
