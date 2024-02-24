@@ -1,5 +1,12 @@
 ## 2024-02-24
 
+### Changed
+- Removed PHP 8.4 from the testing matrix due to compatibility issues, ensuring the project's stability and compatibility with supported PHP versions.
+- Updated the "vimeo/psalm" dependency to version "5.22.2", enhancing compatibility and stability.
+- Simplified script executions in `composer.json`, improving readability and maintainability by removing unnecessary PHP calls and memory limit flags.
+
+## 2024-02-24
+
 ### Fixed
 - Corrected the conditions for invoking the 'Create Release' step in the GitHub workflow. The step now triggers only when the 'Get Commits' step is successful, enhancing the reliability of the release process.
 - Fixed a misnamed step reference in the 'Get commit messages' step, changing 'compare-link' to 'comparison-link.outcome', ensuring it triggers correctly.
