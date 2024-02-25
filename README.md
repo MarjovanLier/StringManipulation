@@ -145,10 +145,22 @@ This approach allows for flexible and powerful string manipulations by combining
 
 ## Testing
 
-Run the tests with:
+To run the entire test suite, use the following command:
 
 ```bash
-composer tests
+./vendor/bin/phpunit
+```
+
+To run specific tests or test suites, you can use PHPUnit flags to filter tests. For example, to run tests in a specific file:
+
+```bash
+./vendor/bin/phpunit --filter testFileName
+```
+
+And to run tests matching a specific name pattern:
+
+```bash
+./vendor/bin/phpunit --filter '/::testNamePattern$/'
 ```
 
 ## System Requirements
