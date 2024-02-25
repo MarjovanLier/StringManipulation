@@ -1,5 +1,17 @@
 # String Manipulation Library for PHP
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Advanced Usage](#advanced-usage)
+- [Testing](#testing)
+- [System Requirements](#system-requirements)
+
+## Introduction
+
 Welcome to the `StringManipulation` library, a robust and efficient PHP toolkit designed to enhance string handling in
 your PHP projects. With its user-friendly interface and performance-oriented design, this library is an essential
 addition for developers looking to perform complex string manipulations with ease.
@@ -57,7 +69,7 @@ This library is licensed under the MIT License. For more information, please ref
 ### Name Standardization
 
 - **Case Conversion**: Easily convert strings between upper case, lower case, and title case, allowing for flexible text
-  formatting and presentation.
+  formatting and presentation. For example, converting 'john doe' to 'John Doe' for proper name presentation.
 
 ```php
 use MarjovanLier\StringManipulation\StringManipulation;
@@ -146,8 +158,9 @@ echo $isValidTime ? 'Valid' : 'Invalid'; // Outputs: 'Invalid'
 
 ## Advanced Usage
 
-For more complex string manipulations, you can chain multiple functions together. Here's an example that demonstrates
-how to remove accents from a string, convert it to ANSI format, and then capitalize each word for name standardization.
+For more complex string manipulations, consider chaining functions to achieve unique transformations. For instance, you
+could first normalise a string, apply a search optimisation, and finally standardise the casing for a comprehensive text
+processing example.
 
 ```php
 use MarjovanLier\StringManipulation\StringManipulation;
@@ -160,9 +173,21 @@ echo $processedString; // Outputs: 'Creme Brulee'
 This approach allows for flexible and powerful string manipulations by combining the library's functions to suit your
 specific needs.
 
+## Contributing
+
+We welcome contributions to the `StringManipulation` library! If you're interested in helping, please follow these
+steps:
+
+1. Fork the repository and create your feature branch.
+2. Ensure your changes adhere to our coding standards and include tests if applicable.
+3. Submit a pull request with a detailed description of your changes.
+
+Thank you for your interest in improving our library!
+
 ## Testing
 
-To run the entire test suite, use the following command:
+To ensure the reliability and functionality of your string manipulations, it's recommended to run the entire test suite
+with the following command:
 
 ```bash
 ./vendor/bin/phpunit
