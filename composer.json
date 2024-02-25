@@ -1,10 +1,13 @@
 {
   "name": "marjovanlier/stringmanipulation",
-  "description": "A comprehensive PHP library for efficient string manipulation, providing functions for search word transformation, name fixing, UTF-8 to ANSI conversion, accent removal, and date & time validation.",
+  "description": "A PHP library for efficient string manipulation, focusing on data normalisation, encoding conversion and validation.",
   "keywords": [
-    "Marjo van Lier",
-    "String Manipulation"
-  ],
+    "string manipulation",
+    "performance",
+    "encoding",
+    "validation",
+    "unicode"
+],
   "homepage": "https://github.com/marjovanlier/stringmanipulation",
   "license": "MIT",
   "type": "library",
