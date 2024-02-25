@@ -14,6 +14,11 @@ use PHPUnit\Framework\TestCase;
  */
 final class IsValidDateTest extends TestCase
 {
+    private const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
+    private const TIME_FORMAT = 'H:i:s';
+
+
     /**
      * Provides a set of valid dates and their respective formats.
      *
@@ -28,7 +33,7 @@ final class IsValidDateTest extends TestCase
         return [
             [
                 '2023-09-06 12:30:00',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '06-09-2023',
@@ -44,11 +49,11 @@ final class IsValidDateTest extends TestCase
             ],
             [
                 '00:00:00',
-                'H:i:s',
+                self::TIME_FORMAT,
             ],
             [
                 '23:59:59',
-                'H:i:s',
+                self::TIME_FORMAT,
             ],
             [
                 '29-02-2012',
@@ -90,23 +95,23 @@ final class IsValidDateTest extends TestCase
             ],
             [
                 '2012-02-30 12:12:12',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '2012-02-30 25:12:12',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '24:00:00',
-                'H:i:s',
+                self::TIME_FORMAT,
             ],
             [
                 '23:60:00',
-                'H:i:s',
+                self::TIME_FORMAT,
             ],
             [
                 '23:59:60',
-                'H:i:s',
+                self::TIME_FORMAT,
             ],
             [
                 '30-02-2012',
@@ -118,39 +123,39 @@ final class IsValidDateTest extends TestCase
             ],
             [
                 '2012-02-30 12:12:12',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '2012-02-28 24:12:12',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '2012-02-28 23:60:12',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '2012-02-28 23:59:60',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '0000-00-00 12:30:00',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '2023-09-06 12:61:12',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '2023-09-06 12:59:61',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '2023-09-06 25:30:00',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '2023-02-30 12:30:00',
-                'Y-m-d H:i:s',
+                self::DATE_TIME_FORMAT,
             ],
             [
                 '2023-02-30',
@@ -158,15 +163,15 @@ final class IsValidDateTest extends TestCase
             ],
             [
                 '25:30:00',
-                'H:i:s',
+                self::TIME_FORMAT,
             ],
             [
                 '12:61:00',
-                'H:i:s',
+                self::TIME_FORMAT,
             ],
             [
                 '12:59:61',
-                'H:i:s',
+                self::TIME_FORMAT,
             ],
         ];
     }
