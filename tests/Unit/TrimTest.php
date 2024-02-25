@@ -14,6 +14,9 @@ use PHPUnit\Framework\TestCase;
  */
 final class TrimTest extends TestCase
 {
+    private const DEFAULT_TRIM_CHARACTERS = " \t\n\r\0\x0B";
+
+
     /**
      * @return array<int, array<int, string>>
      */
@@ -23,17 +26,17 @@ final class TrimTest extends TestCase
             // Basic tests
             [
                 ' hello ',
-                " \t\n\r\0\x0B",
+                self::DEFAULT_TRIM_CHARACTERS,
                 'hello',
             ],
             [
                 "\thello\t",
-                " \t\n\r\0\x0B",
+                self::DEFAULT_TRIM_CHARACTERS,
                 'hello',
             ],
             [
                 "\nhello\n",
-                " \t\n\r\0\x0B",
+                self::DEFAULT_TRIM_CHARACTERS,
                 'hello',
             ],
             // Tests with custom characters
@@ -50,7 +53,7 @@ final class TrimTest extends TestCase
             // Tests with empty strings
             [
                 '',
-                " \t\n\r\0\x0B",
+                self::DEFAULT_TRIM_CHARACTERS,
                 '',
             ],
             // Tests with no characters to trim
