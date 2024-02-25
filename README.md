@@ -14,12 +14,12 @@ Welcome to the `StringManipulation` library, a robust and efficient PHP toolkit 
 
 ## Features
 
-- **Search Words**: Transform strings into a search-optimized format for database queries.
-- **Name Fix**: Standardize last names to adhere to conventional naming formats.
-- **UTF-8 to ANSI**: Convert UTF-8 encoded characters to their ANSI equivalents.
-- **Remove Accents**: Strip accents and special characters from strings to normalize text.
-- **Date Validation**: Ensure date strings conform to specified formats and check for logical consistency.
-- **Time Part Validation**: Validate the time components within date strings for accuracy.
+- **Search Words**: Transform strings into a search-optimized format for database queries, removing unnecessary characters and optimizing for search engine algorithms.
+- **Name Fix**: Standardize last names by capitalizing the first letter of each part of the name and handling prefixes correctly, ensuring consistency across your data.
+- **UTF-8 to ANSI**: Convert UTF-8 encoded characters to their ANSI equivalents, facilitating compatibility with systems that do not support UTF-8.
+- **Remove Accents**: Strip accents and special characters from strings to normalize text, making it easier to search and compare.
+- **Date Validation**: Ensure date strings conform to specified formats and check for logical consistency, such as correct days in a month.
+- **Time Part Validation**: Validate the time components within date strings for accuracy, ensuring that hours, minutes, and seconds are within valid ranges.
 
 ## Installation
 
@@ -49,6 +49,7 @@ This library is licensed under the MIT License. For more information, please ref
 ### Name Standardization
 
 ```php
+- **Case Conversion**: Easily convert strings between upper case, lower case, and title case, allowing for flexible text formatting and presentation.
 use MarjovanLier\StringManipulation\StringManipulation;
 
 $fixedName = StringManipulation::nameFix('mcdonald');
