@@ -169,5 +169,9 @@ And to run tests matching a specific name pattern:
 
 ## Support
 
+## Frequently Asked Questions
+
+For more detailed examples and solutions to common issues, please refer to our [FAQ](FAQ.md).
+
 For support, please open an issue on our [GitHub repository](https://github.com/MarjovanLier/StringManipulation/issues).
 
