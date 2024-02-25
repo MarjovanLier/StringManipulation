@@ -14,6 +14,9 @@ use PHPUnit\Framework\TestCase;
  */
 final class SearchWordsTest extends TestCase
 {
+    private const HELLO_WORLD_LOWERCASE = 'hello world';
+
+
     /**
      * Test the searchWords function.
      */
@@ -21,10 +24,10 @@ final class SearchWordsTest extends TestCase
     {
         // Basic tests
         self::assertEquals('macdonald', StringManipulation::searchWords('MacDonald'));
-        self::assertEquals('hello world', StringManipulation::searchWords('Hello World'));
-        self::assertEquals('hello world', StringManipulation::searchWords('Hèllo Wørld'));
+        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('Hello World'));
+        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('Hèllo Wørld'));
         self::assertEquals('a b c', StringManipulation::searchWords('a/b/c'));
-        self::assertEquals('hello world', StringManipulation::searchWords('hello_world'));
+        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('hello_world'));
     }
 
 
@@ -43,18 +46,18 @@ final class SearchWordsTest extends TestCase
         self::assertEquals('! #$%', StringManipulation::searchWords('!@#$%'));
 
         // Passing strings with extra spaces
-        self::assertEquals('hello world', StringManipulation::searchWords('  hello   world  '));
+        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('  hello   world  '));
 
         // Passing strings with mixed special characters and extra spaces
-        self::assertEquals('hello world', StringManipulation::searchWords('hello / world'));
-        self::assertEquals('hello world', StringManipulation::searchWords('  hello / world  '));
+        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('hello / world'));
+        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('  hello / world  '));
     }
 
 
     public function testSearchWordsReturnsLowercaseOutput(): void
     {
         $result = StringManipulation::searchWords('HeLLo_World');
-        self::assertEquals('hello world', $result);
+        self::assertEquals(self::HELLO_WORLD_LOWERCASE, $result);
     }
 
 
@@ -69,7 +72,7 @@ final class SearchWordsTest extends TestCase
     {
         $words = '{Hello/World?}';
         $result = StringManipulation::searchWords($words);
-        self::assertEquals('hello world', $result);
+        self::assertEquals(self::HELLO_WORLD_LOWERCASE, $result);
     }
 
 
@@ -77,7 +80,7 @@ final class SearchWordsTest extends TestCase
     {
         $words = 'HELLO WORLD';
         $result = StringManipulation::searchWords($words);
-        self::assertEquals('hello world', $result);
+        self::assertEquals(self::HELLO_WORLD_LOWERCASE, $result);
     }
 
 

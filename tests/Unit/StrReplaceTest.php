@@ -14,6 +14,11 @@ use PHPUnit\Framework\TestCase;
  */
 final class StrReplaceTest extends TestCase
 {
+    /**
+     * @var string
+     */
+    private const LOVE_APPLE = 'I love apple.';
+
     // Replace multiple occurrences of multiple characters
     /**
      * @var string[]
@@ -41,8 +46,8 @@ final class StrReplaceTest extends TestCase
 
     public function testStrReplaceWithNotFoundSearch(): void
     {
-        $result = StringManipulation::strReplace('pineapple', 'banana', 'I love apple.');
-        self::assertEquals('I love apple.', $result);
+        $result = StringManipulation::strReplace('pineapple', 'banana', self::LOVE_APPLE);
+        self::assertEquals(self::LOVE_APPLE, $result);
     }
 
 
@@ -65,7 +70,7 @@ final class StrReplaceTest extends TestCase
 
     public function testStrReplace(): void
     {
-        $result = StringManipulation::strReplace('apple', 'banana', 'I love apple.');
+        $result = StringManipulation::strReplace('apple', 'banana', self::LOVE_APPLE);
         self::assertEquals('I love banana.', $result);
     }
 }
