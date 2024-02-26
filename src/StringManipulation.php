@@ -12,7 +12,8 @@ use SensitiveParameter;
  *
  * This class offers a comprehensive suite of static methods for a variety of string operations,
  * making it an indispensable resource for tasks involving string manipulation or validation. Utilising a blend of
- * advanced algorithms and efficient coding practices, The operations encompass, but are not limited to:
+ * advanced algorithms and efficient coding practices.
+ * Operations include:
  * - String transformation: Modifying the format or structure of a string.
  * - Accent removal: Eliminating accents from characters within a string.
  * - String replacement: Substituting specific substrings within a string with alternative substrings.
