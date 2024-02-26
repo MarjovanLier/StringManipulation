@@ -41,7 +41,7 @@ class StringManipulation
      * This function performs several transformations on the input string to make it suitable for
      * searching within a database. The transformations include:
      * - Applying the name fixing standards via the `nameFix` function. (Refer to its PHPDoc for details.)
-     * - Converting the string to lower case.
+     * - Converting the string to lower case using `strtolower`.
      * - Replacing various special characters with spaces (e.g., '{', '}', '(', ')', etc.).
      * - Replacing underscores with spaces.
      * - Removing accents from characters.
