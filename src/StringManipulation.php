@@ -236,26 +236,22 @@ class StringManipulation
 
 
     /**
-     * Replace all occurrences of the search string(s) with the corresponding replacement string(s) in the subject.
+     * Replaces all occurrences of the search string(s) with the corresponding replacement string(s) in the subject.
      *
-     * This function is a stricter version of the built-in PHP str_replace function. It takes three parameters:
-     * - $search: The value(s) being searched for in the subject. This can be a single string or an array of strings.
-     * - $replace: The replacement value(s) to replace found search values. This can be a single string or an array of
-     * strings.
-     * - $subject: The string being searched and replaced on.
+     * This method acts as a more precise version of the built-in PHP str_replace function. It accepts three parameters:
+     * - $search: The value(s) being searched for within the subject. This can be either a single string or an array of strings.
+     * - $replace: The replacement value(s) for the found search values. This can also be either a single string or an array of strings.
+     * - $subject: The string within which the search and replacement is to be performed.
      *
-     * The function returns a new string where all occurrences of each search value have been replaced by the
-     * corresponding replacement value.
+     * It returns a new string wherein every occurrence of each search value has been substituted with the corresponding replacement value.
      *
-     * This function is useful when you need to replace multiple different substrings within a string, or when you need
-     * to perform the same set of replacements on multiple strings.
+     * This method is particularly useful for replacing multiple distinct substrings within a string, or when the same set of replacements needs to be applied across multiple strings.
      *
-     * @param string|string[] $search The value(s) being searched for in the subject.
-     * @param string|string[] $replace The replacement value(s) to replace found search values.
-     * @param string $subject The string being searched and replaced on.
+     * @param string|string[] $search The value(s) being searched for within the subject.
+     * @param string|string[] $replace The replacement value(s) for the found search values.
+     * @param string $subject The string within which the search and replacement is to be performed.
      *
-     * @return string Returns a string where all occurrences of each search value have been replaced by the
-     *                corresponding replacement value.
+     * @return string A string where every occurrence of each search value has been substituted with the corresponding replacement value.
      *
      * @psalm-suppress PossiblyUnusedMethod,UnusedParam
      */
