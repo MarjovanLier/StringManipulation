@@ -317,7 +317,7 @@ class StringManipulation
      * of characters as inputs. The function trims the specified characters from the beginning and end of the input
      * string. If no characters are specified, it trims whitespace characters by default. The characters that are
      * trimmed by default are: " " (ASCII 32 (0x20)), an ordinary space.
-     * "\t" (ASCII 9 (0x09)), a tabulation character.
+     * "\t" (ASCII 9 (0x09)), a tab.
      * "\n" (ASCII 10 (0x0A)), a new line (line feed).
      * "\r" (ASCII 13 (0x0D)), a carriage return.
      * "\0" (ASCII 0 (0x00)), the NUL-byte.
