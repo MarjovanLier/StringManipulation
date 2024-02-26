@@ -10,21 +10,22 @@ use SensitiveParameter;
 /**
  * Class StringManipulation.
  *
- * This class provides a collection of static methods for various string operations.
- * These operations include, but are not limited to:
- * - String transformation: Changing the format or structure of a string.
- * - Accent removal: Removing accents from characters within a string.
- * - String replacement: Replacing certain substrings within a string with other substrings.
- * - Date validation: Checking if a given date string is valid according to a specified format.
+ * This class offers a comprehensive suite of static methods for a variety of string operations,
+ * making it an indispensable resource for tasks involving string manipulation or validation. Utilising a blend of
+ * advanced algorithms and efficient coding practices.
+ * Operations include:
+ * - String transformation: Modifying the format or structure of a string.
+ * - Accent removal: Eliminating accents from characters within a string.
+ * - String replacement: Substituting specific substrings within a string with alternative substrings.
+ * - Date validation: Verifying the validity of a given date string against a specified format.
  *
- * Each method in this class is designed to perform a specific operation and can be used independently of the others.
- * This makes the class a versatile tool for any tasks involving string manipulation or validation.
+ * Each method within this class is meticulously crafted to execute a distinct operation,
+ * allowing for their independent utilisation. This attribute renders the class a versatile
+ * tool for any string manipulation or validation endeavours.
  *
- * Note: This class is suppressed from UnusedClass warning from Psalm static analysis tool.
- * It means that
- * the class is not directly instantiated or invoked in the codebase.
- * However, it is intended to be used
- * wherever necessary, hence the suppression.
+ * Note: This class is exempt from the UnusedClass warning by the Psalm static analysis tool,
+ * indicating that while it may not be directly instantiated or invoked within the codebase,
+ * it is designed for use wherever necessary, thus justifying the exemption.
  *
  * @psalm-suppress UnusedClass
  */
@@ -40,7 +41,7 @@ class StringManipulation
      * This function performs several transformations on the input string to make it suitable for
      * searching within a database. The transformations include:
      * - Applying the name fixing standards via the `nameFix` function. (Refer to its PHPDoc for details.)
-     * - Converting the string to lowercase.
+     * - Converting the string to lower case using `strtolower`.
      * - Replacing various special characters with spaces (e.g., '{', '}', '(', ')', etc.).
      * - Replacing underscores with spaces.
      * - Removing accents from characters.
@@ -236,26 +237,28 @@ class StringManipulation
 
 
     /**
-     * Replace all occurrences of the search string(s) with the corresponding replacement string(s) in the subject.
+     * Replaces all occurrences of the search string(s) with the corresponding replacement string(s) in the subject.
      *
-     * This function is a stricter version of the built-in PHP str_replace function. It takes three parameters:
-     * - $search: The value(s) being searched for in the subject. This can be a single string or an array of strings.
-     * - $replace: The replacement value(s) to replace found search values. This can be a single string or an array of
+     * This method acts as a more precise version of the built-in PHP str_replace function. It accepts three
+     * parameters:
+     * - $search: The value(s) being searched for within the subject. This can be a single string or an array of
      * strings.
-     * - $subject: The string being searched and replaced on.
+     * - $replace: The replacement value(s) for the found search values. This can be a single string or an array of
+     * strings.
+     * - $subject: The string within which the search and replacement is to be performed.
      *
-     * The function returns a new string where all occurrences of each search value have been replaced by the
+     * It returns a new string wherein every occurrence of each search value has been substituted with the
      * corresponding replacement value.
      *
-     * This function is useful when you need to replace multiple different substrings within a string, or when you need
-     * to perform the same set of replacements on multiple strings.
+     * This method is particularly useful for replacing multiple distinct substrings within a string, or when the same
+     * set of replacements needs to be applied across multiple strings.
      *
-     * @param string|string[] $search The value(s) being searched for in the subject.
-     * @param string|string[] $replace The replacement value(s) to replace found search values.
-     * @param string $subject The string being searched and replaced on.
+     * @param string|string[] $search The value(s) being searched for within the subject.
+     * @param string|string[] $replace The replacement value(s) for the found search values.
+     * @param string $subject The string within which the search and replacement are to be performed.
      *
-     * @return string Returns a string where all occurrences of each search value have been replaced by the
-     *                corresponding replacement value.
+     * @return string A string where every occurrence of each search value has been substituted with the corresponding
+     *     replacement value.
      *
      * @psalm-suppress PossiblyUnusedMethod,UnusedParam
      */
