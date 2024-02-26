@@ -11,7 +11,7 @@ use SensitiveParameter;
  * Class StringManipulation.
  *
  * This class offers a comprehensive suite of static methods for a variety of string operations, 
- * making it an indispensable resource for tasks involving string manipulation or validation. 
+ * making it an indispensable resource for tasks involving string manipulation or validation. Utilising a blend of advanced algorithms and efficient coding practices,Utilising a blend of advanced algorithms and efficient coding practices,
  * The operations encompass, but are not limited to:
  * - String transformation: Modifying the format or structure of a string.
  * - Accent removal: Eliminating accents from characters within a string.
@@ -40,7 +40,7 @@ class StringManipulation
      * This function performs several transformations on the input string to make it suitable for
      * searching within a database. The transformations include:
      * - Applying the name fixing standards via the `nameFix` function. (Refer to its PHPDoc for details.)
-     * - Converting the string to lowercase.
+     * - Converting the string to lower case.
      * - Replacing various special characters with spaces (e.g., '{', '}', '(', ')', etc.).
      * - Replacing underscores with spaces.
      * - Removing accents from characters.
@@ -249,7 +249,7 @@ class StringManipulation
      *
      * @param string|string[] $search The value(s) being searched for within the subject.
      * @param string|string[] $replace The replacement value(s) for the found search values.
-     * @param string $subject The string within which the search and replacement is to be performed.
+     * @param string $subject The string within which the search and replacement are to be performed.
      *
      * @return string A string where every occurrence of each search value has been substituted with the corresponding replacement value.
      *
@@ -311,7 +311,7 @@ class StringManipulation
      * of characters as inputs. The function trims the specified characters from the beginning and end of the input
      * string. If no characters are specified, it trims whitespace characters by default. The characters that are
      * trimmed by default are: " " (ASCII 32 (0x20)), an ordinary space.
-     * "\t" (ASCII 9 (0x09)), a tab.
+     * "\t" (ASCII 9 (0x09)), a tabulation character.
      * "\n" (ASCII 10 (0x0A)), a new line (line feed).
      * "\r" (ASCII 13 (0x0D)), a carriage return.
      * "\0" (ASCII 0 (0x00)), the NUL-byte.
