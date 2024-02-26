@@ -241,10 +241,10 @@ class StringManipulation
      *
      * This method acts as a more precise version of the built-in PHP str_replace function. It accepts three
      * parameters:
-     * - $search: $search: The value(s) being searched for within the subject. This can be a single string or an array
-     * of strings.
-     * - $replace: $replace: The replacement value(s) for the found search values. This can be a single string or an
-     * array of strings.
+     * - $search: The value(s) being searched for within the subject. This can be a single string or an array of
+     * strings.
+     * - $replace: The replacement value(s) for the found search values. This can be a single string or an array of
+     * strings.
      * - $subject: The string within which the search and replacement is to be performed.
      *
      * It returns a new string wherein every occurrence of each search value has been substituted with the
