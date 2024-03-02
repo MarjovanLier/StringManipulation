@@ -25,6 +25,7 @@ addition for developers looking to perform complex string manipulations with eas
 [![Phan Enabled](https://img.shields.io/badge/Phan-enabled-brightgreen.svg?style=flat)](https://github.com/phan/phan/)
 [![Psalm Enabled](https://img.shields.io/badge/Psalm-enabled-brightgreen.svg?style=flat)](https://psalm.dev/)
 [![codecov](https://codecov.io/github/MarjovanLier/StringManipulation/graph/badge.svg?token=lBTpWlSq37)](https://codecov.io/github/MarjovanLier/StringManipulation)
+[![Qodana](https://github.com/MarjovanLier/StringManipulation/actions/workflows/qodana_code_quality.yml/badge.svg)](https://github.com/MarjovanLier/StringManipulation/actions/workflows/qodana_code_quality.yml)
 
 ## Features
 
