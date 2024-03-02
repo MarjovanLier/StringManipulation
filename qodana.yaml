@@ -1,5 +1,5 @@
 version: "1.0"
-linter: jetbrains/qodana-php:latest
+linter: jetbrains/qodana-php:2023.3
 profile:
   name: qodana.recommended
 
@@ -14,6 +14,8 @@ include:
   - name: PhpUnnecessaryFullyQualifiedNameInspection
   - name: DuplicatedCode
   - name: PhpReturnDocTypeMismatchInspection
+  - name: PhpLanguageLevelInspection
+  - name: PhpDeprecationInspection
   - name: PhpMissingParamTypeInspection
   - name: PhpMissingFieldTypeInspection
   - name: PhpMissingReturnTypeInspection
