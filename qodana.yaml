@@ -2,13 +2,7 @@ version: "1.0"
 linter: jetbrains/qodana-php:latest
 profile:
   name: qodana.recommended
-exclude:
-  - name: All
-    paths:
-      - .phan/config.php
-      - phpmd.xml
-      - rector.php
-      - qodana.sarif.json
+
 include:
   - name: PhpVulnerablePathsInspection
   - name: VulnerableLibrariesGlobal
@@ -33,6 +27,10 @@ php:
 exclude:
   - name: All
     paths:
+      - .phan/config.php
+      - phpmd.xml
+      - rector.php
+      - qodana.sarif.json
       - vendor
       - vendor/
       - vendor/*
