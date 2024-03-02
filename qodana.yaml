@@ -1,7 +1,7 @@
 version: "1.0"
 linter: jetbrains/qodana-php:latest
 profile:
-  name: qodana.starter
+  name: qodana.recommended
 exclude:
   - name: All
     paths:
@@ -12,10 +12,28 @@ exclude:
 include:
   - name: PhpVulnerablePathsInspection
   - name: VulnerableLibrariesGlobal
-  - name: CheckDependencyLicenses
   - name: PhpCoverageInspection
+  - name: PhpInconsistentReturnPointsInspection
+  - name: PhpRedundantOptionalArgumentInspection
+  - name: PhpTernaryExpressionCanBeReplacedWithConditionInspection
+  - name: PhpFullyQualifiedNameUsageInspection
+  - name: PhpUnnecessaryFullyQualifiedNameInspection
+  - name: DuplicatedCode
+  - name: PhpReturnDocTypeMismatchInspection
+  - name: PhpMissingParamTypeInspection
+  - name: PhpMissingFieldTypeInspection
+  - name: PhpMissingReturnTypeInspection
+  - name: PhpDynamicFieldDeclarationInspection
+  - name: PhpUnusedAliasInspection
+  - name: PhpUnusedLocalVariableInspection
 plugins:
   - id: com.kalessil.phpStorm.phpInspectionsEA
-  - id: net.rentalhost.plugins.php.hammer
 php:
   version: "8.2"
+exclude:
+  - name: All
+    paths:
+      - vendor
+      - vendor/
+      - vendor/*
+      - vendor/**
