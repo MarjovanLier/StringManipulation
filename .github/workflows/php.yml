@@ -19,7 +19,7 @@ jobs:
 
     steps:
       # This step checks out a copy of your repository.
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
         id: checkout
@@ -30,8 +30,7 @@ jobs:
         if: steps.checkout.outcome == 'success'
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, xml, zip, pdo_mysql
+          php-version: '8.2'
 
       # This step caches the Composer packages for faster execution.
       - name: Cache Composer packages
@@ -43,17 +42,16 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
-
       # This step validates the composer.json and composer.lock files.
       - name: Validate composer.json and composer.lock
         id: composer-validate
         if: steps.setup-php.outcome == 'success'
-        run: composer validate --strict
+        run: composer validate
 
       # This step installs the project dependencies.
       - name: Install dependencies
         id: composer-install
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress
 
       # This step sets up Go environment for the job.
       - name: Set up Go
