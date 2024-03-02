@@ -1,0 +1,29 @@
+name: Qodana CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+
+jobs:
+  qodana_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Run Qodana scan
+        uses: JetBrains/qodana-action@v2023.3
+        with:
+          args: --apply-fixes
