@@ -30,6 +30,3 @@ plugins:
   - id: com.kalessil.phpStorm.phpInspectionsEA
 php:
   version: "8.2"
-      - vendor/
-      - vendor/*
-      - vendor/**
