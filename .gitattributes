@@ -1,3 +1,6 @@
+# Convert line endings to LF
+*                   text=auto
+
 # Exclude tests, docs and vendor directories from archives
 /tests              export-ignore
 
