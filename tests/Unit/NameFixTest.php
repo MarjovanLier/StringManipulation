@@ -12,8 +12,6 @@ use PHPUnit\Framework\TestCase;
  *
  * @covers \MarjovanLier\StringManipulation\StringManipulation::nameFix
  *
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- *
  * This class is a test case for the nameFix function in the StringManipulation class.
  * It tests the function with a variety of inputs.
  */

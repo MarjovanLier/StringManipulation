@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MarjovanLier\StringManipulation\Tests\Unit;
 
 use MarjovanLier\StringManipulation\StringManipulation;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
@@ -100,6 +101,7 @@ final class IsValidTimePartTest extends TestCase
      *
      * @dataProvider provideTimeParts
      */
+    #[DataProvider('provideTimeParts')]
     public function testIsValidTimePart(array $timeParts, bool $expectedResult): void
     {
         $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidTimePart');

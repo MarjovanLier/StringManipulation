@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MarjovanLier\StringManipulation\Tests\Unit;
 
 use MarjovanLier\StringManipulation\StringManipulation;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -69,6 +70,7 @@ final class TrimTest extends TestCase
     /**
      * @dataProvider trimDataProvider
      */
+    #[DataProvider('trimDataProvider')]
     public function testTrim(string $input, string $characters, mixed $expected): void
     {
         self::assertEquals($expected, StringManipulation::trim($input, $characters));

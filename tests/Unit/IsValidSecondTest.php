@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MarjovanLier\StringManipulation\Tests\Unit;
 
 use MarjovanLier\StringManipulation\StringManipulation;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
@@ -59,6 +60,7 @@ final class IsValidSecondTest extends TestCase
      *
      * @dataProvider provideSeconds
      */
+    #[DataProvider('provideSeconds')]
     public function testIsValidSecond(int $second, bool $expectedResult): void
     {
         $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidSecond');

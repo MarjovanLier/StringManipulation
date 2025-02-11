@@ -53,7 +53,7 @@ jobs:
       # This step installs the project dependencies.
       - name: Install dependencies
         id: composer-install
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress
 
       # This step sets up Go environment for the job.
       - name: Set up Go
