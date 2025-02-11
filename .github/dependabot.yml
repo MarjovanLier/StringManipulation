@@ -4,6 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "roave/security-advisories"
     commit-message:
       prefix: "chore"
       include: scope
