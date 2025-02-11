@@ -258,7 +258,7 @@ class StringManipulation
      * @param string $subject The string within which the search and replacement are to be performed.
      *
      * @return string A string where every occurrence of each search value has been substituted with the corresponding
-     *     replacement value.
+     *                replacement value.
      *
      * @psalm-suppress PossiblyUnusedMethod,UnusedParam
      */

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MarjovanLier\StringManipulation\Tests\Unit;
 
 use MarjovanLier\StringManipulation\StringManipulation;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
@@ -59,6 +60,7 @@ final class IsValidMinuteTest extends TestCase
      *
      * @dataProvider provideMinutes
      */
+    #[DataProvider('provideMinutes')]
     public function testIsValidMinute(int $minute, bool $expectedResult): void
     {
         $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidMinute');
