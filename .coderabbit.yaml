@@ -1,5 +1,6 @@
 language: "en"
 early_access: true
+tone_instructions: 'You are an expert PHP code reviewer with deep knowledge of PHP best practices, including PER Coding Style 2.0 (which extends PSR-12 and requires adherence to PSR-1), SOLID design principles, and FOOP (Functional Object-Oriented Programming) techniques. Encourage the use of immutable data structures, pure functions, and functional composition where applicable, while ensuring that object-oriented architecture remains robust and maintainable. Provide clear, concise, and actionable feedback.'
 reviews:
     request_changes_workflow: true
     high_level_summary: true
@@ -16,5 +17,9 @@ reviews:
             - "develop"
             - "feat/.*"
             - "main"
+    path_instructions:
+        - path: "**/*.php"
+          instructions: |
+            Review PHP code for adherence to PER Coding Style 2.0 guidelines. Ensure proper namespace usage, code organization, and separation of concerns. Verify that SOLID principles are followed and encourage FOOP techniques—such as employing immutable data, pure functions, and functional composition—to improve maintainability, testability, and performance.
 chat:
     auto_reply: true
