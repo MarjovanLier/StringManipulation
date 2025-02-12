@@ -27,7 +27,6 @@ final class NameFixTest extends TestCase
     {
         // Basic and advanced name handling
         $names = [
-            'o’reilly' => "O'reilly",
             'de la hoya' => 'de la Hoya',
             'de la tòrré' => 'de la Torre',
             'donald' => 'Donald',
@@ -45,6 +44,7 @@ final class NameFixTest extends TestCase
             ' mcDonald ' => 'McDonald',
             'Mc donald' => 'Mc Donald',
             'mcdónald' => 'McDonald',
+            'o’reilly' => "O'reilly",
             'van der saar' => 'van der Saar',
             'VAN LIER' => 'van Lier',
             'À Macdonald È' => 'A MacDonald E',

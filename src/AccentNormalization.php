@@ -25,10 +25,8 @@ trait AccentNormalization
     /**
      * An array of characters with accents and special characters. These characters are intended to be replaced
      * in a string to normalize it.
-     *
-     * @var string[]
      */
-    private const REMOVE_ACCENTS_FROM = [
+    private const array REMOVE_ACCENTS_FROM = [
         '*',
         '?',
         '’',
@@ -271,10 +269,8 @@ trait AccentNormalization
     /**
      * An array of characters without accents. These characters correspond to the characters in the
      * REMOVE_ACCENTS_FROM array and are used to replace them in a string.
-     *
-     * @var string[]
      */
-    private const REMOVE_ACCENTS_TO = [
+    private const array REMOVE_ACCENTS_TO = [
         ' ',
         ' ',
         "'",

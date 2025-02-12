@@ -14,10 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class Utf8AnsiTest extends TestCase
 {
-    /**
-     * @var array<string, string>
-     */
-    private const UTF8_TO_ANSI_MAP = [
+    private const array UTF8_TO_ANSI_MAP = [
         '\u00c0' => 'À',
         '\u00c1' => 'Á',
         '\u00c2' => 'Â',
