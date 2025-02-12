@@ -24,10 +24,8 @@ trait UnicodeMappings
     /**
      * An associative array mapping Unicode characters to their ANSI counterparts.
      * The keys of the array are Unicode characters, and the values are the corresponding ANSI characters.
-     *
-     * @var array<string, string>
      */
-    private const UTF8_ANSI2 = [
+    private const array UTF8_ANSI2 = [
         '\u00c0' => 'À',
         '\u00c1' => 'Á',
         '\u00c2' => 'Â',

@@ -194,7 +194,7 @@ class StringManipulation
      * processing text for storage in a database or file system that does not support UTF-8 encoding.
      *
      * @param null|string $valor The input string to be converted from UTF-8 to ANSI. If null, the function will return
-     *                           an empty string.
+     *                            an empty string.
      *
      * @return string The converted string in ANSI encoding.
      *
@@ -282,7 +282,7 @@ class StringManipulation
      *
      * @param string $date The date string to validate. This should be a string representing a date.
      * @param string $format The expected date format. Default is 'Y-m-d H:i:s'. This should be a string representing
-     *                       the expected format of the date.
+     *                        the expected format of the date.
      *
      * @return bool Returns true if the date string matches the format and is logically valid, false otherwise.
      *
