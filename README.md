@@ -209,7 +209,7 @@ And to run tests matching a specific name pattern:
 
 ## System Requirements
 
-- PHP 8.2 or later.
+- PHP 8.3 or later.
 
 ## Support
 
