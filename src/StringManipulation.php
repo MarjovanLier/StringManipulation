@@ -202,8 +202,6 @@ final class StringManipulation
      *                            an empty string.
      *
      * @return string The converted string in ANSI encoding.
-     *
-     * @psalm-suppress PossiblyUnusedMethod,UnusedParam
      */
     public static function utf8Ansi(?string $valor = ''): string
     {
@@ -244,12 +242,12 @@ final class StringManipulation
     /**
      * Replaces all occurrences of the search string(s) with the corresponding replacement string(s) in the subject.
      *
-     * This method acts as a more precise version of the built-in PHP str_replace function. It accepts three
+     * This method acts as an optimised version of the built-in PHP str_replace function. It accepts three
      * parameters:
      * - $search: The value(s) being searched for within the subject. This can be a single string or an array of
-     * strings.
+     *   strings.
      * - $replace: The replacement value(s) for the found search values. This can be a single string or an array of
-     * strings.
+     *   strings.
      * - $subject: The string within which the search and replacement is to be performed.
      *
      * It returns a new string wherein every occurrence of each search value has been substituted with the
@@ -264,11 +262,21 @@ final class StringManipulation
      *
      * @return string A string where every occurrence of each search value has been substituted with the corresponding
      *                replacement value.
-     *
-     * @psalm-suppress PossiblyUnusedMethod,UnusedParam
      */
     public static function strReplace(array|string $search, array|string $replace, string $subject): string
     {
+        // Quick return for empty string to avoid unnecessary processing
+        if ($subject === '') {
+            return '';
+        }
+
+        // Optimisation for single character replacement (most common case)
+        // This consolidates our optimisations into fewer condition branches
+        if (is_string($search) && strlen($search) === 1) {
+            return strtr($subject, [$search => $replace]);
+        }
+
+        // Use standard PHP function for all other cases
         return str_replace($search, $replace, $subject);
     }
 
