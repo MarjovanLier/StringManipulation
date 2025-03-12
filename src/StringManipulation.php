@@ -34,6 +34,16 @@ final class StringManipulation
     use AccentNormalization;
     use UnicodeMappings;
 
+    /**
+     * Static property to cache accent replacement mappings
+     *
+     * @var array{search: string[], replace: string[]}
+     */
+    private static array $ACCENTS_REPLACEMENT = [
+        'search' => [],
+        'replace' => [],
+    ];
+
 
     /**
      * Transforms a string into a format suitable for database searching.
@@ -220,11 +230,23 @@ final class StringManipulation
      * as mapping arrays for character replacement. It replaces each character in the
      * REMOVE_ACCENTS_FROM array with its corresponding character in the REMOVE_ACCENTS_TO array.
      *
-     * For example, accented characters like 'À', 'Á', 'Â', etc., will be replaced by 'A',
-     * and special characters like '*', '?', '’', etc., will be replaced by spaces or other characters.
+     * For performance optimisation, the replacement arrays are cached in a static property.
      *
-     * This function is useful when you need to remove accents and special characters from a string,
-     * especially when processing text for comparison or storage in a standardized format.
+     * @param string $str The input string from which accents and special characters need to be removed.
+     *
+     * @return string The transformed string without accents and special characters.
+     *
+     * @see REMOVE_ACCENTS_FROM
+     * @see REMOVE_ACCENTS_TO
+     */
+    /**
+     * Removes accents and special characters from a string.
+     *
+     * This function uses the predefined constants REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO
+     * as mapping arrays for character replacement. It replaces each character in the
+     * REMOVE_ACCENTS_FROM array with its corresponding character in the REMOVE_ACCENTS_TO array.
+     *
+     * For performance optimisation, the replacement arrays are cached in a static property.
      *
      * @param string $str The input string from which accents and special characters need to be removed.
      *
@@ -235,7 +257,22 @@ final class StringManipulation
      */
     public static function removeAccents(string $str): string
     {
-        return self::strReplace([...self::REMOVE_ACCENTS_FROM, '  '], [...self::REMOVE_ACCENTS_TO, ' '], $str);
+        // Use a strict comparison instead of empty()
+        if (count(self::$ACCENTS_REPLACEMENT['search']) === 0) {
+            self::$ACCENTS_REPLACEMENT = [
+                'search' => [...self::REMOVE_ACCENTS_FROM, '  '],
+                'replace' => [...self::REMOVE_ACCENTS_TO, ' '],
+            ];
+        }
+
+        $search = self::$ACCENTS_REPLACEMENT['search'];
+        $replace = self::$ACCENTS_REPLACEMENT['replace'];
+
+        return self::strReplace(
+            $search,
+            $replace,
+            $str,
+        );
     }
 
 
