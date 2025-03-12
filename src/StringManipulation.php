@@ -302,18 +302,6 @@ final class StringManipulation
      */
     public static function strReplace(array|string $search, array|string $replace, string $subject): string
     {
-        // Quick return for empty string to avoid unnecessary processing
-        if ($subject === '') {
-            return '';
-        }
-
-        // Optimisation for single character replacement (most common case)
-        // This consolidates our optimisations into fewer condition branches
-        if (is_string($search) && strlen($search) === 1) {
-            return strtr($subject, [$search => $replace]);
-        }
-
-        // Use standard PHP function for all other cases
         return str_replace($search, $replace, $subject);
     }
 
