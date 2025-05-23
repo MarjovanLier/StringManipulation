@@ -214,7 +214,7 @@ final class StringManipulation
      *
      * @return string The converted string in ANSI encoding.
      */
-    public static function utf8Ansi(?string $value=''): string
+    public static function utf8Ansi(?string $value = ''): string
     {
         if ($value === null) {
             return '';
