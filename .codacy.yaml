@@ -1,17 +1,15 @@
 ---
 # Codacy configuration to align with PER 2.0 coding standard
 engines:
-  # Only use PHP CS Fixer with PER 2.0 standard
+  # Try to use PHP_CodeSniffer with our custom config
+  phpcodesniffer:
+    enabled: true
+    config: phpcs.xml
+  # Also try php-cs-fixer if supported
   php-cs-fixer:
     enabled: true
     config: .php-cs-fixer.php
-  # Disable all other PHP style checkers to avoid conflicts
-  phpcodesniffer:
-    enabled: false
-  phpcs:
-    enabled: false
-  php-code-sniffer:
-    enabled: false
+  # Disable other style checkers
   phpmd:
     enabled: false
   # Keep duplication detection
