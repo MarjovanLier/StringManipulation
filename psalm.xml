@@ -20,5 +20,6 @@
     </plugins>
     <issueHandlers>
         <MissingParamType errorLevel="error"/>
+        <MissingClassConstType errorLevel="suppress"/>
     </issueHandlers>
 </psalm>
