@@ -79,11 +79,9 @@ final class StringManipulation
         }
 
         // Apply the name fixing standards to the input string
-        $words = self::nameFix($words);
-
-        // At this point, $words cannot be null because we checked for null input above,
-        // and nameFix only returns null when its input is null.
-        assert($words !== null);
+        // Since we already checked that $words is not null above, and nameFix only returns
+        // null when its input is null, we can safely cast to string here for PHPStan.
+        $words = (string) self::nameFix($words);
 
         // Replace various special characters with spaces and convert the string to lowercase
         $words = strtolower(
