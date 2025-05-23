@@ -66,11 +66,11 @@ fi
 if ! grep -q "Signed-off-by: " "$1"; then
     echo -e "${YELLOW}WARNING: Commit message is missing 'Signed-off-by' line${NC}"
     echo "Adding it automatically..."
-    
+
     # Get git user info
     name=$(git config user.name)
     email=$(git config user.email)
-    
+
     if [ -n "$name" ] && [ -n "$email" ]; then
         echo "" >> "$1"
         echo "Signed-off-by: $name <$email>" >> "$1"

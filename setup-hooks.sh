@@ -44,7 +44,7 @@ check_precommit() {
 # Install pre-commit
 install_precommit() {
     print_status "header" "Installing pre-commit"
-    
+
     # Try different installation methods
     if command -v pip3 &> /dev/null; then
         print_status "info" "Installing pre-commit using pip3..."
@@ -67,20 +67,20 @@ install_precommit() {
 # Main setup function
 main() {
     print_status "header" "StringManipulation Pre-commit Hooks Setup"
-    
+
     # Check if Docker is running
     if ! docker info > /dev/null 2>&1; then
         print_status "error" "Docker is not running. Please start Docker and try again."
         print_status "info" "Pre-commit hooks require Docker to run tests in containers."
         exit 1
     fi
-    
+
     # Check if docker-compose is available
     if ! command -v docker-compose &> /dev/null; then
         print_status "error" "docker-compose is not installed. Please install it and try again."
         exit 1
     fi
-    
+
     # Build Docker image
     print_status "info" "Building Docker test image..."
     if docker-compose build tests > /dev/null 2>&1; then
@@ -89,11 +89,11 @@ main() {
         print_status "error" "Failed to build Docker image"
         exit 1
     fi
-    
+
     # Check and install pre-commit
     if ! check_precommit; then
         install_precommit
-        
+
         # Verify installation
         if ! check_precommit; then
             print_status "error" "Failed to install pre-commit"
@@ -102,7 +102,7 @@ main() {
     else
         print_status "success" "pre-commit is already installed"
     fi
-    
+
     # Install pre-commit hooks
     print_status "info" "Installing git hooks..."
     if pre-commit install; then
@@ -111,7 +111,7 @@ main() {
         print_status "error" "Failed to install git hooks"
         exit 1
     fi
-    
+
     # Install commit-msg hook for conventional commits
     print_status "info" "Installing commit-msg hook..."
     if pre-commit install --hook-type commit-msg; then
@@ -119,7 +119,7 @@ main() {
     else
         print_status "info" "Commit-msg hook installation skipped"
     fi
-    
+
     # Run pre-commit on all files to verify setup
     print_status "info" "Verifying setup by running pre-commit on all files..."
     if pre-commit run --all-files; then
@@ -128,7 +128,7 @@ main() {
         print_status "info" "Some checks failed. This is normal for initial setup."
         print_status "info" "Run './test-runner.sh all' to see detailed test results."
     fi
-    
+
     print_status "header" "Setup Complete!"
     echo ""
     echo "Pre-commit hooks are now installed and will run automatically before each commit."

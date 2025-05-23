@@ -42,7 +42,7 @@ If you prefer to set up manually:
    ```bash
    # Using pip
    pip install pre-commit
-   
+
    # Or using Homebrew (macOS)
    brew install pre-commit
    ```

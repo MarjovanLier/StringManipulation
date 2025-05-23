@@ -32,8 +32,8 @@ print_status() {
 run_test() {
     local test_name=$1
     local service=$2
-    
-    print_info "Running $test_name..."
+
+    print_status "info" "Running $test_name..."
     if docker-compose run --rm "$service" > /dev/null 2>&1; then
         print_status "success" "$test_name passed"
         return 0
@@ -46,19 +46,26 @@ run_test() {
 # Main script
 main() {
     local command=${1:-"all"}
-    
+
     case $command in
         "all")
             print_status "info" "Building Docker image..."
             docker-compose build tests
-            
+
             print_status "info" "Running all tests..."
-            
+
             # Track failures
             local failed=0
-            
+
             # Run each test
-            run_test "Composer Validation" "tests" "composer validate --strict" || ((failed++))
+            # Special handling for composer validation
+            print_status "info" "Running Composer Validation..."
+            if docker-compose run --rm tests composer validate --strict > /dev/null 2>&1; then
+                print_status "success" "Composer Validation passed"
+            else
+                print_status "error" "Composer Validation failed"
+                ((failed++))
+            fi
             run_test "PHP Lint" "test-lint" || ((failed++))
             run_test "Code Style (Pint)" "test-code-style" || ((failed++))
             run_test "PHPStan" "test-phpstan" || ((failed++))
@@ -67,12 +74,12 @@ main() {
             run_test "PHPMD" "test-phpmd" || ((failed++))
             run_test "Rector" "test-rector" || ((failed++))
             run_test "Security Check" "test-security" || ((failed++))
-            
+
             # Try to run optional tests
             print_status "info" "Running optional tests (may fail)..."
             run_test "Phan" "test-phan" || print_status "info" "Phan failed (optional)"
             run_test "Infection" "test-infection" || print_status "info" "Infection failed (optional)"
-            
+
             if [ $failed -eq 0 ]; then
                 print_status "success" "All required tests passed!"
                 exit 0
