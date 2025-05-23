@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MarjovanLier\StringManipulation;
 
 use DateTime;
-use SensitiveParameter;
 
 /**
  * Class StringManipulation.
@@ -41,7 +40,7 @@ final class StringManipulation
      * @var array{search: string[], replace: string[]}
      */
     private static array $ACCENTS_REPLACEMENT = [
-        'search'  => [],
+        'search' => [],
         'replace' => [],
     ];
 
@@ -126,7 +125,7 @@ final class StringManipulation
      * nameFix('van der waals'); // Returns 'van der Waals'
      * nameFix(null); // Returns null
      */
-    public static function nameFix(#[SensitiveParameter] ?string $lastName): ?string
+    public static function nameFix(#[\SensitiveParameter] ?string $lastName): ?string
     {
         if ($lastName === null) {
             return null;
