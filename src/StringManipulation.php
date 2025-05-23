@@ -35,7 +35,8 @@ final class StringManipulation
     use UnicodeMappings;
 
     /**
-     * Static property to cache accent replacement mappings
+     * Static property to cache accent replacement mappings for performance optimisation.
+     * This is populated lazily in the removeAccents() method and reused across calls.
      *
      * @var array{search: string[], replace: string[]}
      */
@@ -208,37 +209,21 @@ final class StringManipulation
      * This function is useful when you need to convert a string from UTF-8 encoding to ANSI encoding, especially when
      * processing text for storage in a database or file system that does not support UTF-8 encoding.
      *
-     * @param null|string $valor The input string to be converted from UTF-8 to ANSI. If null, the function will return
+     * @param null|string $value The input string to be converted from UTF-8 to ANSI. If null, the function will return
      *                            an empty string.
      *
      * @return string The converted string in ANSI encoding.
      */
-    public static function utf8Ansi(?string $valor = ''): string
+    public static function utf8Ansi(?string $value = ''): string
     {
-        if ($valor === null) {
+        if ($value === null) {
             return '';
         }
 
-        return strtr($valor, self::UTF8_ANSI2);
+        return strtr($value, self::UTF8_ANSI2);
     }
 
 
-    /**
-     * Removes accents and special characters from a string.
-     *
-     * This function uses the predefined constants REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO
-     * as mapping arrays for character replacement. It replaces each character in the
-     * REMOVE_ACCENTS_FROM array with its corresponding character in the REMOVE_ACCENTS_TO array.
-     *
-     * For performance optimisation, the replacement arrays are cached in a static property.
-     *
-     * @param string $str The input string from which accents and special characters need to be removed.
-     *
-     * @return string The transformed string without accents and special characters.
-     *
-     * @see REMOVE_ACCENTS_FROM
-     * @see REMOVE_ACCENTS_TO
-     */
     /**
      * Removes accents and special characters from a string.
      *
