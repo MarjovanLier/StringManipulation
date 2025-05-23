@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # Main test runner service
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - composer-cache:/home/testuser/.composer/cache
+    command: composer tests
+    
+  # Individual test services for running specific tests
+  test-code-style:
+    extends: tests
+    command: composer test:code-style
+    
+  test-phpunit:
+    extends: tests
+    command: composer test:phpunit
+    
+  test-phpstan:
+    extends: tests
+    command: composer test:phpstan
+    
+  test-psalm:
+    extends: tests
+    command: composer test:psalm
+    
+  test-phan:
+    extends: tests
+    command: composer test:phan
+    
+  test-phpmd:
+    extends: tests
+    command: composer test:phpmd
+    
+  test-infection:
+    extends: tests
+    command: composer test:infection
+    
+  test-rector:
+    extends: tests
+    command: composer test:rector
+    
+  test-lint:
+    extends: tests
+    command: composer test:lint
+    
+  test-security:
+    extends: tests
+    command: composer test:vulnerabilities-check
+    
+  # Service to run all tests in parallel
+  test-all:
+    extends: tests
+    command: |
+      bash -c "
+        composer test:composer-validate &&
+        composer test:lint &&
+        composer test:code-style &&
+        composer test:phpstan &&
+        composer test:psalm &&
+        composer test:phan &&
+        composer test:phpmd &&
+        composer test:phpunit &&
+        composer test:rector &&
+        composer test:vulnerabilities-check
+      "
+
+volumes:
+  composer-cache:

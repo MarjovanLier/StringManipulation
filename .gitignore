@@ -8,3 +8,10 @@ tests/temp
 reports
 
 .qodo
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Pre-commit
+.pre-commit/

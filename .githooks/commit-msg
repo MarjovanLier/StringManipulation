@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+# Conventional Commits validation hook
+# This hook validates that commit messages follow the Conventional Commits specification
+
+# Colors for output
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Get the commit message
+commit_regex='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9\-]+\))?(!)?: .{1,100}$'
+merge_regex='^Merge '
+
+# Read the commit message
+commit_message=$(cat "$1")
+
+# Check if it's a merge commit
+if echo "$commit_message" | grep -qE "$merge_regex"; then
+    exit 0
+fi
+
+# Get the first line of the commit message
+first_line=$(echo "$commit_message" | head -n1)
+
+# Validate the commit message format
+if ! echo "$first_line" | grep -qE "$commit_regex"; then
+    echo -e "${RED}ERROR: Commit message does not follow Conventional Commits format!${NC}"
+    echo ""
+    echo "Expected format: <type>(<scope>): <subject>"
+    echo ""
+    echo "Valid types:"
+    echo "  - feat:     A new feature"
+    echo "  - fix:      A bug fix"
+    echo "  - docs:     Documentation only changes"
+    echo "  - style:    Changes that do not affect the meaning of the code"
+    echo "  - refactor: A code change that neither fixes a bug nor adds a feature"
+    echo "  - perf:     A code change that improves performance"
+    echo "  - test:     Adding missing tests or correcting existing tests"
+    echo "  - build:    Changes that affect the build system or external dependencies"
+    echo "  - ci:       Changes to our CI configuration files and scripts"
+    echo "  - chore:    Other changes that don't modify src or test files"
+    echo "  - revert:   Reverts a previous commit"
+    echo ""
+    echo "Examples:"
+    echo "  feat(auth): add login endpoint"
+    echo "  fix: resolve memory leak in parser"
+    echo "  docs(readme): update installation instructions"
+    echo "  feat!: add breaking change to API"
+    echo ""
+    echo -e "${YELLOW}Your commit message:${NC}"
+    echo "$first_line"
+    echo ""
+    exit 1
+fi
+
+# Check commit message length (first line should be <= 100 characters)
+if [ ${#first_line} -gt 100 ]; then
+    echo -e "${RED}ERROR: First line of commit message is too long!${NC}"
+    echo "First line should be 100 characters or less. Current length: ${#first_line}"
+    echo ""
+    exit 1
+fi
+
+# Additional checks for signed-off-by (required by this project)
+if ! grep -q "Signed-off-by: " "$1"; then
+    echo -e "${YELLOW}WARNING: Commit message is missing 'Signed-off-by' line${NC}"
+    echo "Adding it automatically..."
+    
+    # Get git user info
+    name=$(git config user.name)
+    email=$(git config user.email)
+    
+    if [ -n "$name" ] && [ -n "$email" ]; then
+        echo "" >> "$1"
+        echo "Signed-off-by: $name <$email>" >> "$1"
+    else
+        echo -e "${RED}ERROR: Cannot add Signed-off-by - git user.name or user.email not configured${NC}"
+        exit 1
+    fi
+fi
+
+exit 0
