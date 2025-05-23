@@ -96,7 +96,7 @@
     "test:composer-validate": "composer validate --strict",
     "test:infection": "php -d memory_limit=-1 -d zend_extension=xdebug -d xdebug.mode=coverage ./vendor/bin/infection --threads=4 --show-mutations",
     "test:lint": "parallel-lint --exclude vendor --show-deprecated .",
-    "test:phan": "phan --allow-polyfill-parser --no-progress-bar",
+    "test:phan": "phan --no-progress-bar",
     "test:phpmd": "phpmd src,tests text phpmd.xml",
     "test:phpstan": "phpstan analyse --no-progress --no-interaction",
     "test:phpunit": "phpunit --no-coverage --no-logging",

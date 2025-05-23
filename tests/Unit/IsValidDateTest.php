@@ -15,15 +15,9 @@ use PHPUnit\Framework\TestCase;
  */
 final class IsValidDateTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+    private const string DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
-    /**
-     * @var string
-     */
-    private const TIME_FORMAT = 'H:i:s';
+    private const string TIME_FORMAT = 'H:i:s';
 
 
     /**

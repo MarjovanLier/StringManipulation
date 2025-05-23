@@ -15,7 +15,8 @@ RUN apk add --no-cache \
 
 # Install PHP extensions
 RUN docker-php-ext-install zip pcntl \
-    && pecl install xdebug ast \
+    && pecl install xdebug \
+    && pecl install ast \
     && docker-php-ext-enable xdebug ast
 
 # Configure Xdebug for coverage

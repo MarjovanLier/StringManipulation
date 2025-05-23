@@ -9,6 +9,15 @@ reports
 
 .qodo
 
+# Qodana
+qodana.yaml
+qodana.sarif.json
+.qodana/
+
+# Temporary files
+commit_messages.txt
+*.tmp
+
 # Docker
 .docker/
 docker-compose.override.yml

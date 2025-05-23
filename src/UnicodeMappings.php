@@ -25,10 +25,8 @@ trait UnicodeMappings
      * An associative array mapping Unicode escape sequences to their UTF-8 character representations.
      * The keys of the array are Unicode escape sequences (e.g., '\u00c0'), and the values are the
      * corresponding UTF-8 characters (e.g., 'À').
-     *
-     * @var array<string, string>
      */
-    private const UTF8_ANSI2 = [
+    private const array UTF8_ANSI2 = [
         '\u00c0' => 'À',
         '\u00c1' => 'Á',
         '\u00c2' => 'Â',

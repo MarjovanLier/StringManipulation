@@ -159,14 +159,12 @@ final class StringManipulation
         // Fix common prefixes to have proper casing
         $lastName = preg_replace_callback(
             '#\b(van|von|den|der|des|de|du|la|le)\b#i',
-            static function ($matches) {
-                return strtolower($matches[1]);
-            },
+            static fn($matches): string => strtolower($matches[1]),
             $lastName,
         );
 
         // Ensure $lastName is not null (defensive programming)
-        $lastName = $lastName ?? '';
+        $lastName ??= '';
 
         // Fix mc/mac spacing if needed
         if ($mcFix) {
@@ -174,7 +172,7 @@ final class StringManipulation
         }
 
         if ($macFix) {
-            $lastName = self::strReplace('Mac ', 'Mac', $lastName);
+            return self::strReplace('Mac ', 'Mac', $lastName);
         }
 
         return $lastName;
