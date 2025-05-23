@@ -81,6 +81,20 @@ main() {
         exit 1
     fi
 
+    # Install npm dependencies for commitlint
+    if [ -f "package.json" ]; then
+        print_status "info" "Installing npm dependencies for commitlint..."
+        if command -v npm &> /dev/null; then
+            if npm install > /dev/null 2>&1; then
+                print_status "success" "npm dependencies installed successfully"
+            else
+                print_status "info" "Failed to install npm dependencies locally (will use Docker)"
+            fi
+        else
+            print_status "info" "npm not found locally (will use Docker for commitlint)"
+        fi
+    fi
+
     # Build Docker image
     print_status "info" "Building Docker test image..."
     if docker-compose build tests > /dev/null 2>&1; then

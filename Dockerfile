@@ -9,12 +9,14 @@ RUN apk add --no-cache \
     curl \
     libzip-dev \
     linux-headers \
+    nodejs \
+    npm \
     $PHPIZE_DEPS
 
 # Install PHP extensions
-RUN docker-php-ext-install zip \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug
+RUN docker-php-ext-install zip pcntl \
+    && pecl install xdebug ast \
+    && docker-php-ext-enable xdebug ast
 
 # Configure Xdebug for coverage
 RUN echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
@@ -30,6 +32,12 @@ COPY composer.json composer.lock* ./
 
 # Install dependencies
 RUN composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
+
+# Copy package.json and commitlint config
+COPY package.json package-lock.json* commitlint.config.js ./
+
+# Install Node dependencies
+RUN npm install --no-save
 
 # Copy the rest of the application
 COPY . .

@@ -15,3 +15,7 @@ docker-compose.override.yml
 
 # Pre-commit
 .pre-commit/
+
+# Node modules
+node_modules/
+package-lock.json
