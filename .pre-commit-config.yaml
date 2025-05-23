@@ -44,7 +44,7 @@ repos:
         language: system
         files: \.(php|xml)$
         pass_filenames: false
-        stages: [commit]
+        stages: [pre-commit]
 
       - id: security-check
         name: Security Vulnerabilities Check
@@ -52,6 +52,35 @@ repos:
         language: system
         files: composer\.lock$
         pass_filenames: false
+
+      - id: phpmd
+        name: PHP Mess Detector
+        entry: docker-compose run --rm test-phpmd
+        language: system
+        files: \.php$
+        pass_filenames: false
+
+      - id: phan
+        name: Phan Static Analysis
+        entry: docker-compose run --rm test-phan
+        language: system
+        files: \.php$
+        pass_filenames: false
+
+      - id: rector
+        name: Rector Code Quality
+        entry: docker-compose run --rm test-rector
+        language: system
+        files: \.php$
+        pass_filenames: false
+
+      - id: infection
+        name: Infection Mutation Testing
+        entry: docker-compose run --rm test-infection
+        language: system
+        files: \.php$
+        pass_filenames: false
+        stages: [pre-push]
 
   # Standard pre-commit hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
