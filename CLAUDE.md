@@ -7,12 +7,26 @@
 - **ALWAYS use conventional commit messages** (feat:, fix:, chore:, etc.)
 - **NEVER overwrite or amend existing commit messages**
 
-## Docker Testing Commands
-- Run all tests in Docker: `docker-compose run --rm test-all`
-- Run specific test: `docker-compose run --rm test-phpunit`
-- Available test services: `test-code-style`, `test-phpunit`, `test-phpstan`, `test-psalm`, `test-phan`, `test-phpmd`, `test-infection`, `test-rector`, `test-lint`, `test-security`
-
 ## Build & Testing Commands
+
+### Docker (Recommended - PHP 8.3 with AST extension)
+**IMPORTANT**: Always use Docker for testing to ensure consistent environment with PHP 8.3 and AST extension.
+
+- Run all tests: `docker-compose run --rm test-all`
+- Run PHPUnit tests: `docker-compose run --rm test-phpunit`
+- Run single test: `docker-compose run --rm app ./vendor/bin/phpunit --filter testClassName`
+- Code style check: `docker-compose run --rm test-code-style`
+- Static analysis:
+  - PHPStan: `docker-compose run --rm test-phpstan`
+  - Psalm: `docker-compose run --rm test-psalm`
+  - Phan: `docker-compose run --rm test-phan`
+- PHP Mess Detector: `docker-compose run --rm test-phpmd`
+- Mutation testing: `docker-compose run --rm test-infection`
+- Code refactoring: `docker-compose run --rm test-rector`
+- Linting: `docker-compose run --rm test-lint`
+- Security check: `docker-compose run --rm test-security`
+
+### Local (Requires PHP 8.3+ with AST extension)
 - Run all tests: `composer tests`
 - Run single test: `./vendor/bin/phpunit --filter testClassName` or `./vendor/bin/phpunit --filter '/::testMethodName$/'`
 - Code style check: `composer test:code-style`
