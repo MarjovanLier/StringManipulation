@@ -44,7 +44,6 @@ repos:
         language: system
         files: \.(php|xml)$
         pass_filenames: false
-        stages: [pre-commit]
 
       - id: security-check
         name: Security Vulnerabilities Check
