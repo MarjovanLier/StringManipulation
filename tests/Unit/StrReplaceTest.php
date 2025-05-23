@@ -55,13 +55,13 @@ final class StrReplaceTest extends TestCase
      */
     public function testStrReplaceFunction(): void
     {
-        // Basic test
+        // Basic test.
         self::assertEquals('b', StringManipulation::strReplace('a', 'b', 'a'));
 
-        // Replace multiple characters
+        // Replace multiple characters.
         self::assertEquals('helloworld', StringManipulation::strReplace(['H', 'W'], ['h', 'w'], 'Helloworld'));
 
-        // Replace multiple occurrences of a single character
+        // Replace multiple occurrences of a single character.
         self::assertEquals('hxllo world', StringManipulation::strReplace('e', 'x', 'hello world'));
         self::assertEquals('hxllo world', StringManipulation::strReplace(self::SEARCH, self::REPLACE, self::SUBJECT));
     }
@@ -89,7 +89,7 @@ final class StrReplaceTest extends TestCase
         $result2 = StringManipulation::strReplace('an', 'z', 'banana');
         self::assertSame('bzza', $result2);
 
-        // This verifies the behavior difference - if the mutation changes the length check
+        // This verifies the behavior difference - if the mutation changes the length check.
         // from === 1 to === 2, both calls would produce the same behavior, and this test would fail.
     }
 
@@ -112,7 +112,7 @@ final class StrReplaceTest extends TestCase
         self::assertSame('cbcbcbc', $result1);
         self::assertSame($result1, $result2);
 
-        // This next test specifically looks at behavior that would be different
+        // This next test specifically looks at behavior that would be different.
         // if the optimization wasn't properly working.
 
         // Using overlapping replacements, the order matters in str_replace but not in strtr.
