@@ -14,21 +14,33 @@ use PHPUnit\Framework\TestCase;
  */
 final class StrReplaceTest extends TestCase
 {
-    private const string LOVE_APPLE = 'I love apple.';
+    /**
+     * @var string
+     */
+    private const LOVE_APPLE = 'I love apple.';
 
-    private const array SEARCH = [
+    /**
+     * @var array<int, string>
+     */
+    private const SEARCH = [
         'H',
         'e',
         'W',
     ];
 
-    private const array REPLACE = [
+    /**
+     * @var array<int, string>
+     */
+    private const REPLACE = [
         'h',
         'x',
         'w',
     ];
 
-    private const string SUBJECT = 'Hello World';
+    /**
+     * @var string
+     */
+    private const SUBJECT = 'Hello World';
 
 
     public function testStrReplaceWithNotFoundSearch(): void

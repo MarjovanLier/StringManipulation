@@ -56,6 +56,9 @@ return [
     // (See `backward_compatibility_checks` for additional options)
     // Automatically inferred from composer.json requirement for "php" of "^8.3"
     'target_php_version' => '8.3',
+    
+    // Minimum PHP version to check compatibility against
+    'minimum_target_php_version' => '8.3',
 
     // If enabled, missing properties will be created when
     // they are first seen. If false, we'll report an
@@ -265,7 +268,7 @@ return [
     // `Issue::SEVERITY_CRITICAL`. Setting it to only
     // critical issues is a good place to start on a big
     // sloppy mature code base.
-    'minimum_severity' => Issue::SEVERITY_CRITICAL,
+    'minimum_severity' => Issue::SEVERITY_LOW,
 
     // Add any issue types (such as `'PhanUndeclaredMethod'`)
     // to this list to inhibit them from being reported.
@@ -306,7 +309,7 @@ return [
 
     // The number of processes to fork off during the analysis
     // phase.
-    'processes' => 4,
+    'processes' => 1,
 
     // List of case-insensitive file extensions supported by Phan.
     // (e.g. `['php', 'html', 'htm']`)
@@ -356,7 +359,8 @@ return [
     // your application should be included in this list.
     'directory_list' => [
         'src',
-        'vendor',
+        'tests',
+        'vendor/phpunit/phpunit/src',
     ],
 
     // A list of individual files to include in analysis

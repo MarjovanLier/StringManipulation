@@ -14,7 +14,10 @@ use PHPUnit\Framework\TestCase;
  */
 final class SearchWordsTest extends TestCase
 {
-    private const string HELLO_WORLD_LOWERCASE = 'hello world';
+    /**
+     * @var string
+     */
+    private const HELLO_WORLD_LOWERCASE = 'hello world';
 
 
     /**

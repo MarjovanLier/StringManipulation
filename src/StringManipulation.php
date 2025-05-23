@@ -370,14 +370,7 @@ final class StringManipulation
      * This function is useful when validating date and time inputs, where the time part needs to be checked for
      * validity.
      *
-     * @param array{
-     *     year: int,
-     *     month: int,
-     *     day: int,
-     *     hour: int,
-     *     minute: int,
-     *     second: int
-     * } $dateParts An associative array containing the date and time parts. Each key should have an integer value.
+     * @param array{year: int, month: int, day: int, hour: int, minute: int, second: int} $dateParts An associative array containing the date and time parts. Each key should have an integer value.
      *
      * @return bool Returns true if the time part is valid (i.e., 'hour' is within the range 0-23, 'minute' is within
      *              the range 0-59, and 'second' is within the range 0-59), false otherwise.

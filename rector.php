@@ -9,6 +9,8 @@ declare(strict_types=1);
 use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
+use Rector\Php83\Rector\ClassConst\AddTypeToConstRector;
+use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\CodingStyle\Rector\ClassMethod\NewlineBeforeNewAssignSetRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\If_\NullableCompareToNullRector;
@@ -68,6 +70,8 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->skip(
         [
             FlipTypeControlToUseExclusiveTypeRector::class,
+            AddTypeToConstRector::class, // Skip due to Phan polyfill parser incompatibility
+            RemoveUselessVarTagRector::class, // Keep var tags for Phan compatibility
         ],
     );
 };

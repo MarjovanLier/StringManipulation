@@ -15,7 +15,10 @@ use PHPUnit\Framework\TestCase;
  */
 final class TrimTest extends TestCase
 {
-    private const string DEFAULT_TRIM_CHARACTERS = " \t\n\r\0\x0B";
+    /**
+     * @var string
+     */
+    private const DEFAULT_TRIM_CHARACTERS = " \t\n\r\0\x0B";
 
 
     /**
