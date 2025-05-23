@@ -6,3 +6,26 @@ tests/temp
 .phpunit.result.cache
 .php-cs-fixer.cache
 reports
+
+.qodo
+
+# Qodana
+qodana.yaml
+qodana.sarif.json
+.qodana/
+
+# Temporary files
+commit_messages.txt
+*.tmp
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Pre-commit
+.pre-commit/
+
+# Node modules
+node_modules/
+package-lock.json
+.php-cs-fixer.cache

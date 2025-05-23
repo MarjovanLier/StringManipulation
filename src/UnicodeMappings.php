@@ -7,23 +7,24 @@ namespace MarjovanLier\StringManipulation;
 /**
  * Trait UnicodeMappings.
  *
- * This trait provides a mapping of Unicode characters to their ANSI counterparts.
- * It defines a constant: UTF8_ANSI2, which is an associative array where each key is a Unicode character
- * and the corresponding value is the ANSI character.
+ * This trait provides a mapping of Unicode escape sequences to their UTF-8 character representations.
+ * It defines a constant: UTF8_ANSI2, which is an associative array where each key is a Unicode escape sequence
+ * (e.g., '\u00c0') and the corresponding value is the UTF-8 character it represents (e.g., 'À').
  *
  * The trait does not provide any methods, but the constant can be used in conjunction with string manipulation
- * functions such as strtr() to convert a string from Unicode to ANSI.
+ * functions such as strtr() to decode Unicode escape sequences into their UTF-8 character equivalents.
  *
  * Example usage:
- * $converted = strtr($unicodeString, UTF8_ANSI2);
+ * $decoded = strtr($stringWithUnicodeEscapes, UTF8_ANSI2);
  *
- * Note: This trait is intended to be used in a class that requires Unicode to ANSI conversion functionality.
+ * Note: This trait is intended to be used in a class that requires Unicode escape sequence decoding functionality.
  */
 trait UnicodeMappings
 {
     /**
-     * An associative array mapping Unicode characters to their ANSI counterparts.
-     * The keys of the array are Unicode characters, and the values are the corresponding ANSI characters.
+     * An associative array mapping Unicode escape sequences to their UTF-8 character representations.
+     * The keys of the array are Unicode escape sequences (e.g., '\u00c0'), and the values are the
+     * corresponding UTF-8 characters (e.g., 'À').
      */
     private const array UTF8_ANSI2 = [
         '\u00c0' => 'À',

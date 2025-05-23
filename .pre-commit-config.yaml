@@ -1,0 +1,98 @@
+# See https://pre-commit.com for more information
+repos:
+  # Local hooks that run in Docker containers
+  - repo: local
+    hooks:
+      - id: composer-validate
+        name: Validate composer.json
+        entry: docker-compose run --rm test-code-style composer validate --strict
+        language: system
+        files: composer\.(json|lock)$
+        pass_filenames: false
+
+      - id: php-lint
+        name: PHP Syntax Check
+        entry: docker-compose run --rm test-lint
+        language: system
+        files: \.php$
+        pass_filenames: false
+
+      - id: php-code-style
+        name: PHP Code Style (Laravel Pint)
+        entry: docker-compose run --rm test-code-style
+        language: system
+        files: \.php$
+        pass_filenames: false
+
+      - id: phpstan
+        name: PHPStan Static Analysis
+        entry: docker-compose run --rm test-phpstan
+        language: system
+        files: \.php$
+        pass_filenames: false
+
+      - id: psalm
+        name: Psalm Static Analysis
+        entry: docker-compose run --rm test-psalm
+        language: system
+        files: \.php$
+        pass_filenames: false
+
+      - id: phpunit
+        name: PHPUnit Tests
+        entry: docker-compose run --rm test-phpunit
+        language: system
+        files: \.(php|xml)$
+        pass_filenames: false
+
+      - id: security-check
+        name: Security Vulnerabilities Check
+        entry: docker-compose run --rm test-security
+        language: system
+        files: composer\.lock$
+        pass_filenames: false
+
+      - id: phpmd
+        name: PHP Mess Detector
+        entry: docker-compose run --rm test-phpmd
+        language: system
+        files: \.php$
+        pass_filenames: false
+
+      - id: phan
+        name: Phan Static Analysis
+        entry: docker-compose run --rm test-phan
+        language: system
+        files: \.php$
+        pass_filenames: false
+
+      - id: rector
+        name: Rector Code Quality
+        entry: docker-compose run --rm test-rector
+        language: system
+        files: \.php$
+        pass_filenames: false
+
+      - id: infection
+        name: Infection Mutation Testing
+        entry: docker-compose run --rm test-infection
+        language: system
+        files: \.php$
+        pass_filenames: false
+        stages: [pre-push]
+
+  # Standard pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^vendor/
+      - id: end-of-file-fixer
+        exclude: ^vendor/
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-json
+      - id: check-xml
+      - id: mixed-line-ending
+        args: ['--fix=lf']

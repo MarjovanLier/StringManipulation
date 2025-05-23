@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<ruleset name="StringManipulation">
+    <description>PER 2.0 coding standard for StringManipulation</description>
+
+    <!-- Include PER 2.0 standard -->
+    <rule ref="PER"/>
+
+    <!-- Scan only PHP files -->
+    <arg name="extensions" value="php"/>
+
+    <!-- Show progress -->
+    <arg value="p"/>
+
+    <!-- Use colors -->
+    <arg name="colors"/>
+
+    <!-- Paths to check -->
+    <file>src</file>
+    <file>tests</file>
+
+    <!-- Exclude paths -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/.github/*</exclude-pattern>
+    <exclude-pattern>*/docker/*</exclude-pattern>
+    <exclude-pattern>*/tests/Benchmark/*</exclude-pattern>
+    <exclude-pattern>*.cache</exclude-pattern>
+
+    <!-- Disable rules that conflict with our project standards -->
+    <rule ref="Generic.Commenting.DocComment.MissingShort">
+        <exclude-pattern>*</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax">
+        <exclude-pattern>*</exclude-pattern>
+    </rule>
+
+    <!-- Disable the specific rules Codacy is complaining about -->
+    <rule ref="Squiz.Arrays.ArrayDeclaration">
+        <exclude-pattern>*</exclude-pattern>
+    </rule>
+
+    <rule ref="WordPress.Security.EscapeOutput">
+        <exclude-pattern>*</exclude-pattern>
+    </rule>
+
+    <rule ref="Squiz.Commenting.InlineComment.InvalidEndChar">
+        <exclude-pattern>*</exclude-pattern>
+    </rule>
+
+    <rule ref="Squiz.PHP.DiscouragedFunctions">
+        <exclude-pattern>*</exclude-pattern>
+    </rule>
+
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <exclude-pattern>*</exclude-pattern>
+    </rule>
+</ruleset>

@@ -58,13 +58,15 @@ final class NameFixTest extends TestCase
         // Negative tests
         $negativeTests = [
             '!@#$%' => '!@#$%',
-            null => null,
         ];
 
         foreach ($negativeTests as $input => $expected) {
             // For each negative test, we assert that the output of the nameFix function is equal to the input.
             self::assertEquals($expected, StringManipulation::nameFix($input));
         }
+
+        // Test null input separately
+        self::assertNull(StringManipulation::nameFix(null));
     }
 
 

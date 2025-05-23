@@ -1,0 +1,15 @@
+{
+  "name": "stringmanipulation",
+  "version": "1.0.0",
+  "description": "PHP String Manipulation Library",
+  "private": true,
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "conventional-changelog-conventionalcommits": "^8.0.0"
+  },
+  "scripts": {
+    "commitlint": "commitlint",
+    "install-hooks": "./setup-hooks.sh"
+  }
+}

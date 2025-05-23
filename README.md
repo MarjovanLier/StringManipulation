@@ -29,18 +29,16 @@ addition for developers looking to perform complex string manipulations with eas
 
 ## Features
 
-- **Search Words**: Transform strings into a search-optimized format for database queries, removing unnecessary
-  characters and optimizing for search engine algorithms.
-- **Name Fix**: Standardize last names by capitalizing the first letter of each part of the name and handling prefixes
+- **Search Words**: Transform strings into a search-optimised format for database queries, removing unnecessary
+  characters and optimising for search engine algorithms.
+- **Name Fix**: Standardise last names by capitalising the first letter of each part of the name and handling prefixes
   correctly, ensuring consistency across your data.
 - **UTF-8 to ANSI**: Convert UTF-8 encoded characters to their ANSI equivalents, facilitating compatibility with systems
   that do not support UTF-8.
-- **Remove Accents**: Strip accents and special characters from strings to normalize text, making it easier to search
+- **Remove Accents**: Strip accents and special characters from strings to normalise text, making it easier to search
   and compare.
 - **Date Validation**: Ensure date strings conform to specified formats and check for logical consistency, such as
   correct days in a month.
-- **Time Part Validation**: Validate the time components within date strings for accuracy, ensuring that hours, minutes,
-  and seconds are within valid ranges.
 
 ## Installation
 
@@ -67,7 +65,7 @@ This library is licensed under the MIT License. For more information, please ref
 
 ## Detailed Examples
 
-### Name Standardization
+### Name Standardisation
 
 - **Case Conversion**: Easily convert strings between upper case, lower case, and title case, allowing for flexible text
   formatting and presentation. For example, converting 'john doe' to 'John Doe' for proper name presentation.
@@ -79,18 +77,10 @@ $fixedName = StringManipulation::nameFix('mcdonald');
 echo $fixedName; // Outputs: 'McDonald'
 ```
 
-### UTF-8 to ANSI Conversion
-
-```php
-use MarjovanLier\StringManipulation\StringManipulation;
-
-$ansiString = StringManipulation::utf8Ansi('Äpfel');
-echo $ansiString; // Outputs: 'Äpfel' in ANSI format
-```
 
 ### Search Words
 
-This feature optimizes strings for database queries by removing unnecessary characters and optimizing for search engine
+This feature optimises strings for database queries by removing unnecessary characters and optimising for search engine
 algorithms.
 
 ```php
@@ -102,7 +92,7 @@ echo $result; // Outputs: 'hello world'
 
 ### Name Fix
 
-Standardize last names by capitalizing the first letter of each part of the name and handling prefixes correctly.
+Standardise last names by capitalising the first letter of each part of the name and handling prefixes correctly.
 
 ```php
 use MarjovanLier\StringManipulation\StringManipulation;
@@ -120,18 +110,18 @@ UTF-8.
 use MarjovanLier\StringManipulation\StringManipulation;
 
 $ansiString = StringManipulation::utf8Ansi('Über');
-echo $ansiString; // Outputs: 'Uber' in ANSI format
+echo $ansiString; // Outputs: 'Uber'
 ```
 
 ### Remove Accents
 
-Strip accents and special characters from strings to normalize text, making it easier to search and compare.
+Strip accents and special characters from strings to normalise text, making it easier to search and compare.
 
 ```php
 use MarjovanLier\StringManipulation\StringManipulation;
 
-$normalizedString = StringManipulation::removeAccents('Crème Brûlée');
-echo $normalizedString; // Outputs: 'Creme Brulee'
+$normalisedString = StringManipulation::removeAccents('Crème Brûlée');
+echo $normalisedString; // Outputs: 'Creme Brulee'
 ```
 
 ### Date Validation
@@ -141,21 +131,10 @@ Ensure date strings conform to specified formats and check for logical consisten
 ```php
 use MarjovanLier\StringManipulation\StringManipulation;
 
-$isValidDate = StringManipulation::validateDate('2023-02-29');
+$isValidDate = StringManipulation::isValidDate('2023-02-29', 'Y-m-d');
 echo $isValidDate ? 'Valid' : 'Invalid'; // Outputs: 'Invalid'
 ```
 
-### Time Part Validation
-
-Validate the time components within date strings for accuracy, ensuring that hours, minutes, and seconds are within
-valid ranges.
-
-```php
-use MarjovanLier\StringManipulation\StringManipulation;
-
-$isValidTime = StringManipulation::validateTime('25:61:00');
-echo $isValidTime ? 'Valid' : 'Invalid'; // Outputs: 'Invalid'
-```
 
 ## Advanced Usage
 
@@ -214,4 +193,3 @@ And to run tests matching a specific name pattern:
 ## Support
 
 For support, please open an issue on our [GitHub repository](https://github.com/MarjovanLier/StringManipulation/issues).
-

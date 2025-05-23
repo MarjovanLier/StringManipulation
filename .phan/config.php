@@ -57,6 +57,9 @@ return [
     // Automatically inferred from composer.json requirement for "php" of "^8.3"
     'target_php_version' => '8.3',
 
+    // Minimum PHP version to check compatibility against
+    'minimum_target_php_version' => '8.3',
+
     // If enabled, missing properties will be created when
     // they are first seen. If false, we'll report an
     // error message if there is an attempt to write
@@ -306,7 +309,7 @@ return [
 
     // The number of processes to fork off during the analysis
     // phase.
-    'processes' => 4,
+    'processes' => 1,
 
     // List of case-insensitive file extensions supported by Phan.
     // (e.g. `['php', 'html', 'htm']`)
@@ -356,6 +359,7 @@ return [
     // your application should be included in this list.
     'directory_list' => [
         'src',
+        'tests',
         'vendor',
     ],
 

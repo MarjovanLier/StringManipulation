@@ -1,0 +1,36 @@
+---
+# Codacy configuration to align with PER 2.0 coding standard
+engines:
+  # Try to use PHP_CodeSniffer with our custom config
+  phpcodesniffer:
+    enabled: true
+    config: phpcs.xml
+  # Also try php-cs-fixer if supported
+  php-cs-fixer:
+    enabled: true
+    config: .php-cs-fixer.php
+  # Disable other style checkers
+  phpmd:
+    enabled: false
+  # Keep duplication detection
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - php
+
+# Exclude non-source files from analysis
+exclude_paths:
+  - 'vendor/**'
+  - '.github/**'
+  - 'docker/**'
+  - 'node_modules/**'
+  - 'tests/Benchmark/**'
+  - '*.md'
+  - '*.sh'
+  - '*.yml'
+  - '*.yaml'
+  - 'Dockerfile'
+  - '.php-cs-fixer.cache'
+  - 'composer.lock'
+  - 'package-lock.json'

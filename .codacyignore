@@ -1,0 +1,35 @@
+# Codacy ignore file
+# Exclude test benchmarks as they have different style requirements
+tests/Benchmark/
+
+# Exclude vendor and dependencies
+vendor/
+node_modules/
+
+# Exclude build and CI files
+.github/
+docker/
+Dockerfile
+docker-compose.yml
+
+# Exclude documentation
+*.md
+README.md
+CONTRIBUTING.md
+CLAUDE.md
+IMPROVEMENTS.md
+
+# Exclude configuration files
+*.yml
+*.yaml
+.gitignore
+.dockerignore
+composer.lock
+package-lock.json
+
+# Exclude shell scripts
+*.sh
+
+# Exclude cache files
+.php-cs-fixer.cache
+.psalm-cache

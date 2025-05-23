@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+# Conventional Commits validation hook using commitlint
+# This hook validates that commit messages follow the Conventional Commits specification
+
+# Colors for output
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+# Check if it's a merge commit
+merge_regex='^Merge '
+commit_message=$(cat "$1")
+
+if echo "$commit_message" | grep -qE "$merge_regex"; then
+    exit 0
+fi
+
+# Determine which commitlint runner to use
+if command -v npx &> /dev/null && [ -d "node_modules" ]; then
+    # Use local npx
+    echo -e "${GREEN}Running commitlint (local)...${NC}"
+
+    if ! npx --no -- commitlint --edit "$1"; then
+        echo ""
+        echo -e "${RED}ERROR: Commit message does not pass commitlint validation!${NC}"
+        echo ""
+        echo "Please ensure your commit message follows the Conventional Commits format."
+        echo "See commitlint.config.js for the specific rules."
+        exit 1
+    fi
+elif [ -f "./commitlint-docker.sh" ] && command -v docker &> /dev/null && docker info &> /dev/null; then
+    # Use Docker wrapper
+    echo -e "${GREEN}Running commitlint (Docker)...${NC}"
+
+    if ! ./commitlint-docker.sh "$1"; then
+        echo ""
+        echo -e "${RED}ERROR: Commit message does not pass commitlint validation!${NC}"
+        echo ""
+        echo "Please ensure your commit message follows the Conventional Commits format."
+        echo "See commitlint.config.js for the specific rules."
+        exit 1
+    fi
+else
+    # Fallback to basic regex validation
+    echo -e "${YELLOW}WARNING: commitlint not available. Using basic validation.${NC}"
+
+    commit_regex='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|security)(\([a-z0-9\-]+\))?(!)?: .{1,100}$'
+    first_line=$(echo "$commit_message" | head -n1)
+
+    if ! echo "$first_line" | grep -qE "$commit_regex"; then
+        echo -e "${RED}ERROR: Commit message does not follow Conventional Commits format!${NC}"
+        echo ""
+        echo "Valid types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert, security"
+        echo "Format: <type>(<scope>): <subject>"
+        echo ""
+        echo "Your message: $first_line"
+        exit 1
+    fi
+fi
+
+# Additional checks for signed-off-by (required by this project)
+if ! grep -q "Signed-off-by: " "$1"; then
+    echo -e "${YELLOW}Adding 'Signed-off-by' line...${NC}"
+
+    # Get git user info
+    name=$(git config user.name)
+    email=$(git config user.email)
+
+    if [ -n "$name" ] && [ -n "$email" ]; then
+        echo "" >> "$1"
+        echo "Signed-off-by: $name <$email>" >> "$1"
+    else
+        echo -e "${RED}ERROR: Cannot add Signed-off-by - git user.name or user.email not configured${NC}"
+        exit 1
+    fi
+fi
+
+exit 0

@@ -1,0 +1,22 @@
+# Conventional Commit Format:
+# <type>(<scope>): <subject>
+#
+# <body>
+#
+# <footer>
+#
+# Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+# Scope: Optional, e.g., parser, compiler, etc.
+# Subject: Brief description (imperative mood, no period)
+# Body: Detailed explanation (optional)
+# Footer: Breaking changes, issue references (optional)
+#
+# Examples:
+# feat(api): add user authentication endpoint
+# fix(parser): resolve memory leak in tokenizer
+# docs: update installation instructions
+#
+# Breaking change example:
+# feat(api)!: change authentication to use JWT
+#
+# BREAKING CHANGE: API now requires JWT tokens instead of API keys

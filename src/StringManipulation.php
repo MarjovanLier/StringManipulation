@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MarjovanLier\StringManipulation;
 
 use DateTime;
-use SensitiveParameter;
 
 /**
  * Class StringManipulation.
@@ -29,10 +28,21 @@ use SensitiveParameter;
  *
  * @psalm-suppress UnusedClass
  */
-class StringManipulation
+final class StringManipulation
 {
     use AccentNormalization;
     use UnicodeMappings;
+
+    /**
+     * Static property to cache accent replacement mappings for performance optimisation.
+     * This is populated lazily in the removeAccents() method and reused across calls.
+     *
+     * @var array{search: string[], replace: string[]}
+     */
+    private static array $ACCENTS_REPLACEMENT = [
+        'search' => [],
+        'replace' => [],
+    ];
 
 
     /**
@@ -68,24 +78,26 @@ class StringManipulation
         }
 
         // Apply the name fixing standards to the input string
-        $words = static::nameFix($words);
+        // Since we already checked that $words is not null above, and nameFix only returns
+        // null when its input is null, we can safely cast to string here for PHPStan.
+        $words = (string) self::nameFix($words);
 
-        // If the name fixed string is not null, perform further transformations.
-        if ($words !== null) {
-            // Replace various special characters with spaces and convert the string to lowercase
-            $words = strtolower(
-                static::strReplace(['{', '}', '(', ')', '/', '\\', '@', ':', '"', '?', ',', '.'], ' ', $words),
-            );
-        }
+        // Convert to lowercase first
+        $words = strtolower($words);
+
+        // Replace all special characters and underscore with spaces in one operation
+        /** @var string[] $searchChars */
+        static $searchChars = ['{', '}', '(', ')', '/', '\\', '@', ':', '"', '?', ',', '.', '_'];
+        /** @var string[] $replaceSpaces */
+        static $replaceSpaces = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+
+        $words = self::strReplace($searchChars, $replaceSpaces, $words);
 
         // Remove accents from characters within the string
-        $words = static::removeAccents(($words ?? ''));
+        $words = self::removeAccents($words);
 
-        // Replace underscores with spaces
-        $words = static::strReplace('_', ' ', $words);
-
-        // Reduce spaces to a single space and return the transformed string.
-        return trim((preg_replace('# {2,}#', ' ', $words) ?? ''));
+        // Reduce multiple spaces to a single space and trim
+        return trim(preg_replace('# {2,}#', ' ', $words) ?? '');
     }
 
 
@@ -113,66 +125,54 @@ class StringManipulation
      * nameFix('van der waals'); // Returns 'van der Waals'
      * nameFix(null); // Returns null
      */
-    public static function nameFix(#[SensitiveParameter] ?string $lastName): ?string
+    public static function nameFix(#[\SensitiveParameter] ?string $lastName): ?string
     {
         if ($lastName === null) {
             return null;
         }
 
-        $lastName = trim(static::utf8Ansi($lastName));
-        $lastName = static::removeAccents($lastName);
+        $lastName = trim(self::utf8Ansi($lastName));
+        $lastName = self::removeAccents($lastName);
         $lastName = (preg_replace('# {2,}#', ' ', $lastName) ?? '');
 
+        // Convert to lowercase once for all operations
+        $lowerLastName = strtolower($lastName);
         $mcFix = false;
-        $lowerLastName = strtolower($lastName);
-
-        if (preg_match('#mc(?! )#', $lowerLastName) === 1) {
-            $mcFix = true;
-            $lastName = static::strReplace('mc', 'mc ', $lowerLastName);
-        }
-
         $macFix = false;
-        $lowerLastName = strtolower($lastName);
 
-        if (preg_match('#mac(?! )#', $lowerLastName) === 1) {
-            $macFix = true;
-            $lastName = static::strReplace('mac', 'mac ', $lowerLastName);
+        // Check for 'mc' prefix without following space
+        if (str_contains($lowerLastName, 'mc') && preg_match('#mc(?! )#', $lowerLastName) === 1) {
+            $mcFix = true;
+            $lastName = self::strReplace('mc', 'mc ', $lowerLastName);
+            $lowerLastName = $lastName;
         }
 
+        // Check for 'mac' prefix without following space
+        if (str_contains($lowerLastName, 'mac') && preg_match('#mac(?! )#', $lowerLastName) === 1) {
+            $macFix = true;
+            $lastName = self::strReplace('mac', 'mac ', $lowerLastName);
+        }
+
+        // Capitalize each part of a hyphenated name
         $lastName = implode('-', array_map('ucwords', explode('-', strtolower($lastName))));
 
-        $lastName = preg_replace(
-            [
-                '#van #i',
-                '#von #i',
-                '# den #i',
-                '# der #i',
-                '# des #i',
-                '#de #i',
-                '#du #i',
-                '#la #i',
-                '#le #i',
-            ],
-            [
-                'van ',
-                'von ',
-                ' den ',
-                ' der ',
-                ' des ',
-                'de ',
-                'du ',
-                'la ',
-                'le ',
-            ],
+        // Fix common prefixes to have proper casing
+        $lastName = preg_replace_callback(
+            '#\b(van|von|den|der|des|de|du|la|le)\b#i',
+            static fn($matches): string => strtolower($matches[1]),
             $lastName,
         );
 
+        // Ensure $lastName is not null (defensive programming)
+        $lastName ??= '';
+
+        // Fix mc/mac spacing if needed
         if ($mcFix) {
-            $lastName = static::strReplace('Mc ', 'Mc', ($lastName ?? ''));
+            $lastName = self::strReplace('Mc ', 'Mc', $lastName);
         }
 
         if ($macFix) {
-            return static::strReplace('Mac ', 'Mac', ($lastName ?? ''));
+            return self::strReplace('Mac ', 'Mac', $lastName);
         }
 
         return $lastName;
@@ -193,20 +193,18 @@ class StringManipulation
      * This function is useful when you need to convert a string from UTF-8 encoding to ANSI encoding, especially when
      * processing text for storage in a database or file system that does not support UTF-8 encoding.
      *
-     * @param null|string $valor The input string to be converted from UTF-8 to ANSI. If null, the function will return
+     * @param null|string $value The input string to be converted from UTF-8 to ANSI. If null, the function will return
      *                            an empty string.
      *
      * @return string The converted string in ANSI encoding.
-     *
-     * @psalm-suppress PossiblyUnusedMethod,UnusedParam
      */
-    public static function utf8Ansi(?string $valor = ''): string
+    public static function utf8Ansi(?string $value = ''): string
     {
-        if ($valor === null) {
+        if ($value === null) {
             return '';
         }
 
-        return strtr($valor, self::UTF8_ANSI2);
+        return strtr($value, self::UTF8_ANSI2);
     }
 
 
@@ -217,11 +215,7 @@ class StringManipulation
      * as mapping arrays for character replacement. It replaces each character in the
      * REMOVE_ACCENTS_FROM array with its corresponding character in the REMOVE_ACCENTS_TO array.
      *
-     * For example, accented characters like 'À', 'Á', 'Â', etc., will be replaced by 'A',
-     * and special characters like '*', '?', '’', etc., will be replaced by spaces or other characters.
-     *
-     * This function is useful when you need to remove accents and special characters from a string,
-     * especially when processing text for comparison or storage in a standardized format.
+     * For performance optimisation, the replacement arrays are cached in a static property.
      *
      * @param string $str The input string from which accents and special characters need to be removed.
      *
@@ -232,19 +226,34 @@ class StringManipulation
      */
     public static function removeAccents(string $str): string
     {
-        return static::strReplace([...self::REMOVE_ACCENTS_FROM, '  '], [...self::REMOVE_ACCENTS_TO, ' '], $str);
+        // Use a strict comparison instead of empty()
+        if (count(self::$ACCENTS_REPLACEMENT['search']) === 0) {
+            self::$ACCENTS_REPLACEMENT = [
+                'search' => [...self::REMOVE_ACCENTS_FROM, '  '],
+                'replace' => [...self::REMOVE_ACCENTS_TO, ' '],
+            ];
+        }
+
+        $search = self::$ACCENTS_REPLACEMENT['search'];
+        $replace = self::$ACCENTS_REPLACEMENT['replace'];
+
+        return self::strReplace(
+            $search,
+            $replace,
+            $str,
+        );
     }
 
 
     /**
      * Replaces all occurrences of the search string(s) with the corresponding replacement string(s) in the subject.
      *
-     * This method acts as a more precise version of the built-in PHP str_replace function. It accepts three
+     * This method acts as an optimised version of the built-in PHP str_replace function. It accepts three
      * parameters:
      * - $search: The value(s) being searched for within the subject. This can be a single string or an array of
-     * strings.
+     *   strings.
      * - $replace: The replacement value(s) for the found search values. This can be a single string or an array of
-     * strings.
+     *   strings.
      * - $subject: The string within which the search and replacement is to be performed.
      *
      * It returns a new string wherein every occurrence of each search value has been substituted with the
@@ -259,11 +268,19 @@ class StringManipulation
      *
      * @return string A string where every occurrence of each search value has been substituted with the corresponding
      *                replacement value.
-     *
-     * @psalm-suppress PossiblyUnusedMethod,UnusedParam
      */
     public static function strReplace(array|string $search, array|string $replace, string $subject): string
     {
+        // Early return for empty subject
+        if ($subject === '') {
+            return '';
+        }
+
+        // Optimize single character replacements using strtr which is faster for this case
+        if (is_string($search) && is_string($replace) && strlen($search) === 1) {
+            return strtr($subject, [$search => $replace]);
+        }
+
         return str_replace($search, $replace, $subject);
     }
 
@@ -273,12 +290,14 @@ class StringManipulation
      *
      * This function checks if the provided date string matches the given format and if the date is logically valid.
      * It uses the DateTime::createFromFormat() method to create a DateTime object from the given date string and
-     * format. If the date string and the format match, it reformats the date into 'Y-m-d' format and extracts the day,
-     * month, and year.  It then checks if these constitute a valid date using checkdate(). If they do, it
-     * returns true; otherwise, it returns false.
+     * format. If the date string and the format match, it extracts the date and time components and validates them.
+     * The validation includes:
+     * - Checking if the month/day/year combination is valid using checkdate()
+     * - Verifying that hours are within 0-23
+     * - Verifying that minutes and seconds are within 0-59
      *
      * This function is useful when validating date inputs, where the date needs to be checked for both format and
-     * logical validity.
+     * logical validity (e.g., preventing invalid dates like February 30).
      *
      * @param string $date The date string to validate. This should be a string representing a date.
      * @param string $format The expected date format. Default is 'Y-m-d H:i:s'. This should be a string representing
@@ -289,10 +308,11 @@ class StringManipulation
      * @example
      * isValidDate('2023-09-06 12:30:00');          // true
      * isValidDate('2012-02-28', 'Y-m-d');          // true
-     * isValidDate('2012-02-30 12:12:12');          // false
+     * isValidDate('2012-02-30 12:12:12');          // false (invalid date)
      * isValidDate('2023-09-06', 'Y-m-d');          // true
      * isValidDate('06-09-2023', 'd-m-Y');          // true
-     * isValidDate('2023-09-06 12:30:00', 'Y-m-d'); // false
+     * isValidDate('2023-09-06 12:30:00', 'Y-m-d'); // false (format mismatch)
+     * isValidDate('2023-12-25 25:00:00');          // false (invalid hour)
      */
     public static function isValidDate(string $date, string $format = 'Y-m-d H:i:s'): bool
     {
@@ -339,32 +359,31 @@ class StringManipulation
 
 
     /**
-     * Check if the time part of a date is valid.
+     * Check if the date and time parts are valid.
      *
-     * This function takes an associative array as an input, which represents the different parts of a time.
+     * This function takes an associative array as an input, which represents the different parts of a date and time.
      * The array should contain the following keys: 'year', 'month', 'day', 'hour', 'minute', and 'second'.
-     * Each key should have an integer value representing the corresponding part of a time.
+     * Each key should have an integer value representing the corresponding part of a date/time.
      *
-     * The function checks if the 'hour', 'minute', and 'second' parts of the time are within their valid ranges.
-     * If all these parts are within their valid ranges, the function returns true; otherwise, it returns false.
+     * The function checks if the date parts (year, month, day) form a valid date using checkdate(),
+     * and if the time parts ('hour', 'minute', and 'second') are within their valid ranges.
+     * If all these parts are valid, the function returns true; otherwise, it returns false.
      *
-     * This function is useful when validating date and time inputs, where the time part needs to be checked for
-     * validity.
+     * This function is useful when validating date and time inputs, ensuring both the date and time parts
+     * are logically valid.
      *
-     * @param array{
-     *     year: int,
-     *     month: int,
-     *     day: int,
-     *     hour: int,
-     *     minute: int,
-     *     second: int
-     * } $dateParts An associative array containing the date and time parts. Each key should have an integer value.
+     * @param array{year: int, month: int, day: int, hour: int, minute: int, second: int} $dateParts An associative array containing the date and time parts. Each key should have an integer value.
      *
-     * @return bool Returns true if the time part is valid (i.e., 'hour' is within the range 0-23, 'minute' is within
-     *              the range 0-59, and 'second' is within the range 0-59), false otherwise.
+     * @return bool Returns true if both the date and time parts are valid, false otherwise.
      */
     private static function isValidTimePart(array $dateParts): bool
     {
+        // First check if the date parts form a valid date
+        if (!checkdate($dateParts['month'], $dateParts['day'], $dateParts['year'])) {
+            return false;
+        }
+
+        // Then check if the time parts are valid
         if (!self::isValidHour($dateParts['hour']) || !self::isValidMinute($dateParts['minute'])) {
             return false;
         }

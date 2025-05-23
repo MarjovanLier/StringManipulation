@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
+use Rector\DeadCode\Rector\Concat\RemoveConcatAutocastRector;
 use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassMethod\NewlineBeforeNewAssignSetRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
@@ -68,6 +69,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->skip(
         [
             FlipTypeControlToUseExclusiveTypeRector::class,
+            RemoveConcatAutocastRector::class, // Skip to avoid conflict with Psalm strict mode
         ],
     );
 };
