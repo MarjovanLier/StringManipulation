@@ -41,7 +41,7 @@ final class StringManipulation
      * @var array{search: string[], replace: string[]}
      */
     private static array $ACCENTS_REPLACEMENT = [
-        'search' => [],
+        'search'  => [],
         'replace' => [],
     ];
 
@@ -81,7 +81,7 @@ final class StringManipulation
         // Apply the name fixing standards to the input string
         $words = self::nameFix($words);
 
-        // Early return if nameFix returned null
+        // Early return if nameFix returned null.
         if ($words === null) {
             return null;
         }
@@ -97,11 +97,11 @@ final class StringManipulation
         // Replace underscores with spaces
         $words = self::strReplace('_', ' ', $words);
 
-        // Reduce spaces to a single space
+        // Reduce spaces to a single space.
         $result = preg_replace('# {2,}#', ' ', $words);
 
-        // Return the trimmed result, ensuring we always have a string
-        return trim($result ?? '');
+        // Return the trimmed result, ensuring we always have a string.
+        return trim(($result ?? ''));
     }
 
 
@@ -214,7 +214,7 @@ final class StringManipulation
      *
      * @return string The converted string in ANSI encoding.
      */
-    public static function utf8Ansi(?string $value = ''): string
+    public static function utf8Ansi(?string $value=''): string
     {
         if ($value === null) {
             return '';

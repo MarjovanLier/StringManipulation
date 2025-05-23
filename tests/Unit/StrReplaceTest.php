@@ -69,16 +69,16 @@ final class StrReplaceTest extends TestCase
      */
     public function testSingleCharacterOptimization(): void
     {
-        // Test with a single character (should use strtr optimization)
+        // Test with a single character (should use strtr optimization).
         $result1 = StringManipulation::strReplace('a', 'z', 'banana');
-        $this->assertSame('bznznz', $result1);
+        self::assertSame('bznznz', $result1);
 
-        // Test with a two-character string (should use str_replace)
+        // Test with a two-character string (should use str_replace).
         $result2 = StringManipulation::strReplace('an', 'z', 'banana');
-        $this->assertSame('bzza', $result2);
+        self::assertSame('bzza', $result2);
 
         // This verifies the behavior difference - if the mutation changes the length check
-        // from === 1 to === 2, both calls would produce the same behavior, and this test would fail
+        // from === 1 to === 2, both calls would produce the same behavior, and this test would fail.
     }
 
     /**
@@ -87,32 +87,32 @@ final class StrReplaceTest extends TestCase
      */
     public function testSingleCharacterVsMultipleCharacter(): void
     {
-        // Create a scenario where strtr and str_replace have observable differences
+        // Create a scenario where strtr and str_replace have observable differences.
 
-        // Case 1: Using a single character replacement (should use strtr)
+        // Case 1: Using a single character replacement (should use strtr).
         $subject = 'abababa';
         $result1 = StringManipulation::strReplace('a', 'c', $subject);
 
-        // Case 2: Using an array with equivalent replacements (should use str_replace)
+        // Case 2: Using an array with equivalent replacements (should use str_replace).
         $result2 = StringManipulation::strReplace(['a'], ['c'], $subject);
 
-        // Both should produce the same result despite taking different code paths
-        $this->assertSame('cbcbcbc', $result1);
-        $this->assertSame($result1, $result2);
+        // Both should produce the same result despite taking different code paths.
+        self::assertSame('cbcbcbc', $result1);
+        self::assertSame($result1, $result2);
 
         // This next test specifically looks at behavior that would be different
-        // if the optimization wasn't properly working
+        // if the optimization wasn't properly working.
 
-        // Using overlapping replacements, the order matters in str_replace but not in strtr
+        // Using overlapping replacements, the order matters in str_replace but not in strtr.
         $complex = 'abcabc';
 
-        // Directly using strtr for comparison
+        // Directly using strtr for comparison.
         $expected = strtr($complex, ['a' => 'z', 'z' => 'y']);
 
-        // Using our optimized function which should handle this the same way
+        // Using our optimized function which should handle this the same way.
         $actual = StringManipulation::strReplace('a', 'z', $complex);
-        $this->assertSame('zbczbc', $actual);
-        $this->assertSame($expected, $actual);
+        self::assertSame('zbczbc', $actual);
+        self::assertSame($expected, $actual);
     }
 
     /**
@@ -120,12 +120,12 @@ final class StrReplaceTest extends TestCase
      */
     public function testEmptyStringOptimization(): void
     {
-        // Test that empty subject returns empty string immediately
+        // Test that empty subject returns empty string immediately.
         $result = StringManipulation::strReplace('a', 'b', '');
-        $this->assertSame('', $result);
+        self::assertSame('', $result);
 
-        // Test that empty search/replace with non-empty subject works correctly
+        // Test that empty search/replace with non-empty subject works correctly.
         $result = StringManipulation::strReplace('', 'x', 'abc');
-        $this->assertSame('abc', $result);
+        self::assertSame('abc', $result);
     }
 }
