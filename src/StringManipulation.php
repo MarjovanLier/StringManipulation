@@ -81,11 +81,6 @@ final class StringManipulation
         // Apply the name fixing standards to the input string
         $words = self::nameFix($words);
 
-        // Early return if nameFix returned null.
-        if ($words === null) {
-            return null;
-        }
-
         // Replace various special characters with spaces and convert the string to lowercase
         $words = strtolower(
             self::strReplace(['{', '}', '(', ')', '/', '\\', '@', ':', '"', '?', ',', '.'], ' ', $words),
