@@ -75,9 +75,10 @@ main() {
             run_test "Rector" "test-rector" || ((failed++))
             run_test "Security Check" "test-security" || ((failed++))
 
+            run_test "Phan" "test-phan" || ((failed++))
+
             # Try to run optional tests
             print_status "info" "Running optional tests (may fail)..."
-            run_test "Phan" "test-phan" || print_status "info" "Phan failed (optional)"
             run_test "Infection" "test-infection" || print_status "info" "Infection failed (optional)"
 
             if [ $failed -eq 0 ]; then

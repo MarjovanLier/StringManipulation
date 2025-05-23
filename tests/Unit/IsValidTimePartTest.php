@@ -17,17 +17,20 @@ use ReflectionClass;
 final class IsValidTimePartTest extends TestCase
 {
     /**
-     * Provides a set of time parts to test.
+     * Provides a set of date and time parts to test.
      *
      * @return array<int, array<int, array<string, int>|bool>>
      *
-     * @psalm-return list<array{0: array{hour: int, minute: int, second: int}, 1: bool}>
+     * @psalm-return list<array{0: array{year: int, month: int, day: int, hour: int, minute: int, second: int}, 1: bool}>
      */
     public static function provideTimeParts(): array
     {
         return [
             [
                 [
+                    'year' => 2023,
+                    'month' => 12,
+                    'day' => 25,
                     'hour' => 0,
                     'minute' => 0,
                     'second' => 0,
@@ -36,6 +39,9 @@ final class IsValidTimePartTest extends TestCase
             ],
             [
                 [
+                    'year' => 2023,
+                    'month' => 12,
+                    'day' => 25,
                     'hour' => 23,
                     'minute' => 59,
                     'second' => 59,
@@ -44,6 +50,9 @@ final class IsValidTimePartTest extends TestCase
             ],
             [
                 [
+                    'year' => 2023,
+                    'month' => 12,
+                    'day' => 25,
                     'hour' => -1,
                     'minute' => 0,
                     'second' => 0,
@@ -52,6 +61,9 @@ final class IsValidTimePartTest extends TestCase
             ],
             [
                 [
+                    'year' => 2023,
+                    'month' => 12,
+                    'day' => 25,
                     'hour' => 24,
                     'minute' => 0,
                     'second' => 0,
@@ -60,6 +72,9 @@ final class IsValidTimePartTest extends TestCase
             ],
             [
                 [
+                    'year' => 2023,
+                    'month' => 12,
+                    'day' => 25,
                     'hour' => 0,
                     'minute' => -1,
                     'second' => 0,
@@ -68,6 +83,9 @@ final class IsValidTimePartTest extends TestCase
             ],
             [
                 [
+                    'year' => 2023,
+                    'month' => 12,
+                    'day' => 25,
                     'hour' => 0,
                     'minute' => 60,
                     'second' => 0,
@@ -76,6 +94,9 @@ final class IsValidTimePartTest extends TestCase
             ],
             [
                 [
+                    'year' => 2023,
+                    'month' => 12,
+                    'day' => 25,
                     'hour' => 0,
                     'minute' => 0,
                     'second' => -1,
@@ -84,11 +105,36 @@ final class IsValidTimePartTest extends TestCase
             ],
             [
                 [
+                    'year' => 2023,
+                    'month' => 12,
+                    'day' => 25,
                     'hour' => 0,
                     'minute' => 0,
                     'second' => 60,
                 ],
                 false,
+            ],
+            [
+                [
+                    'year' => 2023,
+                    'month' => 2,
+                    'day' => 30,
+                    'hour' => 12,
+                    'minute' => 0,
+                    'second' => 0,
+                ],
+                false,  // Invalid date - Feb 30
+            ],
+            [
+                [
+                    'year' => 2023,
+                    'month' => 13,
+                    'day' => 1,
+                    'hour' => 12,
+                    'minute' => 0,
+                    'second' => 0,
+                ],
+                false,  // Invalid month
             ],
         ];
     }

@@ -193,4 +193,3 @@ And to run tests matching a specific name pattern:
 ## Support
 
 For support, please open an issue on our [GitHub repository](https://github.com/MarjovanLier/StringManipulation/issues).
-

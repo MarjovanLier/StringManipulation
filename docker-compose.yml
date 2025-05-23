@@ -28,6 +28,9 @@ services:
 
   test-phan:
     extends: tests
+    environment:
+      - PHAN_DISABLE_XDEBUG_WARN=1
+      - PHAN_ALLOW_XDEBUG=1
     command: composer test:phan
 
   test-phpmd:
