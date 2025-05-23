@@ -1,0 +1,27 @@
+---
+# Codacy configuration to align with PER 2.0 coding standard
+engines:
+  php-cs-fixer:
+    enabled: true
+    config: .php-cs-fixer.php    # Use our PHP CS Fixer configuration with PER 2.0
+  phpcodesniffer:
+    enabled: false               # Disable to avoid conflicts with php-cs-fixer
+  phpmd:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - php
+
+exclude_paths:
+  - 'vendor/**'
+  - '.github/**'
+  - 'docker/**'
+  - 'node_modules/**'
+  - '*.md'
+  - '*.sh'
+  - '*.yml'
+  - '*.yaml'
+  - 'Dockerfile'
+  - '.php-cs-fixer.cache'

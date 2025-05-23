@@ -28,3 +28,4 @@ docker-compose.override.yml
 # Node modules
 node_modules/
 package-lock.json
+.php-cs-fixer.cache
