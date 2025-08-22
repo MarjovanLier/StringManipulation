@@ -80,4 +80,38 @@ final class NameFixTest extends TestCase
     {
         self::assertEquals('12345', StringManipulation::nameFix('12345'));
     }
+
+
+    /**
+     * Test that Mac/Mc prefix handling requires both conditions to be true.
+     * This targets the LogicalAnd mutations in the nameFix function.
+     */
+    public function testMacMcPrefixHandlingLogicalConditions(): void
+    {
+        // Test cases where 'mc' exists but is followed by a space (should NOT trigger fix)
+        self::assertEquals('Mc Donald', StringManipulation::nameFix('mc donald'));
+        self::assertEquals('Mc Lean', StringManipulation::nameFix('mc lean'));
+
+        // Test cases where 'mac' exists but is followed by a space (should NOT trigger fix)
+        self::assertEquals('Mac Donald', StringManipulation::nameFix('mac donald'));
+        self::assertEquals('Mac Lean', StringManipulation::nameFix('mac lean'));
+
+        // Test cases where 'mc' exists and is NOT followed by a space (SHOULD trigger fix)
+        self::assertEquals('McDonald', StringManipulation::nameFix('mcdonald'));
+        self::assertEquals('McLean', StringManipulation::nameFix('mclean'));
+
+        // Test cases where 'mac' exists and is NOT followed by a space (SHOULD trigger fix)
+        self::assertEquals('MacDonald', StringManipulation::nameFix('macdonald'));
+        self::assertEquals('MacLean', StringManipulation::nameFix('maclean'));
+
+        // Test cases where prefix doesn't exist at all
+        self::assertEquals("O'brien", StringManipulation::nameFix("o'brien"));
+        self::assertEquals('Johnson', StringManipulation::nameFix('johnson'));
+
+        // Test complex cases with multiple occurrences
+        self::assertEquals('MacDonald-McDonald', StringManipulation::nameFix('macdonald-mcdonald'));
+
+        // Test edge case where both conditions in OR would be true but should only trigger once
+        self::assertEquals('MacDonald Mac Smith', StringManipulation::nameFix('macdonald mac smith'));
+    }
 }

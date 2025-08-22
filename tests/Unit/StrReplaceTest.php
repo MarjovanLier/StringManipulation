@@ -128,6 +128,47 @@ final class StrReplaceTest extends TestCase
 
 
     /**
+     * Test that verifies both conditions are required for single character optimisation.
+     * This targets the LogicalAnd mutations in the strReplace function.
+     */
+    public function testSingleCharacterOptimisationRequiresBothConditions(): void
+    {
+        // Use variables to avoid Psalm's literal string analysis
+        $testString = 'banana';
+        $searchChar = 'a';
+        $replaceChar = 'z';
+        $expectedResult = 'bznznz';
+
+        // Case 1: Array search with single character - should NOT use strtr optimisation
+        $result1 = StringManipulation::strReplace([$searchChar], $replaceChar, $testString);
+        self::assertSame($expectedResult, $result1);
+
+        // Case 2: Array types - should NOT use strtr optimisation
+        $result2 = StringManipulation::strReplace([$searchChar], [$replaceChar], $testString);
+        self::assertSame($expectedResult, $result2);
+
+        // Case 3: Both string types but length > 1 - should NOT use strtr optimisation
+        $result3 = StringManipulation::strReplace('an', $replaceChar, $testString);
+        self::assertSame('bzza', $result3);
+
+        // Case 4: Both conditions met - SHOULD use strtr optimisation
+        $result4 = StringManipulation::strReplace($searchChar, $replaceChar, $testString);
+        self::assertSame($expectedResult, $result4);
+
+        // Case 5: Test empty string case - should NOT use strtr optimisation
+        $result5 = StringManipulation::strReplace('', $replaceChar, $testString);
+        self::assertSame($testString, $result5);
+
+        // Case 6: Test longer string case - should NOT use strtr optimisation
+        $result6 = StringManipulation::strReplace('ban', 'can', $testString);
+        self::assertSame('canana', $result6);
+
+        // All single-character replacements tested above should produce consistent results
+        // The individual assertions above verify that different code paths work correctly
+    }
+
+
+    /**
      * Test comprehensive array-based string replacements.
      */
     public function testArrayReplacements(): void
