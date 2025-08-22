@@ -73,13 +73,6 @@ final class IsValidHourTest extends TestCase
     {
         $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidHour');
 
-        /**
-         * @noinspection PhpExpressionResultUnusedInspection
-         *
-         * @psalm-suppress UnusedMethodCall
-         */
-        $reflectionMethod->setAccessible(true);
-
         $result = $reflectionMethod->invoke(null, $hour);
 
         self::assertSame($expectedResult, $result);
