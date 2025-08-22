@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MarjovanLier\StringManipulation\Tests\Benchmark;
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 use InvalidArgumentException;
 use MarjovanLier\StringManipulation\StringManipulation;
 
@@ -142,5 +144,14 @@ final class ComprehensiveBenchmark
         echo "• All PHPUnit tests pass with comprehensive assertions\n";
         echo "• Significant algorithmic improvements across the library\n";
         echo "• Memory efficiency maintained with static caching\n";
+    }
+}
+
+// Run benchmark if executed directly
+if (PHP_SAPI === 'cli' && isset($_SERVER['SCRIPT_FILENAME'])) {
+    /** @var string $scriptName */
+    $scriptName = $_SERVER['SCRIPT_FILENAME'];
+    if (basename(__FILE__) === basename($scriptName)) {
+        ComprehensiveBenchmark::run();
     }
 }

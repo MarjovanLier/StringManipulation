@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MarjovanLier\StringManipulation;
 
 use DateTime;
+use LogicException;
 
 /**
  * Class StringManipulation.
@@ -86,11 +87,15 @@ final class StringManipulation
 
         // Build combined transformation mapping on first call
         if (self::$SEARCH_WORDS_MAPPING === []) {
-            // Start with accent removal mappings
-            $accentMapping = array_combine(
-                [...self::REMOVE_ACCENTS_FROM, '  '],
-                [...self::REMOVE_ACCENTS_TO, ' '],
-            );
+            // Start with accent removal mappings (apply strtolower to ensure all replacements are lowercase)
+            $from = [...self::REMOVE_ACCENTS_FROM, '  '];
+            $toArray = array_map('strtolower', [...self::REMOVE_ACCENTS_TO, ' ']);
+
+            if (count($from) !== count($toArray)) {
+                throw new LogicException('REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO arrays must have the same length.');
+            }
+
+            $accentMapping = array_combine($from, $toArray);
 
             // Add special character replacements
             $specialChars = [
@@ -249,11 +254,15 @@ final class StringManipulation
     {
         // Build associative array for strtr() on first call
         if (self::$ACCENTS_REPLACEMENT === []) {
+            $from = [...self::REMOVE_ACCENTS_FROM, '  '];
+            $toArray = [...self::REMOVE_ACCENTS_TO, ' '];
+
+            if (count($from) !== count($toArray)) {
+                throw new LogicException('REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO arrays must have the same length.');
+            }
+
             // Combine parallel arrays into associative array for O(1) lookup
-            self::$ACCENTS_REPLACEMENT = array_combine(
-                [...self::REMOVE_ACCENTS_FROM, '  '],
-                [...self::REMOVE_ACCENTS_TO, ' '],
-            );
+            self::$ACCENTS_REPLACEMENT = array_combine($from, $toArray);
         }
 
         // Use strtr() for O(1) character lookup instead of str_replace() O(k) search
