@@ -65,13 +65,6 @@ final class IsValidSecondTest extends TestCase
     {
         $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidSecond');
 
-        /**
-         * @noinspection PhpExpressionResultUnusedInspection
-         *
-         * @psalm-suppress UnusedMethodCall
-         */
-        $reflectionMethod->setAccessible(true);
-
         $result = $reflectionMethod->invoke(null, $second);
 
         self::assertSame($expectedResult, $result);
