@@ -98,7 +98,7 @@
     "test:lint": "parallel-lint --exclude vendor --show-deprecated .",
     "test:phan": "phan --no-progress-bar",
     "test:phpmd": "phpmd src,tests text phpmd.xml",
-    "test:phpstan": "phpstan analyse --no-progress --no-interaction",
+    "test:phpstan": "phpstan analyse --memory-limit=-1 --no-progress --no-interaction",
     "test:phpunit": "phpunit --no-coverage --no-logging",
     "test:psalm": "psalm --no-cache --no-progress --show-info=false",
     "test:rector": "rector --dry-run",

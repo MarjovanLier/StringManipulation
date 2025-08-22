@@ -74,13 +74,6 @@ final class IsValidTimePartTest extends TestCase
     {
         $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidTimePart');
 
-        /**
-         * @noinspection PhpExpressionResultUnusedInspection
-         *
-         * @psalm-suppress UnusedMethodCall
-         */
-        $reflectionMethod->setAccessible(true);
-
         $result = $reflectionMethod->invoke(null, $timeParts);
 
         self::assertSame($expectedResult, $result);

@@ -65,13 +65,6 @@ final class IsValidMinuteTest extends TestCase
     {
         $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidMinute');
 
-        /**
-         * @noinspection PhpExpressionResultUnusedInspection
-         *
-         * @psalm-suppress UnusedMethodCall
-         */
-        $reflectionMethod->setAccessible(true);
-
         $result = $reflectionMethod->invoke(null, $minute);
 
         self::assertSame($expectedResult, $result);
