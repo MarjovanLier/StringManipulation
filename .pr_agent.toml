@@ -1,8 +1,20 @@
 [config]
+# Model Configuration (2025 Recommended)
+model = "gpt-4o-2024-11-20"
+fallback_models = ["gpt-4o", "gpt-4-turbo"]
+
+# Auto Approval Settings
 enable_auto_approval = true
 enable_comment_approval = true
 auto_approve_for_low_review_effort = 3
 auto_approve_for_no_suggestions = true
+
+# Language and Output
+language = "en"
+output_relevant_configurations = false
+
+# Filtering Options  
+ignore_ticket_labels = ["skip-review", "wont-fix", "draft"]
 
 [pr_reviewer]
 inline_code_comments = true
