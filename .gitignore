@@ -119,7 +119,6 @@ qodana.sarif.json
 # AI tooling directories (private)
 .claude/
 .claude-flow/
-.github
 .hive-mind/
 .kilocode/
 .roo/
