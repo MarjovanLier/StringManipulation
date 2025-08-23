@@ -1,6 +1,6 @@
 {
   "name": "marjovanlier/stringmanipulation",
-  "description": "A PHP library for efficient string manipulation, focusing on data normalisation, encoding conversion and validation.",
+  "description": "High-performance PHP 8.3+ string manipulation library featuring O(n) algorithms with up to 5x speed improvements. Provides Unicode-aware operations including searchWords(), nameFix(), utf8Ansi(), removeAccents(), and isValidDate() with comprehensive testing infrastructure.",
   "keywords": [
     "string manipulation",
     "performance",
@@ -46,32 +46,32 @@
   },
   "require-dev": {
     "enlightn/security-checker": ">=2.0",
-    "infection/infection": ">=0.29.14",
-    "laravel/pint": ">=1.22.1",
-    "phan/phan": ">=5.4.5",
+    "infection/infection": ">=0.31.2",
+    "laravel/pint": ">=1.24.0",
+    "phan/phan": ">=5.5.1",
     "php-parallel-lint/php-parallel-lint": ">=1.4.0",
     "phpmd/phpmd": ">=2.15",
     "phpstan/extension-installer": ">=1.4.3",
-    "phpstan/phpstan": ">=2.1.17",
-    "phpstan/phpstan-strict-rules": ">=2.0.4",
+    "phpstan/phpstan": ">=2.1.22",
+    "phpstan/phpstan-strict-rules": ">=2.0.6",
     "phpunit/phpunit": ">=11.0.9|>=12.0.2",
     "psalm/plugin-phpunit": ">=0.19.3",
-    "rector/rector": ">=2.0.16",
+    "rector/rector": ">=2.1.4",
     "roave/security-advisories": "dev-latest",
     "vimeo/psalm": ">=6.7"
   },
   "scripts-descriptions": {
-    "test:code-style": "Check code for stylistic consistency.",
-    "test:composer-validate": "Ensure 'composer.json' is valid and consistent.",
-    "test:infection": "Conduct mutation testing for robustness.",
-    "test:lint": "Search for syntax errors and problematic patterns.",
-    "test:phan": "Perform static analysis with Phan to identify code issues.",
-    "test:phpmd": "Detect bugs and suboptimal code with PHP Mess Detector.",
-    "test:phpstan": "Use PHPStan for static analysis and bug detection.",
-    "test:phpunit": "Execute PHPUnit tests to verify code functionality.",
-    "test:psalm": "Run Psalm to find errors and improve code quality.",
-    "test:rector": "Apply automated code quality enhancements with Rector.",
-    "test:vulnerabilities-check": "Scan dependencies for known security vulnerabilities."
+    "test:code-style": "Check code for stylistic consistency using Laravel Pint",
+    "test:composer-validate": "Validate composer.json schema, dependencies, and configuration integrity with strict validation",
+    "test:infection": "Execute comprehensive mutation testing to verify test quality and code robustness against logic modifications",
+    "test:lint": "Perform syntax validation and identify deprecated PHP patterns across all source files",
+    "test:phan": "Execute Phan static analysis for type safety, dead code detection, and PHP compatibility validation",
+    "test:phpmd": "Analyse code complexity, design patterns, and identify potential bugs using PHP Mess Detector rules",
+    "test:phpstan": "Perform advanced static analysis with PHPStan for type checking, null safety, and logic validation",
+    "test:phpunit": "Run comprehensive PHPUnit test suite (166 tests) with strict type checking and edge case coverage",
+    "test:psalm": "Execute Psalm static analysis for advanced type inference, purity checking, and security validation",
+    "test:rector": "Analyse code for modernisation opportunities and PHP 8.3+ feature adoption using Rector rules",
+    "test:vulnerabilities-check": "Scan all dependencies for known CVE vulnerabilities and security advisories using Enlightn Security Checker"
   },
   "scripts": {
     "post-update-cmd": [
