@@ -11,9 +11,9 @@ require_all_thresholds_for_incremental_review = false
 minimal_commits_for_incremental_review = 2
 minimal_minutes_for_incremental_review = 10
 enable_help_text = false
-enable_auto_approval = false
-require_approval = true
-maximal_review_effort = 5
+enable_auto_approval = true
+require_approval = false
+maximal_review_effort = 4
 
 [pr_code_suggestions]
 num_code_suggestions = 5
@@ -21,6 +21,7 @@ summarize = true
 auto_extended_mode = true
 rank_suggestions = true
 enable_help_text = false
+auto_approve_for_no_suggestions = true
 
 [pr_update_changelog]
 push_changelog_changes = false
