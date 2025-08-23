@@ -5,7 +5,7 @@
 # ========================================
 # DENY ALL BY DEFAULT
 # ========================================
-/*
+*
 
 # ========================================
 # ALLOW DIRECTORY TRAVERSAL (CRITICAL)
@@ -40,7 +40,7 @@
 # CONFIGURATION FILES
 # ========================================
 !phpunit.xml
-!phpcs.xml  
+!phpcs.xml
 !phpstan.neon
 !psalm.xml
 !phpmd.xml
