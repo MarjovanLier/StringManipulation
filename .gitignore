@@ -32,9 +32,9 @@
 # SOURCE CODE & TESTS
 # ========================================
 !src/
-!src/**
+!src/**/*.php
 !tests/
-!tests/**
+!tests/**/*.php
 
 # ========================================
 # CONFIGURATION FILES
