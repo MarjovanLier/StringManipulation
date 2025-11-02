@@ -274,7 +274,7 @@ trait AccentNormalization
         ' ',
         "'",
         ' ',
-        ', ',
+        ',',
         '',
         '',
         'A',
