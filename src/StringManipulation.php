@@ -159,7 +159,7 @@ final class StringManipulation
         // Fix common prefixes to have proper casing
         $lastName = preg_replace_callback(
             '#\b(van|von|den|der|des|de|du|la|le)\b#i',
-            static fn($matches): string => strtolower($matches[1]),
+            static fn(array $matches): string => strtolower($matches[1]),
             $lastName,
         );
 

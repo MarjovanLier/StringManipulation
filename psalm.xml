@@ -21,6 +21,7 @@
         checkForThrowsInGlobalScope="true"
         ignoreInternalFunctionFalseReturn="false"
         ignoreInternalFunctionNullReturn="false"
+    errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
         <directory name="src"/>

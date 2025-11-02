@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="6.7.0@11a32693fb9e33d4f0505de17af41c8fcac698a7">
+  <file src="src/StringManipulation.php">
+    <PossiblyUndefinedIntArrayOffset>
+      <code><![CDATA[$matches[1]]]></code>
+    </PossiblyUndefinedIntArrayOffset>
+  </file>
+  <file src="tests/Unit/IsValidDateTest.php">
+    <MissingThrowsDocblock>
+      <code><![CDATA[self::assertFalse(StringManipulation::isValidDate($date, $format))]]></code>
+      <code><![CDATA[self::assertTrue(StringManipulation::isValidDate($date, $format))]]></code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="tests/Unit/IsValidHourTest.php">
+    <MissingThrowsDocblock>
+      <code><![CDATA[getMethod]]></code>
+      <code><![CDATA[self::assertSame($expectedResult, $result)]]></code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="tests/Unit/IsValidMinuteTest.php">
+    <MissingThrowsDocblock>
+      <code><![CDATA[getMethod]]></code>
+      <code><![CDATA[self::assertSame($expectedResult, $result)]]></code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="tests/Unit/IsValidSecondTest.php">
+    <MissingThrowsDocblock>
+      <code><![CDATA[getMethod]]></code>
+      <code><![CDATA[self::assertSame($expectedResult, $result)]]></code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="tests/Unit/IsValidTimePartTest.php">
+    <MissingThrowsDocblock>
+      <code><![CDATA[getMethod]]></code>
+      <code><![CDATA[self::assertSame($expectedResult, $result)]]></code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="tests/Unit/NameFixTest.php">
+    <MissingThrowsDocblock>
+      <code><![CDATA[self::assertEquals('12345', StringManipulation::nameFix('12345'))]]></code>
+      <code><![CDATA[self::assertNull(StringManipulation::nameFix(null))]]></code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="tests/Unit/RemoveAccentsTest.php">
+    <MissingThrowsDocblock>
+      <code><![CDATA[self::assertEquals("cote d'Ivoire", StringManipulation::removeAccents('côte d’Ivoire'))]]></code>
+      <code><![CDATA[self::assertEquals('!@#$%', StringManipulation::removeAccents('!@#$%'))]]></code>
+      <code><![CDATA[self::assertEquals('', StringManipulation::removeAccents(''))]]></code>
+      <code><![CDATA[self::assertEquals('12345', StringManipulation::removeAccents('12345'))]]></code>
+      <code><![CDATA[self::assertEquals('AAAAAA', $result)]]></code>
+      <code><![CDATA[self::assertEquals('ABCDEF', $result)]]></code>
+      <code><![CDATA[self::assertEquals('AEIOU', StringManipulation::removeAccents('ÁÉÍÓÚ'))]]></code>
+      <code><![CDATA[self::assertEquals('AeOeUe', StringManipulation::removeAccents('ÄëÖëÜë'))]]></code>
+      <code><![CDATA[self::assertEquals('Nino', StringManipulation::removeAccents('Niño'))]]></code>
+      <code><![CDATA[self::assertEquals('abcdef', StringManipulation::removeAccents('abcdef'))]]></code>
+      <code><![CDATA[self::assertEquals('aeiou', StringManipulation::removeAccents('áéíóú'))]]></code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="tests/Unit/SearchWordsTest.php">
+    <MissingThrowsDocblock>
+      <code><![CDATA[self::assertEquals('! #$%', StringManipulation::searchWords('!@#$%'))]]></code>
+      <code><![CDATA[self::assertEquals('12345', StringManipulation::searchWords('12345'))]]></code>
+      <code><![CDATA[self::assertEquals('[hello world!]', $result)]]></code>
+      <code><![CDATA[self::assertEquals('a b c', StringManipulation::searchWords('a/b/c'))]]></code>
+      <code><![CDATA[self::assertEquals('hello world test', $result)]]></code>
+      <code><![CDATA[self::assertEquals('macdonald', StringManipulation::searchWords('MacDonald'))]]></code>
+      <code><![CDATA[self::assertEquals(self::HELLO_WORLD_LOWERCASE, $result)]]></code>
+      <code><![CDATA[self::assertEquals(self::HELLO_WORLD_LOWERCASE, $result)]]></code>
+      <code><![CDATA[self::assertEquals(self::HELLO_WORLD_LOWERCASE, $result)]]></code>
+      <code><![CDATA[self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('  hello   world  '))]]></code>
+      <code><![CDATA[self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('  hello / world  '))]]></code>
+      <code><![CDATA[self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('Hello World'))]]></code>
+      <code><![CDATA[self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('Hèllo Wørld'))]]></code>
+      <code><![CDATA[self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('hello / world'))]]></code>
+      <code><![CDATA[self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('hello_world'))]]></code>
+      <code><![CDATA[self::assertNull(StringManipulation::searchWords(null))]]></code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="tests/Unit/StrReplaceTest.php">
+    <MissingThrowsDocblock>
+      <code><![CDATA[self::assertEquals('I love banana.', $result)]]></code>
+      <code><![CDATA[self::assertEquals('b', StringManipulation::strReplace('a', 'b', 'a'))]]></code>
+      <code><![CDATA[self::assertEquals('helloworld', StringManipulation::strReplace(['H', 'W'], ['h', 'w'], 'Helloworld'))]]></code>
+      <code><![CDATA[self::assertEquals('hxllo world', StringManipulation::strReplace('e', 'x', 'hello world'))]]></code>
+      <code><![CDATA[self::assertEquals('hxllo world', StringManipulation::strReplace(self::SEARCH, self::REPLACE, self::SUBJECT))]]></code>
+      <code><![CDATA[self::assertEquals(self::LOVE_APPLE, $result)]]></code>
+      <code><![CDATA[self::assertSame($expected, $actual)]]></code>
+      <code><![CDATA[self::assertSame($result1, $result2)]]></code>
+      <code><![CDATA[self::assertSame('', $result)]]></code>
+      <code><![CDATA[self::assertSame('abc', $result)]]></code>
+      <code><![CDATA[self::assertSame('bznznz', $result1)]]></code>
+      <code><![CDATA[self::assertSame('bzza', $result2)]]></code>
+      <code><![CDATA[self::assertSame('cbcbcbc', $result1)]]></code>
+      <code><![CDATA[self::assertSame('zbczbc', $actual)]]></code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="tests/Unit/TrimTest.php">
+    <MissingThrowsDocblock>
+      <code><![CDATA[self::assertEquals($expected, StringManipulation::trim($input, $characters))]]></code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="tests/Unit/Utf8AnsiTest.php">
+    <MissingThrowsDocblock>
+      <code><![CDATA[self::assertEquals($string, $result)]]></code>
+      <code><![CDATA[self::assertEquals('', StringManipulation::utf8Ansi(''))]]></code>
+      <code><![CDATA[self::assertEquals('', StringManipulation::utf8Ansi(null))]]></code>
+      <code><![CDATA[self::assertEquals('À', $result)]]></code>
+    </MissingThrowsDocblock>
+  </file>
+</files>

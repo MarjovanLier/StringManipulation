@@ -27,7 +27,6 @@ return RectorConfig::configure()
         SetList::INSTANCEOF,
         SetList::PRIVATIZATION,
         SetList::NAMING,
-        SetList::TYPE_DECLARATION_DOCBLOCKS,
     ])
     ->withTypeCoverageLevel(10)
     ->withDeadCodeLevel(10)
