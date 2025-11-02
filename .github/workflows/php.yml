@@ -99,7 +99,7 @@ jobs:
         if: steps.phpmd.outcome == 'success'
         run: composer test:pest
 
-      # This step runs mutation testing with Infection.
+      # This step runs mutation testing with Pest.
       - name: Run Mutation Testing
         id: infection
         if: steps.pest.outcome == 'success'

@@ -14,9 +14,9 @@ services:
     extends: tests
     command: composer test:code-style
 
-  test-phpunit:
+  test-pest:
     extends: tests
-    command: composer test:phpunit
+    command: composer test:pest
 
   test-phpstan:
     extends: tests
@@ -39,7 +39,7 @@ services:
 
   test-infection:
     extends: tests
-    command: composer test:infection
+    command: pest --mutate
 
   test-rector:
     extends: tests
@@ -65,7 +65,7 @@ services:
         composer test:psalm &&
         composer test:phan &&
         composer test:phpmd &&
-        composer test:phpunit &&
+        composer test:pest &&
         composer test:rector &&
         composer test:vulnerabilities-check
       "
