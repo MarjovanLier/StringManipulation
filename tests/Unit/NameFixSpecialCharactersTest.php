@@ -8,13 +8,11 @@ use MarjovanLier\StringManipulation\StringManipulation;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Special characters and complex scenarios test suite for nameFix function.
+ * Covers names with numbers, special characters, and complex real-world combinations.
+ *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class . '::nameFix
-Special characters and complex scenarios test suite for nameFix function.
-Covers names with numbers, special characters, and complex real-world combinations.::class', 'nameFix
-Special characters and complex scenarios test suite for nameFix function.
-Covers names with numbers, special characters, and complex real-world combinations.')]
 final class NameFixSpecialCharactersTest extends TestCase
 {
     /**

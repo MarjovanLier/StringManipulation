@@ -8,17 +8,13 @@ use MarjovanLier\StringManipulation\StringManipulation;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Happy path test suite for nameFix function covering standard international names,
+ * common prefixes, and typical name formatting scenarios that should work correctly.
+ * This class focuses on the positive/happy flow scenarios where inputs are
+ * well-formed and expected to produce standard formatted output.
+ *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class . '::nameFix
-Happy path test suite for nameFix function covering standard international names,
-common prefixes, and typical name formatting scenarios that should work correctly.
-This class focuses on the positive/happy flow scenarios where inputs are
-well-formed and expected to produce standard formatted output.::class', 'nameFix
-Happy path test suite for nameFix function covering standard international names,
-common prefixes, and typical name formatting scenarios that should work correctly.
-This class focuses on the positive/happy flow scenarios where inputs are
-well-formed and expected to produce standard formatted output.')]
 final class NameFixComprehensiveTest extends TestCase
 {
     /**

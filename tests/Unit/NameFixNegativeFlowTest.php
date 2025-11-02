@@ -8,13 +8,11 @@ use MarjovanLier\StringManipulation\StringManipulation;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Negative flow test suite for nameFix function covering malformed inputs,
+ * boundary conditions, security concerns, and error scenarios.
+ *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class . '::nameFix
-Negative flow test suite for nameFix function covering malformed inputs,
-boundary conditions, security concerns, and error scenarios.::class', 'nameFix
-Negative flow test suite for nameFix function covering malformed inputs,
-boundary conditions, security concerns, and error scenarios.')]
 final class NameFixNegativeFlowTest extends TestCase
 {
     /**

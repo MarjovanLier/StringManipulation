@@ -16,8 +16,6 @@ use ReflectionClass;
  *
  * @internal
  */
-#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'searchWords')]
-#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'removeAccents')]
 final class CriticalBugFixIntegrationTest extends TestCase
 {
     /**
