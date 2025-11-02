@@ -18,7 +18,8 @@ parameters:
 
     type_perfect:
         null_over_false: true     # Use null instead of false for "no-result"
-        no_mixed: true            # Prevent mixed types (combines no_mixed_property + no_mixed_caller)
+        no_mixed_property: true   # Prevent properties from having mixed types
+        no_mixed_caller: true     # Prevent method calls on mixed types
 
     type_coverage:
         return: 95                # Require 95% return type coverage
