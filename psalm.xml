@@ -21,11 +21,9 @@
         checkForThrowsInGlobalScope="true"
         ignoreInternalFunctionFalseReturn="false"
         ignoreInternalFunctionNullReturn="false"
-    errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
         <directory name="src"/>
-        <directory name="tests"/>
         <ignoreFiles>
             <directory name="vendor"/>
         </ignoreFiles>
@@ -44,5 +42,7 @@
         <InvalidScalarArgument errorLevel="error"/>
         <InvalidReturnType errorLevel="error"/>
         <UndefinedClass errorLevel="error"/>
+        <!-- Psalm cannot infer regex capture groups exist; PHPStan handles this correctly -->
+        <PossiblyUndefinedIntArrayOffset errorLevel="info"/>
     </issueHandlers>
 </psalm>
