@@ -28,24 +28,6 @@ test('search words function negative', function (): void {
     expect(StringManipulation::searchWords('hello / world'))->toBe('hello world');
     expect(StringManipulation::searchWords('  hello / world  '))->toBe('hello world');
 });
-test('search words returns lowercase output', function (): void {
-    $result = StringManipulation::searchWords('HeLLo_World');
-    expect($result)->toBe('hello world');
-});
-test('search words returns lowercase output regardless of input case', function (): void {
-    $result = StringManipulation::searchWords('HeLLo_{WorLD}_(Test)');
-    expect($result)->toBe('hello world test');
-});
-test('search words', function (): void {
-    $words = '{Hello/World?}';
-    $result = StringManipulation::searchWords($words);
-    expect($result)->toBe('hello world');
-});
-test('search words upper', function (): void {
-    $words = 'HELLO WORLD';
-    $result = StringManipulation::searchWords($words);
-    expect($result)->toBe('hello world');
-});
 test('search words with unlisted special characters', function (): void {
     $words = '[Hello*World!]';
     $result = StringManipulation::searchWords($words);

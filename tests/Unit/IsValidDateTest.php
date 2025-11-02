@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 use MarjovanLier\StringManipulation\StringManipulation;
 
-const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
-const TIME_FORMAT = 'H:i:s';
 /**
  * Provides a set of valid dates and their respective formats.
  *
@@ -19,7 +17,7 @@ dataset('provideValidDates', fn(): array => [
 
     [
         '2023-09-06 12:30:00',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '06-09-2023',
@@ -35,11 +33,11 @@ dataset('provideValidDates', fn(): array => [
     ],
     [
         '00:00:00',
-        TIME_FORMAT,
+        'H:i:s',
     ],
     [
         '23:59:59',
-        TIME_FORMAT,
+        'H:i:s',
     ],
     [
         '29-02-2012',
@@ -77,23 +75,23 @@ dataset('provideInvalidDates', fn(): array => [
     ],
     [
         '2012-02-30 12:12:12',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '2012-02-30 25:12:12',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '24:00:00',
-        TIME_FORMAT,
+        'H:i:s',
     ],
     [
         '23:60:00',
-        TIME_FORMAT,
+        'H:i:s',
     ],
     [
         '23:59:60',
-        TIME_FORMAT,
+        'H:i:s',
     ],
     [
         '30-02-2012',
@@ -105,39 +103,39 @@ dataset('provideInvalidDates', fn(): array => [
     ],
     [
         '2012-02-30 12:12:12',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '2012-02-28 24:12:12',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '2012-02-28 23:60:12',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '2012-02-28 23:59:60',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '0000-00-00 12:30:00',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '2023-09-06 12:61:12',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '2023-09-06 12:59:61',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '2023-09-06 25:30:00',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '2023-02-30 12:30:00',
-        DATE_TIME_FORMAT,
+        'Y-m-d H:i:s',
     ],
     [
         '2023-02-30',
@@ -145,15 +143,15 @@ dataset('provideInvalidDates', fn(): array => [
     ],
     [
         '25:30:00',
-        TIME_FORMAT,
+        'H:i:s',
     ],
     [
         '12:61:00',
-        TIME_FORMAT,
+        'H:i:s',
     ],
     [
         '12:59:61',
-        TIME_FORMAT,
+        'H:i:s',
     ],
 ]);
 test('valid dates', function (string $date, string $format): void {
