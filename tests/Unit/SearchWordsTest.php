@@ -66,6 +66,13 @@ test('search words converts all special characters to spaces', function (): void
     expect(StringManipulation::searchWords('hello.world'))->toBe('hello world');
 });
 
+test('search words converts double quote to space', function (): void {
+    // Line 90 mutation: RemoveArrayItem for " (double quote)
+    expect(StringManipulation::searchWords('hello"world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('"quoted"'))->toBe('quoted');
+    expect(StringManipulation::searchWords('say "hello" world'))->toBe('say hello world');
+});
+
 test('search words handles empty string correctly', function (): void {
     // Line 100 mutation: EmptyStringToNotEmpty
     // Test that preg_replace returning null is handled correctly
