@@ -3,27 +3,9 @@
 declare(strict_types=1);
 use MarjovanLier\StringManipulation\StringManipulation;
 
-const LOVE_APPLE = 'I love apple.';
-/**
- * @var array<int, string>
- */
-const SEARCH = [
-    'H',
-    'e',
-    'W',
-];
-/**
- * @var array<int, string>
- */
-const REPLACE = [
-    'h',
-    'x',
-    'w',
-];
-const SUBJECT = 'Hello World';
 test('str replace with not found search', function (): void {
-    $result = StringManipulation::strReplace('pineapple', 'banana', LOVE_APPLE);
-    expect($result)->toBe(LOVE_APPLE);
+    $result = StringManipulation::strReplace('pineapple', 'banana', 'I love apple.');
+    expect($result)->toBe('I love apple.');
 });
 test('str replace function', function (): void {
     // Basic test.
@@ -34,10 +16,10 @@ test('str replace function', function (): void {
 
     // Replace multiple occurrences of a single character.
     expect(StringManipulation::strReplace('e', 'x', 'hello world'))->toBe('hxllo world');
-    expect(StringManipulation::strReplace(SEARCH, REPLACE, SUBJECT))->toBe('hxllo world');
+    expect(StringManipulation::strReplace(['H', 'e', 'W'], ['h', 'x', 'w'], 'Hello World'))->toBe('hxllo world');
 });
 test('str replace', function (): void {
-    $result = StringManipulation::strReplace('apple', 'banana', LOVE_APPLE);
+    $result = StringManipulation::strReplace('apple', 'banana', 'I love apple.');
     expect($result)->toBe('I love banana.');
 });
 test('single character optimization', function (): void {

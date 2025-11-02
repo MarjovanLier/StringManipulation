@@ -3,7 +3,6 @@
 declare(strict_types=1);
 use MarjovanLier\StringManipulation\StringManipulation;
 
-const DEFAULT_TRIM_CHARACTERS = " \t\n\r\0\x0B";
 /**
  * @return array<int, array<int, string>>
  */
@@ -12,17 +11,17 @@ dataset('trimDataProvider', fn(): array => [
     // Basic tests
     [
         ' hello ',
-        DEFAULT_TRIM_CHARACTERS,
+        " \t\n\r\0\x0B",
         'hello',
     ],
     [
         "\thello\t",
-        DEFAULT_TRIM_CHARACTERS,
+        " \t\n\r\0\x0B",
         'hello',
     ],
     [
         "\nhello\n",
-        DEFAULT_TRIM_CHARACTERS,
+        " \t\n\r\0\x0B",
         'hello',
     ],
     // Tests with custom characters
@@ -39,7 +38,7 @@ dataset('trimDataProvider', fn(): array => [
     // Tests with empty strings
     [
         '',
-        DEFAULT_TRIM_CHARACTERS,
+        " \t\n\r\0\x0B",
         '',
     ],
     // Tests with no characters to trim

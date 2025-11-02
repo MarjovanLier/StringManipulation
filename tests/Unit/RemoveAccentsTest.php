@@ -51,7 +51,7 @@ test('remove accents handles double spaces', function (): void {
 
 test('remove accents converts all A-based characters', function (): void {
     // Lines 194-199 mutations: RemoveArrayItem for Á, À, Â, Ä, Å, Ã
-    expect(StringManipulation::removeAccents('Café Français'))->toContain('Cafe Francais');
+    expect(StringManipulation::removeAccents('Café Français'))->toBe('Cafe Francais');
     expect(StringManipulation::removeAccents('ÀÁÂÃÄÅ'))->toBe('AAAAAA');
     expect(StringManipulation::removeAccents('àáâãäå'))->toBe('aaaaaa');
 });

@@ -14,16 +14,3 @@ use MarjovanLier\StringManipulation\Tests\TestCase;
 */
 
 pest()->extend(TestCase::class)->in('Unit');
-
-/*
-|--------------------------------------------------------------------------
-| Global Functions
-|--------------------------------------------------------------------------
-|
-| Import PHPUnit assertion functions for use in functional tests.
-|
-*/
-
-uses()->beforeEach(function (): void {
-    // This ensures the test case is properly set up
-})->in('Unit');
