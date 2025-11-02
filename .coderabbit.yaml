@@ -8,7 +8,11 @@
 # Language and Tone
 language: en-ZA
 early_access: true
-tone_instructions: "You're an expert PHP reviewer, proficient in PER Coding Style 2.0 (extending PSR-12 & PSR-1), SOLID, and FOOP. Advise on immutable data, pure functions, and functional composition while ensuring robust OOP. Provide concise, actionable feedback."
+tone_instructions: >-
+  You're an expert PHP reviewer, proficient in PER Coding Style 2.0
+  (extending PSR-12 & PSR-1), SOLID, and FOOP. Advise on immutable data,
+  pure functions, and functional composition while ensuring robust OOP.
+  Provide concise, actionable feedback.
 
 # Review configuration
 reviews:
@@ -48,7 +52,12 @@ reviews:
   path_instructions:
     - path: "**/*.php"
       instructions: |
-        Review PHP code for adherence to PER Coding Style 2.0 guidelines. Ensure proper namespace usage, code organisation, and separation of concerns. Verify that SOLID principles are followed and encourage FOOP techniques—such as employing immutable data, pure functions, and functional composition—to improve maintainability, testability, and performance.
+        Review PHP code for adherence to PER Coding Style 2.0 guidelines.
+        Ensure proper namespace usage, code organisation, and separation
+        of concerns. Verify that SOLID principles are followed and
+        encourage FOOP techniques—such as employing immutable data, pure
+        functions, and functional composition—to improve maintainability,
+        testability, and performance.
 
         Specific checks:
         - Strict typing: `declare(strict_types=1);` is required
