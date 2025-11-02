@@ -9,9 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::removeAccents
  */
+#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'removeAccents')]
 final class RemoveAccentsTest extends TestCase
 {
     /**

@@ -10,9 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::isValidDate
  */
+#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'isValidDate')]
 final class IsValidDateTest extends TestCase
 {
     private const string DATE_TIME_FORMAT = 'Y-m-d H:i:s';

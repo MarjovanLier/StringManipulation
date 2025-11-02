@@ -9,9 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::utf8Ansi
  */
+#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'utf8Ansi')]
 final class Utf8AnsiTest extends TestCase
 {
     /**

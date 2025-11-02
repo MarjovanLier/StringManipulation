@@ -11,9 +11,8 @@ use ReflectionClass;
 
 /**
  * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::isValidMinute
  */
+#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'isValidMinute')]
 final class IsValidMinuteTest extends TestCase
 {
     /**

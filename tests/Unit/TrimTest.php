@@ -10,9 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::trim
  */
+#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'trim')]
 final class TrimTest extends TestCase
 {
     private const string DEFAULT_TRIM_CHARACTERS = " \t\n\r\0\x0B";

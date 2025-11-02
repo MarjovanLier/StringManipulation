@@ -11,9 +11,8 @@ use ReflectionClass;
 
 /**
  * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::isValidSecond
  */
+#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'isValidSecond')]
 final class IsValidSecondTest extends TestCase
 {
     /**

@@ -11,9 +11,8 @@ use ReflectionClass;
 
 /**
  * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::isValidTimePart
  */
+#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'isValidTimePart')]
 final class IsValidTimePartTest extends TestCase
 {
     /**

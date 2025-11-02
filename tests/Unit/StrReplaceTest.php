@@ -9,9 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::strReplace
  */
+#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'strReplace')]
 final class StrReplaceTest extends TestCase
 {
     private const string LOVE_APPLE = 'I love apple.';

@@ -9,9 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::searchWords
  */
+#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'searchWords')]
 final class SearchWordsTest extends TestCase
 {
     private const string HELLO_WORLD_LOWERCASE = 'hello world';

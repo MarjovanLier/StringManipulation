@@ -10,11 +10,10 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::nameFix
- *
  * This class is a test case for the nameFix function in the StringManipulation class.
  * It tests the function with a variety of inputs.
  */
+#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'nameFix')]
 final class NameFixTest extends TestCase
 {
     /**
