@@ -83,7 +83,7 @@ repos:
 
   # Standard pre-commit hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
         exclude: ^vendor/
@@ -96,3 +96,7 @@ repos:
       - id: check-xml
       - id: mixed-line-ending
         args: ['--fix=lf']
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: detect-private-key
+      - id: fix-byte-order-marker

@@ -7,6 +7,20 @@
         findUnusedBaselineEntry="true"
         findUnusedCode="true"
         taintAnalysis="true"
+        strictBinaryOperands="true"
+        ensureArrayStringOffsetsExist="true"
+        ensureArrayIntOffsetsExist="true"
+        reportMixedIssues="true"
+        totallyTyped="true"
+        sealAllMethods="true"
+        sealAllProperties="true"
+        memoizeMethodCallResults="true"
+        hoistConstants="true"
+        addParamTypes="true"
+        checkForThrowsDocblock="true"
+        checkForThrowsInGlobalScope="true"
+        ignoreInternalFunctionFalseReturn="false"
+        ignoreInternalFunctionNullReturn="false"
 >
     <projectFiles>
         <directory name="src"/>
@@ -20,5 +34,14 @@
     </plugins>
     <issueHandlers>
         <MissingParamType errorLevel="error"/>
+        <MissingReturnType errorLevel="error"/>
+        <MissingPropertyType errorLevel="error"/>
+        <MissingClosureReturnType errorLevel="error"/>
+        <InvalidDocblock errorLevel="error"/>
+        <MismatchingDocblockReturnType errorLevel="error"/>
+        <MismatchingDocblockParamType errorLevel="error"/>
+        <InvalidScalarArgument errorLevel="error"/>
+        <InvalidReturnType errorLevel="error"/>
+        <UndefinedClass errorLevel="error"/>
     </issueHandlers>
 </psalm>

@@ -57,9 +57,9 @@ jobs:
 
       # This step sets up Go environment for the job.
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
-          go-version: "1.22"
+          go-version: "1.23"
 
       # This step installs osv-scanner for vulnerability scanning.
       - name: Install osv-scanner
@@ -197,7 +197,7 @@ jobs:
       - name: Create release
         id: create_release
         if: github.ref == 'refs/heads/main' && steps.get-commits.outcome == 'success'
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

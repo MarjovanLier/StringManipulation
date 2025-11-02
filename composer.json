@@ -42,7 +42,7 @@
   },
   "minimum-stability": "stable",
   "require": {
-    "php": ">=8.3.0|>=8.4.0"
+    "php": "^8.3"
   },
   "require-dev": {
     "enlightn/security-checker": ">=2.0",
@@ -71,7 +71,10 @@
     "test:phpunit": "Execute PHPUnit tests to verify code functionality.",
     "test:psalm": "Run Psalm to find errors and improve code quality.",
     "test:rector": "Apply automated code quality enhancements with Rector.",
-    "test:vulnerabilities-check": "Scan dependencies for known security vulnerabilities."
+    "test:vulnerabilities-check": "Scan dependencies for known security vulnerabilities.",
+    "fix:code-style": "Automatically fix code style issues with Pint.",
+    "fix:rector": "Apply Rector refactorings to improve code quality.",
+    "analyse:all": "Run all static analysis tools (PHPStan, Psalm, Phan)."
   },
   "scripts": {
     "post-update-cmd": [
@@ -102,6 +105,13 @@
     "test:phpunit": "phpunit --no-coverage --no-logging",
     "test:psalm": "psalm --no-cache --no-progress --show-info=false",
     "test:rector": "rector --dry-run",
-    "test:vulnerabilities-check": "security-checker security:check"
+    "test:vulnerabilities-check": "security-checker security:check",
+    "fix:code-style": "pint",
+    "fix:rector": "rector",
+    "analyse:all": [
+      "@test:phpstan",
+      "@test:psalm",
+      "@test:phan"
+    ]
   }
 }

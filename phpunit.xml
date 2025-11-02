@@ -8,6 +8,11 @@
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
          displayDetailsOnTestsThatTriggerNotices="true"
+         cacheDirectory=".phpunit.cache"
+         requireCoverageMetadata="true"
+         beStrictAboutCoverageMetadata="true"
+         failOnWarning="true"
+         failOnRisky="true"
 >
     <testsuites>
         <testsuite name="Unit">
@@ -19,15 +24,9 @@
             <directory>src</directory>
         </include>
     </source>
-    <php>
-        <env name="APP_ENV" value="testing"/>
-        <env name="BCRYPT_ROUNDS" value="4"/>
-        <env name="CACHE_DRIVER" value="array"/>
-        <env name="MAIL_MAILER" value="array"/>
-        <env name="QUEUE_CONNECTION" value="sync"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="TELESCOPE_ENABLED" value="false"/>
-    </php>
+    <extensions>
+        <bootstrap class="Psalm\PhpUnitPlugin\Plugin"/>
+    </extensions>
     <coverage>
         <report>
             <html outputDirectory="reports/code-coverage/html"/>
