@@ -78,3 +78,40 @@ test('search words handles empty string correctly', function (): void {
     // Test that preg_replace returning null is handled correctly
     expect(StringManipulation::searchWords(''))->toBe('');
 });
+
+test('search words converts question mark to space', function (): void {
+    // Line 90 mutation: RemoveArrayItem for ? (question mark)
+    expect(StringManipulation::searchWords('hello?world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('what?where?'))->toBe('what where');
+    expect(StringManipulation::searchWords('question?'))->toBe('question');
+});
+
+test('search words converts at symbol to space', function (): void {
+    // Line 90 mutation: RemoveArrayItem for @ (at symbol)
+    expect(StringManipulation::searchWords('hello@world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('user@domain'))->toBe('user domain');
+});
+
+test('search words converts opening parenthesis to space', function (): void {
+    // Line 90 mutation: RemoveArrayItem for ( (opening parenthesis)
+    expect(StringManipulation::searchWords('hello(world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('(test'))->toBe('test');
+});
+
+test('search words converts opening brace to space', function (): void {
+    // Line 90 mutation: RemoveArrayItem for { (opening brace)
+    expect(StringManipulation::searchWords('hello{world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('{test}'))->toBe('test');
+});
+
+test('search words converts forward slash to space', function (): void {
+    // Line 90 mutation: RemoveArrayItem for / (forward slash)
+    expect(StringManipulation::searchWords('hello/world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('path/to/file'))->toBe('path to file');
+});
+
+test('search words converts underscore to space', function (): void {
+    // Line 90 mutation: RemoveArrayItem for _ (underscore)
+    expect(StringManipulation::searchWords('hello_world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('snake_case_name'))->toBe('snake case name');
+});

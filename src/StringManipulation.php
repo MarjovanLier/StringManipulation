@@ -97,7 +97,7 @@ final class StringManipulation
         $words = self::removeAccents($words);
 
         // Reduce multiple spaces to a single space and trim
-        return trim(preg_replace('# {2,}#', ' ', $words) ?? '');
+        return trim((string) preg_replace('# {2,}#', ' ', $words));
     }
 
 
@@ -133,7 +133,7 @@ final class StringManipulation
 
         $lastName = trim(self::utf8Ansi($lastName));
         $lastName = self::removeAccents($lastName);
-        $lastName = (preg_replace('# {2,}#', ' ', $lastName) ?? '');
+        $lastName = (string) preg_replace('# {2,}#', ' ', $lastName);
 
         // Convert to lowercase once for all operations
         $lowerLastName = strtolower($lastName);
@@ -157,14 +157,11 @@ final class StringManipulation
         $lastName = implode('-', array_map(ucwords(...), explode('-', strtolower($lastName))));
 
         // Fix common prefixes to have proper casing
-        $lastName = preg_replace_callback(
+        $lastName = (string) preg_replace_callback(
             '#\b(van|von|den|der|des|de|du|la|le)\b#i',
             static fn(array $matches): string => strtolower($matches[1]),
             $lastName,
         );
-
-        // Ensure $lastName is not null (defensive programming)
-        $lastName ??= '';
 
         // Fix mc/mac spacing if needed
         if ($mcFix) {
