@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 use MarjovanLier\StringManipulation\StringManipulation;
 
 test('remove accents function', function (): void {
@@ -32,4 +33,18 @@ test('remove accents with no accents', function (): void {
     $string = 'ABCDEF';
     $result = StringManipulation::removeAccents($string);
     expect($result)->toBe('ABCDEF');
+});
+
+test('remove accents handles double spaces', function (): void {
+    // Line 232 & 233 mutations: RemoveArrayItem
+    // Tests that the function correctly handles the '  ' => ' ' mapping
+    // in the accentsReplacement array
+    $stringWithDoubleSpaces = 'hello  world';
+    $result = StringManipulation::removeAccents($stringWithDoubleSpaces);
+    expect($result)->toBe('hello world');
+
+    // Test multiple double spaces
+    $stringWithMultipleDoubleSpaces = 'a  b  c  d';
+    $result2 = StringManipulation::removeAccents($stringWithMultipleDoubleSpaces);
+    expect($result2)->toBe('a b c d');
 });

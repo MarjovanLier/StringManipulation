@@ -73,9 +73,25 @@ repos:
         files: \.php$
         pass_filenames: false
 
+      - id: test-coverage
+        name: Pest Test Coverage
+        entry: docker-compose run --rm tests ./vendor/bin/pest --coverage --min=100
+        language: system
+        files: \.php$
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: type-coverage
+        name: Pest Type Coverage
+        entry: docker-compose run --rm tests ./vendor/bin/pest --type-coverage --min=100
+        language: system
+        files: \.php$
+        pass_filenames: false
+        stages: [pre-push]
+
       - id: mutation
         name: Pest Mutation Testing
-        entry: docker-compose run --rm tests ./vendor/bin/pest --mutate --min=90
+        entry: docker-compose run --rm tests ./vendor/bin/pest --mutate --min=90 --everything --covered-only
         language: system
         files: \.php$
         pass_filenames: false

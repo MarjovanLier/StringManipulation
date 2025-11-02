@@ -51,6 +51,7 @@
     "laravel/pint": ">=1.22.1",
     "pestphp/pest": "^4.1",
     "pestphp/pest-plugin-drift": "^4.0",
+    "pestphp/pest-plugin-type-coverage": "^4.0",
     "phan/phan": ">=5.4.5",
     "php-parallel-lint/php-parallel-lint": ">=1.4.0",
     "phpmd/phpmd": ">=2.15",

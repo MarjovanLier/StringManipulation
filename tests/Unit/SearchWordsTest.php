@@ -52,3 +52,22 @@ test('search words with unlisted special characters', function (): void {
     $result = StringManipulation::searchWords($words);
     expect($result)->toBe('[hello world!]');
 });
+
+test('search words converts all special characters to spaces', function (): void {
+    // Test each character from the searchChars array:
+    // {, }, (, ), /, \, @, :, ", ?, ,, ., _
+
+    // Characters that were NOT being tested (6 surviving mutations):
+    expect(StringManipulation::searchWords('hello}world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('hello)world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('hello\\world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('hello:world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('hello,world'))->toBe('hello world');
+    expect(StringManipulation::searchWords('hello.world'))->toBe('hello world');
+});
+
+test('search words handles empty string correctly', function (): void {
+    // Line 100 mutation: EmptyStringToNotEmpty
+    // Test that preg_replace returning null is handled correctly
+    expect(StringManipulation::searchWords(''))->toBe('');
+});

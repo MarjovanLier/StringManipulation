@@ -154,7 +154,7 @@ final class StringManipulation
         }
 
         // Capitalize each part of a hyphenated name
-        $lastName = implode('-', array_map('ucwords', explode('-', strtolower($lastName))));
+        $lastName = implode('-', array_map(ucwords(...), explode('-', strtolower($lastName))));
 
         // Fix common prefixes to have proper casing
         $lastName = preg_replace_callback(

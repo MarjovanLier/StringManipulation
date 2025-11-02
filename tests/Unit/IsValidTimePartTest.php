@@ -47,13 +47,6 @@ dataset('provideTimeParts', fn(): array => array_merge(
 test('is valid time part', function (array $timeParts, bool $expectedResult): void {
     $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidTimePart');
 
-    /**
-     * @noinspection PhpExpressionResultUnusedInspection
-     *
-     * @psalm-suppress UnusedMethodCall
-     */
-    $reflectionMethod->setAccessible(true);
-
     $result = $reflectionMethod->invoke(null, $timeParts);
 
     expect($result)->toBe($expectedResult);

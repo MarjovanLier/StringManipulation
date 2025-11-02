@@ -12,6 +12,7 @@ use MarjovanLier\StringManipulation\StringManipulation;
  *     false}, list{60, false}, list{100, false}}
  */
 dataset('provideHours', fn(): array => [
+
     [
         0,
         true,
@@ -47,13 +48,6 @@ dataset('provideHours', fn(): array => [
 ]);
 test('is valid hour', function (int $hour, bool $expectedResult): void {
     $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidHour');
-
-    /**
-     * @noinspection PhpExpressionResultUnusedInspection
-     *
-     * @psalm-suppress UnusedMethodCall
-     */
-    $reflectionMethod->setAccessible(true);
 
     $result = $reflectionMethod->invoke(null, $hour);
 

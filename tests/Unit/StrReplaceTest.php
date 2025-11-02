@@ -79,11 +79,57 @@ test('single character vs multiple character', function (): void {
     expect($actual)->toBe($expected);
 });
 test('empty string optimization', function (): void {
-    // Test that empty subject returns empty string immediately.
+    // Line 276 mutation: RemoveEarlyReturn
+    // Test that empty subject returns empty string immediately
     $result = StringManipulation::strReplace('a', 'b', '');
     expect($result)->toBe('');
 
-    // Test that empty search/replace with non-empty subject works correctly.
+    // Test that empty search/replace with non-empty subject works correctly
     $result = StringManipulation::strReplace('', 'x', 'abc');
     expect($result)->toBe('abc');
+});
+
+test('single character optimization mutations', function (): void {
+    // Line 280 mutations: IdenticalToNotIdentical, BooleanAndToBooleanOr, DecrementInteger, IncrementInteger
+    // Line 281 mutation: RemoveEarlyReturn
+    // These test the optimization path: is_string($search) && is_string($replace) && strlen($search) === 1
+
+    // All three conditions must be true:
+    // 1. search is string (not array)
+    // 2. replace is string (not array)
+    // 3. search length is exactly 1
+
+    // Test case where search is array (first condition false)
+    $arraySearch = StringManipulation::strReplace(['a'], ['b'], 'apple');
+    expect($arraySearch)->toBe('bpple');
+
+    // Test case where search length is 0 (third condition false)
+    $zeroLength = StringManipulation::strReplace('', 'x', 'apple');
+    expect($zeroLength)->toBe('apple');
+
+    // Test case where search length is 2 (third condition false - not === 1)
+    $twoChars = StringManipulation::strReplace('pp', 'tt', 'apple');
+    expect($twoChars)->toBe('attle');
+
+    // Test case where ALL conditions are true (optimization path)
+    $singleChar = StringManipulation::strReplace('p', 't', 'apple');
+    expect($singleChar)->toBe('attle');
+});
+
+test('single character optimization uses correct path', function (): void {
+    // Line 280 mutations specifically test the strlen($search) === 1 check
+    // DecrementInteger would change it to === 0
+    // IncrementInteger would change it to === 2
+
+    // With length === 1 (correct), this should use strtr optimization
+    $len1 = StringManipulation::strReplace('x', 'y', 'xxx');
+    expect($len1)->toBe('yyy');
+
+    // With length === 0 (if decremented), empty search would not match
+    $len0 = StringManipulation::strReplace('', 'y', 'xxx');
+    expect($len0)->toBe('xxx'); // Should not change
+
+    // With length === 2 (if incremented), this would use str_replace instead
+    $len2 = StringManipulation::strReplace('xx', 'yy', 'xxx');
+    expect($len2)->toBe('yyx'); // Different result than single char replacement
 });

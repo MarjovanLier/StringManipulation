@@ -8,6 +8,7 @@ const DEFAULT_TRIM_CHARACTERS = " \t\n\r\0\x0B";
  * @return array<int, array<int, string>>
  */
 dataset('trimDataProvider', fn(): array => [
+
     // Basic tests
     [
         ' hello ',
@@ -50,4 +51,5 @@ dataset('trimDataProvider', fn(): array => [
 ]);
 test('trim', function (string $input, string $characters, mixed $expected): void {
     expect(StringManipulation::trim($input, $characters))->toBe($expected);
+
 })->with('trimDataProvider');

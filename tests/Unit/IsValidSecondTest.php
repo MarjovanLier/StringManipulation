@@ -12,6 +12,7 @@ use MarjovanLier\StringManipulation\StringManipulation;
  *     false}}
  */
 dataset('provideSeconds', fn(): array => [
+
     [
         0,
         true,
@@ -39,13 +40,6 @@ dataset('provideSeconds', fn(): array => [
 ]);
 test('is valid second', function (int $second, bool $expectedResult): void {
     $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidSecond');
-
-    /**
-     * @noinspection PhpExpressionResultUnusedInspection
-     *
-     * @psalm-suppress UnusedMethodCall
-     */
-    $reflectionMethod->setAccessible(true);
 
     $result = $reflectionMethod->invoke(null, $second);
 

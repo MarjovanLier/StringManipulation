@@ -18,6 +18,7 @@ const TIME_FORMAT = 'H:i:s';
  * @suppress PossiblyUnusedMethod
  */
 dataset('provideValidDates', fn(): array => [
+
     [
         '2023-09-06 12:30:00',
         DATE_TIME_FORMAT,
@@ -63,6 +64,7 @@ dataset('provideValidDates', fn(): array => [
  * @psalm-return list<array{0: string, 1: string}>
  */
 dataset('provideInvalidDates', fn(): array => [
+
     [
         '2023-09-06 12:30:00',
         'Y-m-d',
@@ -158,6 +160,7 @@ dataset('provideInvalidDates', fn(): array => [
 ]);
 test('valid dates', function (string $date, string $format): void {
     expect(StringManipulation::isValidDate($date, $format))->toBeTrue();
+
 })->with('provideValidDates');
 test('invalid dates', function (string $date, string $format): void {
     expect(StringManipulation::isValidDate($date, $format))->toBeFalse();
