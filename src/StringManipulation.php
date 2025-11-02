@@ -141,7 +141,7 @@ final class StringManipulation
         $macFix = false;
 
         // Check for 'mc' prefix without following space
-        if (str_contains($lowerLastName, 'mc') && preg_match('#mc(?! )#', $lowerLastName) === 1) {
+        if (preg_match('#mc(?! )#', $lowerLastName) === 1) {
             $mcFix = true;
             $lastName = self::strReplace('mc', 'mc ', $lowerLastName);
             $lowerLastName = $lastName;
