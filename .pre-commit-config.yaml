@@ -75,7 +75,7 @@ repos:
 
       - id: mutation
         name: Pest Mutation Testing
-        entry: docker-compose run --rm tests ./vendor/bin/pest --mutate --min=85
+        entry: docker-compose run --rm tests ./vendor/bin/pest --mutate --min=90
         language: system
         files: \.php$
         pass_filenames: false
