@@ -9,9 +9,8 @@
 language: en-ZA
 early_access: true
 tone_instructions: >-
-  You're an expert PHP reviewer, proficient in PER Coding Style 2.0
-  (extending PSR-12 & PSR-1), SOLID, and FOOP. Advise on immutable data,
-  pure functions, and functional composition while ensuring robust OOP.
+  Expert PHP reviewer proficient in PER Coding Style 2.0, SOLID, and FOOP.
+  Advise on immutable data, pure functions, and functional composition.
   Provide concise, actionable feedback.
 
 # Review configuration
@@ -55,8 +54,8 @@ reviews:
         Review PHP code for adherence to PER Coding Style 2.0 guidelines.
         Ensure proper namespace usage, code organisation, and separation
         of concerns. Verify that SOLID principles are followed and
-        encourage FOOP techniques—such as employing immutable data, pure
-        functions, and functional composition—to improve maintainability,
+        encourage FOOP techniques—such as immutable data, pure functions,
+        and functional composition—to improve maintainability,
         testability, and performance.
 
         Specific checks:
@@ -121,23 +120,23 @@ reviews:
     custom_checks:
       - mode: "error"
         name: "Strict Type Declarations"
-        instructions: "All PHP files in src/ must start with `declare(strict_types=1);` after the opening PHP tag and before namespace declaration."
+        instructions: "All PHP files in src/ must begin with `declare(strict_types=1);` after the opening PHP tag and before the namespace declaration."
 
       - mode: "error"
-        name: "No var_dump or dd()"
-        instructions: "Code must not contain var_dump(), dd(), dump(), print_r() or similar debugging functions in production code (src/ directory)."
+        name: "No Debugging Functions"
+        instructions: "Production code (src/ directory) must not contain debugging functions: var_dump(), var_export(), print_r(), dd(), or dump()."
 
       - mode: "warning"
         name: "Test Coverage"
-        instructions: "New code should have corresponding PHPUnit tests. Critical features require 100% line coverage, standard features require 90% coverage."
+        instructions: "New code must have corresponding PHPUnit tests. Critical features require 100% line coverage; standard features require 90% coverage."
 
       - mode: "warning"
         name: "Performance Complexity"
-        instructions: "Algorithms should avoid O(n²) or worse complexity. Document Big O complexity for non-trivial algorithms."
+        instructions: "Algorithms should avoid O(n²) or worse time complexity. Document Big O time complexity for non-trivial algorithms."
 
       - mode: "warning"
         name: "Security Best Practices"
-        instructions: "Code must not contain hardcoded secrets, credentials, or API keys. All user input must be validated. SQL queries must use parameterised statements."
+        instructions: "Validate all user input. Use parameterised statements for SQL queries. Never hardcode secrets, credentials, or API keys."
 
   # Tools configuration
   tools:
@@ -224,7 +223,7 @@ code_generation:
       - path: "src/**/*.php"
         instructions: |
           Focus on explaining business behaviour and functionality, not obvious implementation.
-          Use South African English spelling (organisation, optimisation, analyse).
+          Use South African English spelling (organisation, optimisation, analyse, behaviour).
           Include @param and @return tags with proper types.
           Add @throws for exceptions.
           Add @example tags demonstrating usage.
@@ -237,10 +236,10 @@ code_generation:
       - path: "src/**/*.php"
         instructions: |
           Generate PHPUnit tests following TDD principles:
-          - Test names should describe behaviour: test_methodName_condition_expectedBehaviour
-          - Each test should follow AAA pattern (Arrange-Act-Assert)
+          - Test names must describe behaviour: test_methodName_condition_expectedBehaviour
+          - Each test must follow the AAA pattern (Arrange-Act-Assert)
           - Include unit tests for all public methods, edge cases, and error conditions
-          - Tests should be independent and deterministic
-          - Aim for fast execution (<100ms for unit tests)
+          - Tests must be independent and deterministic
+          - Target fast execution (<100ms for unit tests)
           - Use data providers with #[DataProvider] for testing multiple scenarios
           - Focus on critical functionality and edge cases
