@@ -1,14 +1,13 @@
-includes:
-    - vendor/phpstan/phpstan-strict-rules/rules.neon
-
 parameters:
     level: max
+    paths:
+        - src/
+        - tests/
+    tmpDir: .phpstan
     phpVersion: 80300
     treatPhpDocTypesAsCertain: false
     tipsOfTheDay: false
     reportWrongPhpDocTypeInVarTag: true
-    checkMissingIterableValueType: true
-    checkGenericClassInNonGenericObjectType: true
     checkBenevolentUnionTypes: true
     checkUninitializedProperties: true
     checkTooWideReturnTypesInProtectedAndPublicMethods: true
@@ -17,15 +16,20 @@ parameters:
     reportPossiblyNonexistentConstantArrayOffset: true
     reportPossiblyNonexistentGeneralArrayOffset: true
 
-    paths:
-        - src
-        - tests
+    type_perfect:
+        null_over_false: true     # Use null instead of false for "no-result"
+        no_mixed: true            # Prevent mixed types (combines no_mixed_property + no_mixed_caller)
 
-    ignoreErrors:
+    type_coverage:
+        return: 95                # Require 95% return type coverage
+        param: 99                 # Require 99% parameter type coverage
+        property: 95              # Require 95% property type coverage
+        constant: 85              # Require 85% constant type coverage (PHP 8.3+)
+        declare: 100              # Require 100% strict_types declarations
 
     parallel:
         jobSize: 20
         maximumNumberOfProcesses: 32
         minimumNumberOfJobsPerProcess: 2
 
-    tmpDir: .phpstan
+    ignoreErrors:

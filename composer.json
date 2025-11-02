@@ -57,7 +57,9 @@
     "phpunit/phpunit": ">=11.0.9|>=12.0.2",
     "psalm/plugin-phpunit": ">=0.19.3",
     "rector/rector": ">=2.0.16",
+    "rector/type-perfect": "^2.1",
     "roave/security-advisories": "dev-latest",
+    "tomasvotruba/type-coverage": "^2.0",
     "vimeo/psalm": ">=6.7"
   },
   "scripts-descriptions": {
