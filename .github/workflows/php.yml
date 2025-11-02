@@ -93,16 +93,16 @@ jobs:
         if: steps.code-style.outcome == 'success'
         run: composer test:phpmd
 
-      # This step runs tests with PHPUnit.
-      - name: Run tests with PHPUnit
-        id: phpunit
+      # This step runs tests with Pest.
+      - name: Run tests with Pest
+        id: pest
         if: steps.phpmd.outcome == 'success'
-        run: composer test:phpunit
+        run: composer test:pest
 
       # This step runs mutation testing with Infection.
       - name: Run Mutation Testing
         id: infection
-        if: steps.phpunit.outcome == 'success'
+        if: steps.pest.outcome == 'success'
         run: composer test:infection
 
       # This step runs static analysis with PHPStan.
