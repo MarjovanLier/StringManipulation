@@ -108,12 +108,12 @@ docker-compose run --rm tests composer test:phpstan
 
 - `test:code-style` - Check code style (Laravel Pint)
 - `test:composer-validate` - Validate composer.json
-- `test:infection` - Run mutation testing
+- `test:infection` - Run mutation testing (via Pest)
 - `test:lint` - Check for syntax errors
 - `test:phan` - Static analysis with Phan
 - `test:phpmd` - PHP Mess Detector
 - `test:phpstan` - PHPStan static analysis
-- `test:phpunit` - Unit tests
+- `test:pest` - Run Pest test suite
 - `test:psalm` - Psalm static analysis
 - `test:rector` - Code quality checks
 - `test:vulnerabilities-check` - Security vulnerability scan

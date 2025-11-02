@@ -2,116 +2,106 @@
 
 declare(strict_types=1);
 
-namespace MarjovanLier\StringManipulation\Tests\Unit;
-
 use MarjovanLier\StringManipulation\StringManipulation;
-use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::nameFix
- *
- * This class is a test case for the nameFix function in the StringManipulation class.
- * It tests the function with a variety of inputs.
- */
-final class NameFixTest extends TestCase
-{
-    /**
-     * Test the nameFix function with a variety of inputs.
-     *
-     * This function tests the nameFix function with a variety of names, including basic and advanced name handling.
-     * It also includes negative tests where the input is not a name.
-     */
-    public function testNameFixFunction(): void
-    {
-        // Basic and advanced name handling
-        $names = [
-            'de la hoya' => 'de la Hoya',
-            'de la tòrré' => 'de la Torre',
-            'donald' => 'Donald',
-            'johnson' => 'Johnson',
-            'macarthur' => 'MacArthur',
-            '   macdonald   ' => 'MacDonald',
-            'macdonald-smith-jones' => 'MacDonald-Smith-Jones',
-            'mACdonald-sMith-jOnes' => 'MacDonald-Smith-Jones',
-            'MacDonald-sMith-jOnes' => 'MacDonald-Smith-Jones',
-            'macIntosh' => 'MacIntosh',
-            'mac jones' => 'Mac Jones',
-            'macjones' => 'MacJones',
-            'mcdonald' => 'McDonald',
-            'MCDONALD' => 'McDonald',
-            ' mcDonald ' => 'McDonald',
-            'Mc donald' => 'Mc Donald',
-            'mcdónald' => 'McDonald',
-            'o’reilly' => "O'reilly",
-            'van der saar' => 'van der Saar',
-            'VAN LIER' => 'van Lier',
-            'À Macdonald È' => 'A MacDonald E',
-        ];
+test('name fix function', function (): void {
 
-        foreach ($names as $input => $expected) {
-            // For each name, we assert that the output of the nameFix function is equal to the expected output.
-            self::assertEquals($expected, StringManipulation::nameFix($input));
-        }
+    // Basic and advanced name handling
+    $names = [
+        'de la hoya' => 'de la Hoya',
+        'de la tòrré' => 'de la Torre',
+        'donald' => 'Donald',
+        'johnson' => 'Johnson',
+        'macarthur' => 'MacArthur',
+        '   macdonald   ' => 'MacDonald',
+        'macdonald-smith-jones' => 'MacDonald-Smith-Jones',
+        'mACdonald-sMith-jOnes' => 'MacDonald-Smith-Jones',
+        'MacDonald-sMith-jOnes' => 'MacDonald-Smith-Jones',
+        'macIntosh' => 'MacIntosh',
+        'mac jones' => 'Mac Jones',
+        'macjones' => 'MacJones',
+        'mcdonald' => 'McDonald',
+        'MCDONALD' => 'McDonald',
+        ' mcDonald ' => 'McDonald',
+        'Mc donald' => 'Mc Donald',
+        'mcdónald' => 'McDonald',
+        'o’reilly' => "O'reilly",
+        'van der saar' => 'van der Saar',
+        'VAN LIER' => 'van Lier',
+        'À Macdonald È' => 'A MacDonald E',
+    ];
 
-        // Negative tests
-        $negativeTests = [
-            '!@#$%' => '!@#$%',
-        ];
-
-        foreach ($negativeTests as $input => $expected) {
-            // For each negative test, we assert that the output of the nameFix function is equal to the input.
-            self::assertEquals($expected, StringManipulation::nameFix($input));
-        }
-
-        // Test null input separately
-        self::assertNull(StringManipulation::nameFix(null));
+    foreach ($names as $input => $expected) {
+        // For each name, we assert that the output of the nameFix function is equal to the expected output.
+        expect(StringManipulation::nameFix($input))->toBe($expected);
     }
 
+    // Negative tests
+    $negativeTests = [
+        '!@#$%' => '!@#$%',
+    ];
 
-    /**
-     * Test the nameFix function with numeric input.
-     *
-     * This function tests the nameFix function with a numeric input.
-     * The function is expected to return the input as is in this case.
-     */
-    public function testNameFixWithNumericInput(): void
-    {
-        self::assertEquals('12345', StringManipulation::nameFix('12345'));
+    foreach ($negativeTests as $input => $expected) {
+        // For each negative test, we assert that the output of the nameFix function is equal to the input.
+        expect(StringManipulation::nameFix($input))->toBe($expected);
     }
 
+    // Test null input separately
+    expect(StringManipulation::nameFix(null))->toBeNull();
+});
 
-    /**
-     * Test that Mac/Mc prefix handling requires both conditions to be true.
-     * This targets the LogicalAnd mutations in the nameFix function.
-     */
-    public function testMacMcPrefixHandlingLogicalConditions(): void
-    {
-        // Test cases where 'mc' exists but is followed by a space (should NOT trigger fix)
-        self::assertEquals('Mc Donald', StringManipulation::nameFix('mc donald'));
-        self::assertEquals('Mc Lean', StringManipulation::nameFix('mc lean'));
+test('name fix with numeric input', function (): void {
 
-        // Test cases where 'mac' exists but is followed by a space (should NOT trigger fix)
-        self::assertEquals('Mac Donald', StringManipulation::nameFix('mac donald'));
-        self::assertEquals('Mac Lean', StringManipulation::nameFix('mac lean'));
+    expect(StringManipulation::nameFix('12345'))->toBe('12345');
+});
 
-        // Test cases where 'mc' exists and is NOT followed by a space (SHOULD trigger fix)
-        self::assertEquals('McDonald', StringManipulation::nameFix('mcdonald'));
-        self::assertEquals('McLean', StringManipulation::nameFix('mclean'));
+test('name fix handles empty string correctly', function (): void {
+    // Lines 136, 167 mutations: EmptyStringToNotEmpty
+    // Test that preg_replace returning null is handled correctly
+    expect(StringManipulation::nameFix(''))->toBe('');
+});
 
-        // Test cases where 'mac' exists and is NOT followed by a space (SHOULD trigger fix)
-        self::assertEquals('MacDonald', StringManipulation::nameFix('macdonald'));
-        self::assertEquals('MacLean', StringManipulation::nameFix('maclean'));
+test('name fix handles mc prefix edge cases', function (): void {
+    // Line 144 mutation: BooleanAndToBooleanOr
+    // Test that both conditions must be true: contains 'mc' AND regex matches 'mc' without space
 
-        // Test cases where prefix doesn't exist at all
-        self::assertEquals("O'brien", StringManipulation::nameFix("o'brien"));
-        self::assertEquals('Johnson', StringManipulation::nameFix('johnson'));
+    // Contains 'mc' but WITH space after it - should NOT trigger mcFix
+    expect(StringManipulation::nameFix('mc donald'))->toBe('Mc Donald');
 
-        // Test complex cases with multiple occurrences
-        self::assertEquals('MacDonald-McDonald', StringManipulation::nameFix('macdonald-mcdonald'));
+    // Contains 'mc' AND WITHOUT space after it - should trigger mcFix
+    expect(StringManipulation::nameFix('mcdonald'))->toBe('McDonald');
 
-        // Test edge case where both conditions in OR would be true but should only trigger once
-        self::assertEquals('MacDonald Mac Smith', StringManipulation::nameFix('macdonald mac smith'));
-    }
-}
+    // Does NOT contain 'mc' at all - should not trigger mcFix
+    expect(StringManipulation::nameFix('donald'))->toBe('Donald');
+});
+
+test('name fix handles mac prefix edge cases', function (): void {
+    // Line 151 mutation: BooleanAndToBooleanOr
+    // Test that both conditions must be true: contains 'mac' AND regex matches 'mac' without space
+
+    // Contains 'mac' but WITH space after it - should NOT trigger macFix
+    expect(StringManipulation::nameFix('mac donald'))->toBe('Mac Donald');
+
+    // Contains 'mac' AND WITHOUT space after it - should trigger macFix
+    expect(StringManipulation::nameFix('macdonald'))->toBe('MacDonald');
+
+    // Does NOT contain 'mac' at all - should not trigger macFix
+    expect(StringManipulation::nameFix('donald'))->toBe('Donald');
+});
+
+test('name fix handles name prefixes correctly', function (): void {
+    // Line 162 mutation: DecrementInteger
+    // Tests that the regex callback uses $matches[1] (captured group) not $matches[0] (full match)
+    // The regex pattern captures the prefix in group 1, and we need to lowercase only that group
+
+    // Test van prefix
+    expect(StringManipulation::nameFix('VAN LIER'))->toBe('van Lier');
+    expect(StringManipulation::nameFix('Van Lier'))->toBe('van Lier');
+
+    // Test von prefix
+    expect(StringManipulation::nameFix('VON SMITH'))->toBe('von Smith');
+
+    // Test multiple prefixes
+    expect(StringManipulation::nameFix('Van Der Saar'))->toBe('van der Saar');
+    expect(StringManipulation::nameFix('De La Hoya'))->toBe('de la Hoya');
+});

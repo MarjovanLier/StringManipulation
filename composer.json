@@ -37,41 +37,49 @@
     "sort-packages": true,
     "allow-plugins": {
       "infection/extension-installer": true,
-      "phpstan/extension-installer": true
+      "phpstan/extension-installer": true,
+      "pestphp/pest-plugin": true
     }
   },
   "minimum-stability": "stable",
   "require": {
-    "php": ">=8.3.0|>=8.4.0"
+    "php": "^8.3"
   },
   "require-dev": {
     "enlightn/security-checker": ">=2.0",
     "infection/infection": ">=0.31.2",
     "laravel/pint": ">=1.24.0",
+    "pestphp/pest": "^4.1",
+    "pestphp/pest-plugin-drift": "^4.0",
+    "pestphp/pest-plugin-type-coverage": "^4.0",
     "phan/phan": ">=5.5.1",
     "php-parallel-lint/php-parallel-lint": ">=1.4.0",
     "phpmd/phpmd": ">=2.15",
     "phpstan/extension-installer": ">=1.4.3",
     "phpstan/phpstan": ">=2.1.22",
     "phpstan/phpstan-strict-rules": ">=2.0.6",
-    "phpunit/phpunit": ">=11.0.9|>=12.0.2",
     "psalm/plugin-phpunit": ">=0.19.3",
     "rector/rector": ">=2.1.4",
+    "rector/type-perfect": "^2.1",
     "roave/security-advisories": "dev-latest",
+    "tomasvotruba/type-coverage": "^2.0",
     "vimeo/psalm": ">=6.7"
   },
   "scripts-descriptions": {
     "test:code-style": "Check code for stylistic consistency using Laravel Pint",
     "test:composer-validate": "Validate composer.json schema, dependencies, and configuration integrity with strict validation",
-    "test:infection": "Execute comprehensive mutation testing to verify test quality and code robustness against logic modifications",
+    "test:infection": "Run mutation testing using Pest's built-in mutation testing to verify test suite quality and effectiveness",
     "test:lint": "Perform syntax validation and identify deprecated PHP patterns across all source files",
     "test:phan": "Execute Phan static analysis for type safety, dead code detection, and PHP compatibility validation",
     "test:phpmd": "Analyse code complexity, design patterns, and identify potential bugs using PHP Mess Detector rules",
     "test:phpstan": "Perform advanced static analysis with PHPStan for type checking, null safety, and logic validation",
-    "test:phpunit": "Run comprehensive PHPUnit test suite (166 tests) with strict type checking and edge case coverage",
+    "test:pest": "Run comprehensive Pest test suite with mutation testing, strict type checking and edge case coverage",
     "test:psalm": "Execute Psalm static analysis for advanced type inference, purity checking, and security validation",
     "test:rector": "Analyse code for modernisation opportunities and PHP 8.3+ feature adoption using Rector rules",
-    "test:vulnerabilities-check": "Scan all dependencies for known CVE vulnerabilities and security advisories using Enlightn Security Checker"
+    "test:vulnerabilities-check": "Scan all dependencies for known CVE vulnerabilities and security advisories using Enlightn Security Checker",
+    "fix:code-style": "Automatically fix code style issues with Pint",
+    "fix:rector": "Apply Rector refactorings to improve code quality",
+    "analyse:all": "Run all static analysis tools (PHPStan, Psalm, Phan)"
   },
   "scripts": {
     "post-update-cmd": [
@@ -85,7 +93,7 @@
       "@test:lint",
       "@test:code-style",
       "@test:phpmd",
-      "@test:phpunit",
+      "@test:pest",
       "@test:infection",
       "@test:phpstan",
       "@test:phan",
@@ -94,14 +102,21 @@
     ],
     "test:code-style": "pint --test",
     "test:composer-validate": "composer validate --strict",
-    "test:infection": "php -d memory_limit=-1 -d zend_extension=xdebug -d xdebug.mode=coverage ./vendor/bin/infection --threads=4 --show-mutations",
+    "test:infection": "php -d zend_extension=xdebug -d xdebug.mode=coverage ./vendor/bin/pest --mutate --everything --parallel",
     "test:lint": "parallel-lint --exclude vendor --show-deprecated .",
     "test:phan": "phan --no-progress-bar",
     "test:phpmd": "phpmd src,tests text phpmd.xml",
     "test:phpstan": "phpstan analyse --memory-limit=-1 --no-progress --no-interaction",
-    "test:phpunit": "phpunit --no-coverage --no-logging",
+    "test:pest": "pest --no-coverage",
     "test:psalm": "psalm --no-cache --no-progress --show-info=false",
     "test:rector": "rector --dry-run",
-    "test:vulnerabilities-check": "security-checker security:check"
+    "test:vulnerabilities-check": "security-checker security:check",
+    "fix:code-style": "pint",
+    "fix:rector": "rector",
+    "analyse:all": [
+      "@test:phpstan",
+      "@test:psalm",
+      "@test:phan"
+    ]
   }
 }

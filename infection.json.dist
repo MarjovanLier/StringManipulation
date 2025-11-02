@@ -1,0 +1,38 @@
+{
+    "$schema": "vendor/infection/infection/resources/schema.json",
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "infection.log",
+        "summary": "infection-summary.log",
+        "json": "infection.json",
+        "perMutator": "infection-per-mutator.md"
+    },
+    "tmpDir": ".infection",
+    "timeout": 10,
+    "php": {
+        "configTimeout": 30
+    },
+    "mutators": {
+        "@default": true,
+        "@function_signature": true,
+        "@number": true,
+        "@operator": true,
+        "@regex": true,
+        "@removal": true,
+        "@return_value": true,
+        "@sort": true,
+        "@zero_iteration": true,
+        "@cast": true
+    },
+    "testFramework": "phpunit",
+    "testFrameworkOptions": "--no-coverage --no-logging",
+    "bootstrap": "vendor/autoload.php",
+    "minMsi": 85,
+    "minCoveredMsi": 90,
+    "threads": 4,
+    "ignoreMsiWithNoMutations": true
+}

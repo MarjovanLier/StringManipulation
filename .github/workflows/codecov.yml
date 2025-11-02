@@ -19,7 +19,7 @@ jobs:
         run: composer self-update && composer install && composer dump-autoload
 
       - name: Run tests and collect coverage
-        run: vendor/bin/phpunit
+        run: vendor/bin/pest --coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4.0.1

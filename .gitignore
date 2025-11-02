@@ -15,7 +15,7 @@
 !*/
 
 # ========================================
-# CORE APPLICATION FILES  
+# CORE APPLICATION FILES
 # ========================================
 !*.php
 !composer.json
@@ -57,7 +57,7 @@
 !.codacy.yaml
 
 # ========================================
-# DOCKER & INFRASTRUCTURE  
+# DOCKER & INFRASTRUCTURE
 # ========================================
 !Dockerfile
 !docker-compose.yml
@@ -81,7 +81,7 @@
 !.pr_agent.toml
 !sweep.yaml
 
-# ========================================  
+# ========================================
 # GIT CONFIGURATION
 # ========================================
 !.gitignore
@@ -102,6 +102,10 @@ package-lock.json
 .phpunit.cache
 .phpunit.result.cache
 .php-cs-fixer.cache
+.phpstan/
+
+# Temporary files
+commit_messages.txt
 *.tmp
 
 # Build artifacts and reports

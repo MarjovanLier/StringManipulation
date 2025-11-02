@@ -38,9 +38,9 @@ repos:
         files: \.php$
         pass_filenames: false
 
-      - id: phpunit
-        name: PHPUnit Tests
-        entry: docker-compose run --rm test-phpunit
+      - id: pest
+        name: Pest Tests
+        entry: docker-compose run --rm tests ./vendor/bin/pest --no-coverage
         language: system
         files: \.(php|xml)$
         pass_filenames: false
@@ -73,9 +73,25 @@ repos:
         files: \.php$
         pass_filenames: false
 
-      - id: infection
-        name: Infection Mutation Testing
-        entry: docker-compose run --rm test-infection
+      - id: test-coverage
+        name: Pest Test Coverage
+        entry: docker-compose run --rm tests ./vendor/bin/pest --coverage --min=100
+        language: system
+        files: \.php$
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: type-coverage
+        name: Pest Type Coverage
+        entry: docker-compose run --rm tests ./vendor/bin/pest --type-coverage --min=100
+        language: system
+        files: \.php$
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: mutation
+        name: Pest Mutation Testing
+        entry: docker-compose run --rm tests ./vendor/bin/pest --mutate --min=86 --everything --covered-only
         language: system
         files: \.php$
         pass_filenames: false
@@ -83,7 +99,7 @@ repos:
 
   # Standard pre-commit hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
         exclude: ^vendor/
@@ -96,3 +112,7 @@ repos:
       - id: check-xml
       - id: mixed-line-ending
         args: ['--fix=lf']
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: detect-private-key
+      - id: fix-byte-order-marker

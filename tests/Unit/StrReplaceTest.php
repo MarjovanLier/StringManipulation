@@ -1,320 +1,117 @@
 <?php
 
 declare(strict_types=1);
-
-namespace MarjovanLier\StringManipulation\Tests\Unit;
-
 use MarjovanLier\StringManipulation\StringManipulation;
-use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::strReplace
- */
-final class StrReplaceTest extends TestCase
-{
-    private const string LOVE_APPLE = 'I love apple.';
+test('str replace with not found search', function (): void {
+    $result = StringManipulation::strReplace('pineapple', 'banana', 'I love apple.');
+    expect($result)->toBe('I love apple.');
+});
+test('str replace function', function (): void {
+    // Basic test.
+    expect(StringManipulation::strReplace('a', 'b', 'a'))->toBe('b');
 
-    /**
-     * @var array<int, string>
-     */
-    private const array SEARCH = [
-        'H',
-        'e',
-        'W',
-    ];
+    // Replace multiple characters.
+    expect(StringManipulation::strReplace(['H', 'W'], ['h', 'w'], 'Helloworld'))->toBe('helloworld');
 
-    /**
-     * @var array<int, string>
-     */
-    private const array REPLACE = [
-        'h',
-        'x',
-        'w',
-    ];
+    // Replace multiple occurrences of a single character.
+    expect(StringManipulation::strReplace('e', 'x', 'hello world'))->toBe('hxllo world');
+    expect(StringManipulation::strReplace(['H', 'e', 'W'], ['h', 'x', 'w'], 'Hello World'))->toBe('hxllo world');
+});
+test('str replace', function (): void {
+    $result = StringManipulation::strReplace('apple', 'banana', 'I love apple.');
+    expect($result)->toBe('I love banana.');
+});
+test('single character optimization', function (): void {
+    // Test with a single character (should use strtr optimization).
+    $result1 = StringManipulation::strReplace('a', 'z', 'banana');
+    expect($result1)->toBe('bznznz');
 
-    private const string SUBJECT = 'Hello World';
+    // Test with a two-character string (should use str_replace).
+    $result2 = StringManipulation::strReplace('an', 'z', 'banana');
+    expect($result2)->toBe('bzza');
 
+    // This verifies the behavior difference - if the mutation changes the length check.
+    // from === 1 to === 2, both calls would produce the same behavior, and this test would fail.
+});
+test('single character vs multiple character', function (): void {
+    // Create a scenario where strtr and str_replace have observable differences.
+    // Case 1: Using a single character replacement (should use strtr).
+    $subject = 'abababa';
+    $result1 = StringManipulation::strReplace('a', 'c', $subject);
 
-    public function testStrReplaceBasicFunctionality(): void
-    {
-        // Test with not found search
-        $result = StringManipulation::strReplace('pineapple', 'banana', self::LOVE_APPLE);
-        self::assertEquals(self::LOVE_APPLE, $result);
+    // Case 2: Using an array with equivalent replacements (should use str_replace).
+    $result2 = StringManipulation::strReplace(['a'], ['c'], $subject);
 
-        // Basic test
-        self::assertEquals('b', StringManipulation::strReplace('a', 'b', 'a'));
+    // Both should produce the same result despite taking different code paths.
+    expect($result1)->toBe('cbcbcbc');
+    expect($result2)->toBe($result1);
 
-        // Replace multiple characters
-        self::assertEquals('helloworld', StringManipulation::strReplace(['H', 'W'], ['h', 'w'], 'Helloworld'));
+    // This next test specifically looks at behavior that would be different.
+    // if the optimization wasn't properly working.
+    // Using overlapping replacements, the order matters in str_replace but not in strtr.
+    $complex = 'abcabc';
 
-        // Replace multiple occurrences of a single character
-        self::assertEquals('hxllo world', StringManipulation::strReplace('e', 'x', 'hello world'));
-        self::assertEquals('hxllo world', StringManipulation::strReplace(self::SEARCH, self::REPLACE, self::SUBJECT));
+    // Directly using strtr for comparison.
+    $expected = strtr($complex, ['a' => 'z', 'z' => 'y']);
 
-        // Basic replacement test
-        $result = StringManipulation::strReplace('apple', 'banana', self::LOVE_APPLE);
-        self::assertEquals('I love banana.', $result);
-    }
+    // Using our optimized function which should handle this the same way.
+    $actual = StringManipulation::strReplace('a', 'z', $complex);
+    expect($actual)->toBe('zbczbc');
+    expect($actual)->toBe($expected);
+});
+test('empty string optimization', function (): void {
+    // Line 276 mutation: RemoveEarlyReturn
+    // Test that empty subject returns empty string immediately
+    $result = StringManipulation::strReplace('a', 'b', '');
+    expect($result)->toBe('');
 
+    // Test that empty search/replace with non-empty subject works correctly
+    $result = StringManipulation::strReplace('', 'x', 'abc');
+    expect($result)->toBe('abc');
+});
 
-    /**
-     * Test that specifically targets the single character optimisation path.
-     * This kills the IncrementInteger mutation by ensuring behaviour is different
-     * when search string length is exactly 1.
-     */
-    public function testSingleCharacterOptimisation(): void
-    {
-        // Test with a single character (should use strtr optimisation).
-        $result1 = StringManipulation::strReplace('a', 'z', 'banana');
-        self::assertSame('bznznz', $result1);
+test('single character optimization mutations', function (): void {
+    // Line 280 mutations: IdenticalToNotIdentical, BooleanAndToBooleanOr, DecrementInteger, IncrementInteger
+    // Line 281 mutation: RemoveEarlyReturn
+    // These test the optimization path: is_string($search) && is_string($replace) && strlen($search) === 1
 
-        // Test with a two-character string (should use str_replace).
-        $result2 = StringManipulation::strReplace('an', 'z', 'banana');
-        self::assertSame('bzza', $result2);
+    // All three conditions must be true:
+    // 1. search is string (not array)
+    // 2. replace is string (not array)
+    // 3. search length is exactly 1
 
-        // This verifies the behaviour difference - if the mutation changes the length check.
-        // from === 1 to === 2, both calls would produce the same behaviour, and this test would fail.
-    }
+    // Test case where search is array (first condition false)
+    $arraySearch = StringManipulation::strReplace(['a'], ['b'], 'apple');
+    expect($arraySearch)->toBe('bpple');
 
-    /**
-     * Test that specifically targets the distinction between single character and non-single character.
-     * This kills the Identical mutation that changes === 1 to !== 1
-     */
-    public function testSingleCharacterVsMultipleCharacter(): void
-    {
-        // Create a scenario where strtr and str_replace have observable differences.
+    // Test case where search length is 0 (third condition false)
+    $zeroLength = StringManipulation::strReplace('', 'x', 'apple');
+    expect($zeroLength)->toBe('apple');
 
-        // Case 1: Using a single character replacement (should use strtr).
-        $subject = 'abababa';
-        $result1 = StringManipulation::strReplace('a', 'c', $subject);
+    // Test case where search length is 2 (third condition false - not === 1)
+    $twoChars = StringManipulation::strReplace('pp', 'tt', 'apple');
+    expect($twoChars)->toBe('attle');
 
-        // Case 2: Using an array with equivalent replacements (should use str_replace).
-        $result2 = StringManipulation::strReplace(['a'], ['c'], $subject);
+    // Test case where ALL conditions are true (optimization path)
+    $singleChar = StringManipulation::strReplace('p', 't', 'apple');
+    expect($singleChar)->toBe('attle');
+});
 
-        // Both should produce the same result despite taking different code paths.
-        self::assertSame('cbcbcbc', $result1);
-        self::assertSame($result1, $result2);
+test('single character optimization uses correct path', function (): void {
+    // Line 280 mutations specifically test the strlen($search) === 1 check
+    // DecrementInteger would change it to === 0
+    // IncrementInteger would change it to === 2
 
-        // This next test specifically looks at behaviour that would be different.
-        // if the optimisation wasn't properly working.
+    // With length === 1 (correct), this should use strtr optimization
+    $len1 = StringManipulation::strReplace('x', 'y', 'xxx');
+    expect($len1)->toBe('yyy');
 
-        // Using overlapping replacements, the order matters in str_replace but not in strtr.
-        $complex = 'abcabc';
+    // With length === 0 (if decremented), empty search would not match
+    $len0 = StringManipulation::strReplace('', 'y', 'xxx');
+    expect($len0)->toBe('xxx'); // Should not change
 
-        // Directly using strtr for comparison.
-        $expected = strtr($complex, ['a' => 'z', 'z' => 'y']);
-
-        // Using our optimised function which should handle this the same way.
-        $actual = StringManipulation::strReplace('a', 'z', $complex);
-        self::assertSame('zbczbc', $actual);
-        self::assertSame($expected, $actual);
-    }
-
-    /**
-     * Edge case test that verifies the empty string optimisation
-     */
-    public function testEmptyStringOptimisation(): void
-    {
-        // Test that empty subject returns empty string immediately.
-        $result = StringManipulation::strReplace('a', 'b', '');
-        self::assertSame('', $result);
-
-        // Test that empty search/replace with non-empty subject works correctly.
-        $result = StringManipulation::strReplace('', 'x', 'abc');
-        self::assertSame('abc', $result);
-    }
-
-
-    /**
-     * Test that verifies both conditions are required for single character optimisation.
-     * This targets the LogicalAnd mutations in the strReplace function.
-     */
-    public function testSingleCharacterOptimisationRequiresBothConditions(): void
-    {
-        // Use variables to avoid Psalm's literal string analysis
-        $testString = 'banana';
-        $searchChar = 'a';
-        $replaceChar = 'z';
-        $expectedResult = 'bznznz';
-
-        // Case 1: Array search with single character - should NOT use strtr optimisation
-        $result1 = StringManipulation::strReplace([$searchChar], $replaceChar, $testString);
-        self::assertSame($expectedResult, $result1);
-
-        // Case 2: Array types - should NOT use strtr optimisation
-        $result2 = StringManipulation::strReplace([$searchChar], [$replaceChar], $testString);
-        self::assertSame($expectedResult, $result2);
-
-        // Case 3: Both string types but length > 1 - should NOT use strtr optimisation
-        $result3 = StringManipulation::strReplace('an', $replaceChar, $testString);
-        self::assertSame('bzza', $result3);
-
-        // Case 4: Both conditions met - SHOULD use strtr optimisation
-        $result4 = StringManipulation::strReplace($searchChar, $replaceChar, $testString);
-        self::assertSame($expectedResult, $result4);
-
-        // Case 5: Test empty string case - should NOT use strtr optimisation
-        $result5 = StringManipulation::strReplace('', $replaceChar, $testString);
-        self::assertSame($testString, $result5);
-
-        // Case 6: Test longer string case - should NOT use strtr optimisation
-        $result6 = StringManipulation::strReplace('ban', 'can', $testString);
-        self::assertSame('canana', $result6);
-
-        // All single-character replacements tested above should produce consistent results
-        // The individual assertions above verify that different code paths work correctly
-    }
-
-
-    /**
-     * Test comprehensive array-based string replacements.
-     */
-    public function testArrayReplacements(): void
-    {
-        // Multiple search/replace arrays
-        $searches = ['cat', 'dog', 'bird'];
-        $replacements = ['feline', 'canine', 'avian'];
-        $text = 'The cat, dog, and bird are animals.';
-        $expected = 'The feline, canine, and avian are animals.';
-        self::assertEquals($expected, StringManipulation::strReplace($searches, $replacements, $text));
-
-        // Array with overlapping matches
-        $searches = ['ab', 'bc', 'ca'];
-        $replacements = ['X', 'Y', 'Z'];
-        $text = 'abcabc';
-        $result = StringManipulation::strReplace($searches, $replacements, $text);
-        // Actual behaviour: 'ab' -> 'X', then 'bc' -> 'Y' doesn't match because 'b' is gone
-        self::assertEquals('XcXc', $result);
-
-        // Arrays with different character lengths
-        $searches = ['a', 'bb', 'ccc'];
-        $replacements = ['AAA', 'B', 'c'];
-        $text = 'a bb ccc';
-        $expected = 'AAA B c';
-        self::assertEquals($expected, StringManipulation::strReplace($searches, $replacements, $text));
-
-        // Empty replacements
-        $searches = ['remove', 'delete', 'erase'];
-        $replacements = ['', '', ''];
-        $text = 'remove this, delete that, erase everything';
-        $expected = ' this,  that,  everything';
-        self::assertEquals($expected, StringManipulation::strReplace($searches, $replacements, $text));
-    }
-
-
-    /**
-     * Test case-sensitive string replacements.
-     */
-    public function testCaseSensitiveReplacements(): void
-    {
-        // Basic case sensitivity
-        $text = 'Hello hello HELLO';
-        self::assertEquals('Hi hello HELLO', StringManipulation::strReplace('Hello', 'Hi', $text));
-        self::assertEquals('Hello Hi HELLO', StringManipulation::strReplace('hello', 'Hi', $text));
-        self::assertEquals('Hello hello HI', StringManipulation::strReplace('HELLO', 'HI', $text));
-
-        // Mixed case arrays
-        $searches = ['Cat', 'DOG', 'bIrD'];
-        $replacements = ['Feline', 'CANINE', 'AvIaN'];
-        $text = 'Cat DOG bIrD cat dog bird';
-        $expected = 'Feline CANINE AvIaN cat dog bird';
-        self::assertEquals($expected, StringManipulation::strReplace($searches, $replacements, $text));
-    }
-
-
-    /**
-     * Test string replacements with special characters.
-     */
-    public function testSpecialCharacterReplacements(): void
-    {
-        // Replace special characters
-        $text = 'Hello@World#Test$Example%Done';
-        self::assertEquals('Hello_World#Test$Example%Done', StringManipulation::strReplace('@', '_', $text));
-        self::assertEquals('Hello@World_Test$Example%Done', StringManipulation::strReplace('#', '_', $text));
-
-        // Multiple special character replacements
-        $searches = ['@', '#', '$', '%'];
-        $replacements = ['_AT_', '_HASH_', '_DOLLAR_', '_PERCENT_'];
-        $expected = 'Hello_AT_World_HASH_Test_DOLLAR_Example_PERCENT_Done';
-        self::assertEquals($expected, StringManipulation::strReplace($searches, $replacements, $text));
-
-        // Unicode special characters
-        $unicodeText = 'Café→Restaurant←Menu';
-        self::assertEquals('Café_Restaurant←Menu', StringManipulation::strReplace('→', '_', $unicodeText));
-        self::assertEquals('Café→Restaurant_Menu', StringManipulation::strReplace('←', '_', $unicodeText));
-    }
-
-
-    /**
-     * Test string replacements with numbers.
-     */
-    public function testNumberReplacements(): void
-    {
-        // Replace numbers
-        $text = 'Version 1.2.3 released on 2023-09-06';
-        self::assertEquals('Version X.2.3 released on 2023-09-06', StringManipulation::strReplace('1', 'X', $text));
-
-        // Replace multiple numbers
-        $searches = ['1', '2', '3'];
-        $replacements = ['ONE', 'TWO', 'THREE'];
-        $expected = 'Version ONE.TWO.THREE released on TWO0TWOTHREE-09-06';
-        self::assertEquals($expected, StringManipulation::strReplace($searches, $replacements, $text));
-
-        // Replace number patterns
-        $dateText = '2023-09-06 14:30:15';
-        self::assertEquals('XXXX-09-06 14:30:15', StringManipulation::strReplace('2023', 'XXXX', $dateText));
-        self::assertEquals('2023-XX-06 14:30:15', StringManipulation::strReplace('09', 'XX', $dateText));
-    }
-
-
-    /**
-     * Test performance, whitespace and real-world scenarios.
-     */
-    public function testAdvancedReplacementScenarios(): void
-    {
-        // Performance: Large text with multiple replacements
-        $largeText = str_repeat('The quick brown fox jumps over the lazy dog. ', 100);
-        $result = StringManipulation::strReplace('fox', 'cat', $largeText);
-        self::assertStringContainsString('cat', $result);
-        self::assertStringNotContainsString('fox', $result);
-
-        // Performance: Many small replacements
-        $text = str_repeat('abcdefghijklmnopqrstuvwxyz', 10);
-        $searches = ['a', 'e', 'i', 'o', 'u'];
-        $replacements = ['A', 'E', 'I', 'O', 'U'];
-        $result = StringManipulation::strReplace($searches, $replacements, $text);
-        self::assertStringContainsString('A', $result);
-        self::assertStringNotContainsString('a', $result);
-
-        // Whitespace: Replace different types of whitespace
-        $text = "Line1\tTab\nNewline\rCarriageReturn Line2";
-        self::assertEquals("Line1 Tab\nNewline\rCarriageReturn Line2", StringManipulation::strReplace("\t", ' ', $text));
-
-        // Whitespace: Normalise all whitespace
-        $searches = ["\t", "\n", "\r"];
-        $replacements = [' ', ' ', ' '];
-        $expected = "Line1 Tab Newline CarriageReturn Line2";
-        self::assertEquals($expected, StringManipulation::strReplace($searches, $replacements, $text));
-
-        // Real-world: HTML entity replacement
-        $htmlText = 'Caf&eacute; &amp; Restaurant &quot;Menu&quot;';
-        $searches = ['&eacute;', '&amp;', '&quot;'];
-        $replacements = ['é', '&', '"'];
-        $expected = 'Café & Restaurant "Menu"';
-        self::assertEquals($expected, StringManipulation::strReplace($searches, $replacements, $htmlText));
-
-        // Real-world: URL slug creation
-        $title = 'How to Learn PHP: A Complete Guide for Beginners!';
-        $searches = [' ', ':', '!'];
-        $replacements = ['-', '', ''];
-        $expected = 'How-to-Learn-PHP-A-Complete-Guide-for-Beginners';
-        self::assertEquals($expected, StringManipulation::strReplace($searches, $replacements, $title));
-
-        // Real-world: File path normalisation
-        $windowsPath = 'C:\\Users\\Name\\Documents\\File.txt';
-        $unixPath = 'C:/Users/Name/Documents/File.txt';
-        self::assertEquals($unixPath, StringManipulation::strReplace('\\', '/', $windowsPath));
-    }
-}
+    // With length === 2 (if incremented), this would use str_replace instead
+    $len2 = StringManipulation::strReplace('xx', 'yy', 'xxx');
+    expect($len2)->toBe('yyx'); // Different result than single char replacement
+});

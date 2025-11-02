@@ -15,9 +15,6 @@ use ReflectionClass;
  * work correctly in combination.
  *
  * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::searchWords
- * @covers \MarjovanLier\StringManipulation\StringManipulation::removeAccents
  */
 final class CriticalBugFixIntegrationTest extends TestCase
 {
@@ -46,10 +43,10 @@ final class CriticalBugFixIntegrationTest extends TestCase
     {
         $reflectionClass = new ReflectionClass(StringManipulation::class);
 
-        $reflectionProperty = $reflectionClass->getProperty('SEARCH_WORDS_MAPPING');
+        $reflectionProperty = $reflectionClass->getProperty('searchWordsMapping');
         $reflectionProperty->setValue(null, []);
 
-        $accentsReplacement = $reflectionClass->getProperty('ACCENTS_REPLACEMENT');
+        $accentsReplacement = $reflectionClass->getProperty('accentsReplacement');
         $accentsReplacement->setValue(null, []);
     }
 

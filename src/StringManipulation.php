@@ -41,7 +41,7 @@ final class StringManipulation
      *
      * @var array<string, string>
      */
-    private static array $ACCENTS_REPLACEMENT = [];
+    private static array $accentsReplacement = [];
 
     /**
      * Static property to cache combined transformation mapping for searchWords() optimization.
@@ -50,7 +50,7 @@ final class StringManipulation
      *
      * @var array<string, string>
      */
-    private static array $SEARCH_WORDS_MAPPING = [];
+    private static array $searchWordsMapping = [];
 
 
     /**
@@ -72,6 +72,8 @@ final class StringManipulation
      *
      * @return null|string The transformed string suitable for database search, or null if input was null.
      *
+     * @throws LogicException If REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO arrays have different lengths.
+     *
      * @example
      * searchWords('John_Doe@Example.com'); // Returns 'john doe example com'
      * searchWords('McDonald'); // Returns 'mcdonald'
@@ -86,10 +88,10 @@ final class StringManipulation
         }
 
         // Build combined transformation mapping on first call
-        if (self::$SEARCH_WORDS_MAPPING === []) {
+        if (self::$searchWordsMapping === []) {
             // Start with accent removal mappings (apply strtolower to ensure all replacements are lowercase)
             $from = [...self::REMOVE_ACCENTS_FROM, '  '];
-            $toArray = array_map('strtolower', [...self::REMOVE_ACCENTS_TO, ' ']);
+            $toArray = array_map(strtolower(...), [...self::REMOVE_ACCENTS_TO, ' ']);
 
             if (count($from) !== count($toArray)) {
                 throw new LogicException('REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO arrays must have the same length.');
@@ -111,7 +113,7 @@ final class StringManipulation
             }
 
             // Combine all mappings for single-pass transformation
-            self::$SEARCH_WORDS_MAPPING = array_merge(
+            self::$searchWordsMapping = array_merge(
                 $accentMapping,
                 $specialChars,
                 $uppercaseMapping,
@@ -122,7 +124,7 @@ final class StringManipulation
         $words = self::applyBasicNameFix($words);
 
         // Single-pass character transformation with strtr() for O(1) lookup
-        $words = strtr($words, self::$SEARCH_WORDS_MAPPING);
+        $words = strtr($words, self::$searchWordsMapping);
 
         // Final cleanup: reduce multiple spaces to single space and trim
         return trim(preg_replace('# {2,}#', ' ', $words) ?? '');
@@ -146,6 +148,8 @@ final class StringManipulation
      * @param null|string $lastName The last name to be fixed. If null, returns null.
      *
      * @return null|string The fixed last name according to the standards, or null if input was null.
+     *
+     * @throws LogicException If REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO arrays have different lengths.
      *
      * @example
      * nameFix('mcdonald'); // Returns 'McDonald'
@@ -183,12 +187,12 @@ final class StringManipulation
         }
 
         // Single pass: capitalize words in hyphenated names
-        $lastName = implode('-', array_map('ucwords', explode('-', $lowerLastName)));
+        $lastName = implode('-', array_map(ucwords(...), explode('-', $lowerLastName)));
 
         // Single pass: fix common prefixes to lowercase
         $lastName = preg_replace_callback(
             '#\b(van|von|den|der|des|de|du|la|le)\b#i',
-            static fn($matches): string => strtolower($matches[1]),
+            static fn(array $matches): string => strtolower($matches[1]),
             $lastName,
         ) ?? '';
 
@@ -247,13 +251,15 @@ final class StringManipulation
      *
      * @return string The transformed string without accents and special characters.
      *
+     * @throws LogicException If REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO arrays have different lengths.
+     *
      * @see REMOVE_ACCENTS_FROM
      * @see REMOVE_ACCENTS_TO
      */
     public static function removeAccents(string $str): string
     {
         // Build associative array for strtr() on first call
-        if (self::$ACCENTS_REPLACEMENT === []) {
+        if (self::$accentsReplacement === []) {
             $from = [...self::REMOVE_ACCENTS_FROM, '  '];
             $toArray = [...self::REMOVE_ACCENTS_TO, ' '];
 
@@ -262,11 +268,11 @@ final class StringManipulation
             }
 
             // Combine parallel arrays into associative array for O(1) lookup
-            self::$ACCENTS_REPLACEMENT = array_combine($from, $toArray);
+            self::$accentsReplacement = array_combine($from, $toArray);
         }
 
         // Use strtr() for O(1) character lookup instead of str_replace() O(k) search
-        return strtr($str, self::$ACCENTS_REPLACEMENT);
+        return strtr($str, self::$accentsReplacement);
     }
 
 

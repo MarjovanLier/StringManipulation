@@ -15,9 +15,6 @@ use ReflectionClass;
  * FIX: Added validation with LogicException for mismatched arrays
  *
  * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::searchWords
- * @covers \MarjovanLier\StringManipulation\StringManipulation::removeAccents
  */
 final class ArrayCombineValidationBugFixTest extends TestCase
 {
@@ -46,10 +43,10 @@ final class ArrayCombineValidationBugFixTest extends TestCase
     {
         $reflectionClass = new ReflectionClass(StringManipulation::class);
 
-        $reflectionProperty = $reflectionClass->getProperty('SEARCH_WORDS_MAPPING');
+        $reflectionProperty = $reflectionClass->getProperty('searchWordsMapping');
         $reflectionProperty->setValue(null, []);
 
-        $accentsReplacement = $reflectionClass->getProperty('ACCENTS_REPLACEMENT');
+        $accentsReplacement = $reflectionClass->getProperty('accentsReplacement');
         $accentsReplacement->setValue(null, []);
     }
 

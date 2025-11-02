@@ -8,12 +8,10 @@ use MarjovanLier\StringManipulation\StringManipulation;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @internal
- *
- * @covers \MarjovanLier\StringManipulation\StringManipulation::nameFix
- *
  * Edge case test suite for nameFix function covering boundary conditions,
  * unusual but valid inputs, and corner cases that should still work correctly.
+ *
+ * @internal
  */
 final class NameFixEdgeCasesTest extends TestCase
 {
