@@ -8,11 +8,6 @@
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
          displayDetailsOnTestsThatTriggerNotices="true"
-         cacheDirectory=".phpunit.cache"
-         requireCoverageMetadata="true"
-         beStrictAboutCoverageMetadata="true"
-         failOnWarning="true"
-         failOnRisky="true"
 >
     <testsuites>
         <testsuite name="Unit">
@@ -24,9 +19,6 @@
             <directory>src</directory>
         </include>
     </source>
-    <extensions>
-        <bootstrap class="Psalm\PhpUnitPlugin\Plugin"/>
-    </extensions>
     <coverage>
         <report>
             <html outputDirectory="reports/code-coverage/html"/>

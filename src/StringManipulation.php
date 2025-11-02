@@ -39,7 +39,7 @@ final class StringManipulation
      *
      * @var array{search: string[], replace: string[]}
      */
-    private static array $ACCENTS_REPLACEMENT = [
+    private static array $accentsReplacement = [
         'search' => [],
         'replace' => [],
     ];
@@ -227,15 +227,15 @@ final class StringManipulation
     public static function removeAccents(string $str): string
     {
         // Use a strict comparison instead of empty()
-        if (count(self::$ACCENTS_REPLACEMENT['search']) === 0) {
-            self::$ACCENTS_REPLACEMENT = [
+        if (count(self::$accentsReplacement['search']) === 0) {
+            self::$accentsReplacement = [
                 'search' => [...self::REMOVE_ACCENTS_FROM, '  '],
                 'replace' => [...self::REMOVE_ACCENTS_TO, ' '],
             ];
         }
 
-        $search = self::$ACCENTS_REPLACEMENT['search'];
-        $replace = self::$ACCENTS_REPLACEMENT['replace'];
+        $search = self::$accentsReplacement['search'];
+        $replace = self::$accentsReplacement['replace'];
 
         return self::strReplace(
             $search,
