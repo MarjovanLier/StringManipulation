@@ -1,78 +1,53 @@
 <?php
 
 declare(strict_types=1);
-
-namespace MarjovanLier\StringManipulation\Tests\Unit;
-
 use MarjovanLier\StringManipulation\StringManipulation;
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 /**
- * @internal
+ * Provides a set of Minutes to test.
+ *
+ * @return array<int, array<int, bool|int>>
+ *
+ * @psalm-return list{list{0, true}, list{30, true}, list{59, true}, list{-1, false}, list{60, false}, list{100,
+ *     false}}
  */
-#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'isValidMinute')]
-final class IsValidMinuteTest extends TestCase
-{
-    /**
-     * Provides a set of Minutes to test.
-     *
-     * @return array<int, array<int, bool|int>>
-     *
-     * @psalm-return list{list{0, true}, list{30, true}, list{59, true}, list{-1, false}, list{60, false}, list{100,
-     *     false}}
-     */
-    public static function provideMinutes(): array
-    {
-        return [
-            [
-                0,
-                true,
-            ],
-            [
-                30,
-                true,
-            ],
-            [
-                59,
-                true,
-            ],
-            [
-                -1,
-                false,
-            ],
-            [
-                60,
-                false,
-            ],
-            [
-                100,
-                false,
-            ],
-        ];
-    }
-
+dataset('provideMinutes', fn(): array => [
+    [
+        0,
+        true,
+    ],
+    [
+        30,
+        true,
+    ],
+    [
+        59,
+        true,
+    ],
+    [
+        -1,
+        false,
+    ],
+    [
+        60,
+        false,
+    ],
+    [
+        100,
+        false,
+    ],
+]);
+test('is valid minute', function (int $minute, bool $expectedResult): void {
+    $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidMinute');
 
     /**
-     * Tests the isValidMinute method.
+     * @noinspection PhpExpressionResultUnusedInspection
      *
-     * @dataProvider provideMinutes
+     * @psalm-suppress UnusedMethodCall
      */
-    #[DataProvider('provideMinutes')]
-    public function testIsValidMinute(int $minute, bool $expectedResult): void
-    {
-        $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidMinute');
+    $reflectionMethod->setAccessible(true);
 
-        /**
-         * @noinspection PhpExpressionResultUnusedInspection
-         *
-         * @psalm-suppress UnusedMethodCall
-         */
-        $reflectionMethod->setAccessible(true);
+    $result = $reflectionMethod->invoke(null, $minute);
 
-        $result = $reflectionMethod->invoke(null, $minute);
-
-        self::assertSame($expectedResult, $result);
-    }
-}
+    expect($result)->toBe($expectedResult);
+})->with('provideMinutes');

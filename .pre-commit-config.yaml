@@ -38,9 +38,9 @@ repos:
         files: \.php$
         pass_filenames: false
 
-      - id: phpunit
-        name: PHPUnit Tests
-        entry: docker-compose run --rm test-phpunit
+      - id: pest
+        name: Pest Tests
+        entry: docker-compose run --rm tests ./vendor/bin/pest --no-coverage
         language: system
         files: \.(php|xml)$
         pass_filenames: false
@@ -73,9 +73,9 @@ repos:
         files: \.php$
         pass_filenames: false
 
-      - id: infection
-        name: Infection Mutation Testing
-        entry: docker-compose run --rm test-infection
+      - id: mutation
+        name: Pest Mutation Testing
+        entry: docker-compose run --rm tests ./vendor/bin/pest --mutate --min=85
         language: system
         files: \.php$
         pass_filenames: false

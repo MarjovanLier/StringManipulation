@@ -1,78 +1,53 @@
 <?php
 
 declare(strict_types=1);
-
-namespace MarjovanLier\StringManipulation\Tests\Unit;
-
 use MarjovanLier\StringManipulation\StringManipulation;
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 /**
- * @internal
+ * Provides a set of seconds to test.
+ *
+ * @return array<int, array<int, bool|int>>
+ *
+ * @psalm-return list{list{0, true}, list{30, true}, list{59, true}, list{-1, false}, list{60, false}, list{100,
+ *     false}}
  */
-#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'isValidSecond')]
-final class IsValidSecondTest extends TestCase
-{
-    /**
-     * Provides a set of seconds to test.
-     *
-     * @return array<int, array<int, bool|int>>
-     *
-     * @psalm-return list{list{0, true}, list{30, true}, list{59, true}, list{-1, false}, list{60, false}, list{100,
-     *     false}}
-     */
-    public static function provideSeconds(): array
-    {
-        return [
-            [
-                0,
-                true,
-            ],
-            [
-                30,
-                true,
-            ],
-            [
-                59,
-                true,
-            ],
-            [
-                -1,
-                false,
-            ],
-            [
-                60,
-                false,
-            ],
-            [
-                100,
-                false,
-            ],
-        ];
-    }
-
+dataset('provideSeconds', fn(): array => [
+    [
+        0,
+        true,
+    ],
+    [
+        30,
+        true,
+    ],
+    [
+        59,
+        true,
+    ],
+    [
+        -1,
+        false,
+    ],
+    [
+        60,
+        false,
+    ],
+    [
+        100,
+        false,
+    ],
+]);
+test('is valid second', function (int $second, bool $expectedResult): void {
+    $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidSecond');
 
     /**
-     * Tests the isValidSecond method.
+     * @noinspection PhpExpressionResultUnusedInspection
      *
-     * @dataProvider provideSeconds
+     * @psalm-suppress UnusedMethodCall
      */
-    #[DataProvider('provideSeconds')]
-    public function testIsValidSecond(int $second, bool $expectedResult): void
-    {
-        $reflectionMethod = (new ReflectionClass(StringManipulation::class))->getMethod('isValidSecond');
+    $reflectionMethod->setAccessible(true);
 
-        /**
-         * @noinspection PhpExpressionResultUnusedInspection
-         *
-         * @psalm-suppress UnusedMethodCall
-         */
-        $reflectionMethod->setAccessible(true);
+    $result = $reflectionMethod->invoke(null, $second);
 
-        $result = $reflectionMethod->invoke(null, $second);
-
-        self::assertSame($expectedResult, $result);
-    }
-}
+    expect($result)->toBe($expectedResult);
+})->with('provideSeconds');

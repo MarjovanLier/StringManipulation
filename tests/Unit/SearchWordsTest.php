@@ -1,92 +1,54 @@
 <?php
 
 declare(strict_types=1);
-
-namespace MarjovanLier\StringManipulation\Tests\Unit;
-
 use MarjovanLier\StringManipulation\StringManipulation;
-use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- */
-#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'searchWords')]
-final class SearchWordsTest extends TestCase
-{
-    private const string HELLO_WORLD_LOWERCASE = 'hello world';
+const HELLO_WORLD_LOWERCASE = 'hello world';
+test('search words function', function (): void {
+    // Basic tests
+    expect(StringManipulation::searchWords('MacDonald'))->toBe('macdonald');
+    expect(StringManipulation::searchWords('Hello World'))->toBe(HELLO_WORLD_LOWERCASE);
+    expect(StringManipulation::searchWords('Hèllo Wørld'))->toBe(HELLO_WORLD_LOWERCASE);
+    expect(StringManipulation::searchWords('a/b/c'))->toBe('a b c');
+    expect(StringManipulation::searchWords('hello_world'))->toBe(HELLO_WORLD_LOWERCASE);
+});
+test('search words function negative', function (): void {
+    // Passing null
+    expect(StringManipulation::searchWords(null))->toBeNull();
 
+    // Passing numbers
+    expect(StringManipulation::searchWords('12345'))->toBe('12345');
 
-    /**
-     * Test the searchWords function.
-     */
-    public function testSearchWordsFunction(): void
-    {
-        // Basic tests
-        self::assertEquals('macdonald', StringManipulation::searchWords('MacDonald'));
-        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('Hello World'));
-        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('Hèllo Wørld'));
-        self::assertEquals('a b c', StringManipulation::searchWords('a/b/c'));
-        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('hello_world'));
-    }
+    // Passing special characters
+    expect(StringManipulation::searchWords('!@#$%'))->toBe('! #$%');
 
+    // Passing strings with extra spaces
+    expect(StringManipulation::searchWords('  hello   world  '))->toBe(HELLO_WORLD_LOWERCASE);
 
-    /**
-     * Negative tests for the searchWords function.
-     */
-    public function testSearchWordsFunctionNegative(): void
-    {
-        // Passing null
-        self::assertNull(StringManipulation::searchWords(null));
-
-        // Passing numbers
-        self::assertEquals('12345', StringManipulation::searchWords('12345'));
-
-        // Passing special characters
-        self::assertEquals('! #$%', StringManipulation::searchWords('!@#$%'));
-
-        // Passing strings with extra spaces
-        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('  hello   world  '));
-
-        // Passing strings with mixed special characters and extra spaces
-        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('hello / world'));
-        self::assertEquals(self::HELLO_WORLD_LOWERCASE, StringManipulation::searchWords('  hello / world  '));
-    }
-
-
-    public function testSearchWordsReturnsLowercaseOutput(): void
-    {
-        $result = StringManipulation::searchWords('HeLLo_World');
-        self::assertEquals(self::HELLO_WORLD_LOWERCASE, $result);
-    }
-
-
-    public function testSearchWordsReturnsLowercaseOutputRegardlessOfInputCase(): void
-    {
-        $result = StringManipulation::searchWords('HeLLo_{WorLD}_(Test)');
-        self::assertEquals('hello world test', $result);
-    }
-
-
-    public function testSearchWords(): void
-    {
-        $words = '{Hello/World?}';
-        $result = StringManipulation::searchWords($words);
-        self::assertEquals(self::HELLO_WORLD_LOWERCASE, $result);
-    }
-
-
-    public function testSearchWordsUpper(): void
-    {
-        $words = 'HELLO WORLD';
-        $result = StringManipulation::searchWords($words);
-        self::assertEquals(self::HELLO_WORLD_LOWERCASE, $result);
-    }
-
-
-    public function testSearchWordsWithUnlistedSpecialCharacters(): void
-    {
-        $words = '[Hello*World!]';
-        $result = StringManipulation::searchWords($words);
-        self::assertEquals('[hello world!]', $result);
-    }
-}
+    // Passing strings with mixed special characters and extra spaces
+    expect(StringManipulation::searchWords('hello / world'))->toBe(HELLO_WORLD_LOWERCASE);
+    expect(StringManipulation::searchWords('  hello / world  '))->toBe(HELLO_WORLD_LOWERCASE);
+});
+test('search words returns lowercase output', function (): void {
+    $result = StringManipulation::searchWords('HeLLo_World');
+    expect($result)->toBe(HELLO_WORLD_LOWERCASE);
+});
+test('search words returns lowercase output regardless of input case', function (): void {
+    $result = StringManipulation::searchWords('HeLLo_{WorLD}_(Test)');
+    expect($result)->toBe('hello world test');
+});
+test('search words', function (): void {
+    $words = '{Hello/World?}';
+    $result = StringManipulation::searchWords($words);
+    expect($result)->toBe(HELLO_WORLD_LOWERCASE);
+});
+test('search words upper', function (): void {
+    $words = 'HELLO WORLD';
+    $result = StringManipulation::searchWords($words);
+    expect($result)->toBe(HELLO_WORLD_LOWERCASE);
+});
+test('search words with unlisted special characters', function (): void {
+    $words = '[Hello*World!]';
+    $result = StringManipulation::searchWords($words);
+    expect($result)->toBe('[hello world!]');
+});

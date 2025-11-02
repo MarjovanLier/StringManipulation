@@ -1,62 +1,35 @@
 <?php
 
 declare(strict_types=1);
-
-namespace MarjovanLier\StringManipulation\Tests\Unit;
-
 use MarjovanLier\StringManipulation\StringManipulation;
-use PHPUnit\Framework\TestCase;
 
-/**
- * @internal
- */
-#[\PHPUnit\Framework\Attributes\CoversMethod(\MarjovanLier\StringManipulation\StringManipulation::class, 'removeAccents')]
-final class RemoveAccentsTest extends TestCase
-{
-    /**
-     * Test the removeAccents function.
-     */
-    public function testRemoveAccentsFunction(): void
-    {
-        self::assertEquals('aeiou', StringManipulation::removeAccents('áéíóú'));
-        self::assertEquals('AEIOU', StringManipulation::removeAccents('ÁÉÍÓÚ'));
-        self::assertEquals('AeOeUe', StringManipulation::removeAccents('ÄëÖëÜë'));
-        self::assertEquals('Nino', StringManipulation::removeAccents('Niño'));
-        self::assertEquals("cote d'Ivoire", StringManipulation::removeAccents('côte d’Ivoire'));
-    }
+test('remove accents function', function (): void {
+    expect(StringManipulation::removeAccents('áéíóú'))->toBe('aeiou');
+    expect(StringManipulation::removeAccents('ÁÉÍÓÚ'))->toBe('AEIOU');
+    expect(StringManipulation::removeAccents('ÄëÖëÜë'))->toBe('AeOeUe');
+    expect(StringManipulation::removeAccents('Niño'))->toBe('Nino');
+    expect(StringManipulation::removeAccents('côte d’Ivoire'))->toBe("cote d'Ivoire");
+});
+test('remove accents function negative', function (): void {
+    // Passing empty string
+    expect(StringManipulation::removeAccents(''))->toBe('');
 
+    // Passing numbers
+    expect(StringManipulation::removeAccents('12345'))->toBe('12345');
 
-    /**
-     * Negative tests for the removeAccents function.
-     */
-    public function testRemoveAccentsFunctionNegative(): void
-    {
-        // Passing empty string
-        self::assertEquals('', StringManipulation::removeAccents(''));
+    // Passing special characters
+    expect(StringManipulation::removeAccents('!@#$%'))->toBe('!@#$%');
 
-        // Passing numbers
-        self::assertEquals('12345', StringManipulation::removeAccents('12345'));
-
-        // Passing special characters
-        self::assertEquals('!@#$%', StringManipulation::removeAccents('!@#$%'));
-
-        // Passing a string without accents
-        self::assertEquals('abcdef', StringManipulation::removeAccents('abcdef'));
-    }
-
-
-    public function testRemoveAccents(): void
-    {
-        $string = 'ÀÁÂÃÄÅ';
-        $result = StringManipulation::removeAccents($string);
-        self::assertEquals('AAAAAA', $result);
-    }
-
-
-    public function testRemoveAccentsWithNoAccents(): void
-    {
-        $string = 'ABCDEF';
-        $result = StringManipulation::removeAccents($string);
-        self::assertEquals('ABCDEF', $result);
-    }
-}
+    // Passing a string without accents
+    expect(StringManipulation::removeAccents('abcdef'))->toBe('abcdef');
+});
+test('remove accents', function (): void {
+    $string = 'ÀÁÂÃÄÅ';
+    $result = StringManipulation::removeAccents($string);
+    expect($result)->toBe('AAAAAA');
+});
+test('remove accents with no accents', function (): void {
+    $string = 'ABCDEF';
+    $result = StringManipulation::removeAccents($string);
+    expect($result)->toBe('ABCDEF');
+});
