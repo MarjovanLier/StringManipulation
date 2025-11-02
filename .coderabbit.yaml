@@ -130,10 +130,6 @@ reviews:
         name: "Security Best Practices"
         instructions: "Code must not contain hardcoded secrets, credentials, or API keys. All user input must be validated. SQL queries must use parameterised statements."
 
-      - mode: "warning"
-        name: "South African English Spelling"
-        instructions: "Documentation files (*.md) and docblocks should use South African English spelling (British English variant). Check for American spellings: organization (should be organisation), color (should be colour), optimize (should be optimise), analyze (should be analyse). Warn if American spelling is found. Pass if British spelling is used."
-
   # Tools configuration
   tools:
     # GitHub Checks - MAX TIMEOUT (15 minutes)
