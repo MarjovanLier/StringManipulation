@@ -39,7 +39,7 @@ services:
 
   test-infection:
     extends: tests
-    command: pest --mutate
+    command: php -d zend_extension=xdebug -d xdebug.mode=coverage ./vendor/bin/pest --mutate --everything --parallel
 
   test-rector:
     extends: tests

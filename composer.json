@@ -68,6 +68,7 @@
   "scripts-descriptions": {
     "test:code-style": "Check code for stylistic consistency using Laravel Pint",
     "test:composer-validate": "Validate composer.json schema, dependencies, and configuration integrity with strict validation",
+    "test:infection": "Run mutation testing using Pest's built-in mutation testing to verify test suite quality and effectiveness",
     "test:lint": "Perform syntax validation and identify deprecated PHP patterns across all source files",
     "test:phan": "Execute Phan static analysis for type safety, dead code detection, and PHP compatibility validation",
     "test:phpmd": "Analyse code complexity, design patterns, and identify potential bugs using PHP Mess Detector rules",
@@ -101,7 +102,7 @@
     ],
     "test:code-style": "pint --test",
     "test:composer-validate": "composer validate --strict",
-    "test:infection": "pest --mutate",
+    "test:infection": "php -d zend_extension=xdebug -d xdebug.mode=coverage ./vendor/bin/pest --mutate --everything --parallel",
     "test:lint": "parallel-lint --exclude vendor --show-deprecated .",
     "test:phan": "phan --no-progress-bar",
     "test:phpmd": "phpmd src,tests text phpmd.xml",
