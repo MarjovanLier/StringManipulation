@@ -20,17 +20,17 @@ Benchmarks and optimisation details for the StringManipulation library.
 
 ## Overview
 
-The StringManipulation library has undergone extensive performance tuning, resulting in **2-5x speed improvements** through O(n) optimisation algorithms. All core methods are designed with predictable, linear performance scaling.
+The StringManipulation library has undergone extensive performance tuning, resulting in **2-5x speed improvements** through O(n) optimisation algorithms and pre-computed compile-time constants. All core methods are designed with predictable, linear performance scaling.
 
 ---
 
 ## Benchmarks
 
-| Method            | Operations/Second | Complexity | Optimisation                    |
-|:------------------|:------------------|:-----------|:--------------------------------|
-| `removeAccents()` | **~450,000**      | O(n)       | Hash table lookups with strtr() |
-| `searchWords()`   | **~195,000**      | O(n)       | Single-pass combined mapping    |
-| `nameFix()`       | **~130,000**      | O(n)       | Consolidated regex operations   |
+| Method            | Operations/Second | Complexity | Optimisation                        |
+|:------------------|:------------------|:-----------|:------------------------------------|
+| `removeAccents()` | **~750,000**      | O(n)       | Pre-computed constant with strtr()  |
+| `searchWords()`   | **~400,000**      | O(n)       | Pre-computed constant with strtr()  |
+| `nameFix()`       | **~180,000**      | O(n)       | Consolidated regex operations       |
 
 *Benchmarks measured in Docker with PHP 8.3. Actual performance varies based on hardware, string length, and character complexity.*
 
@@ -38,26 +38,21 @@ The StringManipulation library has undergone extensive performance tuning, resul
 
 ## Optimisation Techniques
 
-### Hash Table Lookups
+### Pre-Computed Constants
 
-The `removeAccents()` method uses PHP's `strtr()` function with a pre-built character mapping array. This provides O(1) lookup time for each character, resulting in overall O(n) complexity.
+The `removeAccents()` and `searchWords()` methods use PHP's `strtr()` function with pre-computed compile-time constants. This eliminates runtime array construction overhead and provides O(1) lookup time for each character, resulting in overall O(n) complexity.
 
 ```php
-// Internal implementation concept
-private static ?array $accentsReplacement = null;
+// Pre-computed at compile time - no runtime overhead
+private const array ACCENT_MAPPING = [
+    'À' => 'A', 'Á' => 'A', 'Â' => 'A', // ... full mapping
+    'à' => 'a', 'á' => 'a', 'â' => 'a', // ... preserves case
+];
 
 public static function removeAccents(string $str): string
 {
-    // Lazy initialisation - build mapping once
-    if (self::$accentsReplacement === null) {
-        self::$accentsReplacement = array_combine(
-            self::REMOVE_ACCENTS_FROM,
-            self::REMOVE_ACCENTS_TO
-        );
-    }
-
-    // O(n) string traversal with O(1) lookups
-    return strtr($str, self::$accentsReplacement);
+    // Single strtr() call with O(1) lookups per character
+    return strtr($str, self::ACCENT_MAPPING);
 }
 ```
 
@@ -71,16 +66,18 @@ The `searchWords()` method performs all transformations in a single pass through
 
 This reduces memory allocations and cache misses compared to chaining multiple operations.
 
-### Static Caching
+### Compile-Time Constants
 
-Character mapping tables are stored as static properties and initialised lazily. Subsequent calls reuse the cached data:
+Character mapping tables are defined as typed constants (`private const array`), computed at compile time by PHP. This provides:
+
+- **Zero first-call overhead**: No lazy initialisation required
+- **Guaranteed consistency**: Constants cannot be modified at runtime
+- **Optimal memory usage**: PHP optimises constant storage
 
 ```php
-// First call: builds and caches mapping
-$result1 = StringManipulation::removeAccents('Cafe');
-
-// Subsequent calls: uses cached mapping
-$result2 = StringManipulation::removeAccents('Munchen');
+// Every call uses the same pre-computed constant
+$result1 = StringManipulation::removeAccents('Cafe');   // Fast
+$result2 = StringManipulation::removeAccents('Munchen'); // Equally fast
 ```
 
 ### Consolidated Regex Operations
@@ -193,14 +190,13 @@ $search = StringManipulation::searchWords($name);
 $search = StringManipulation::searchWords($name);
 ```
 
-### Pre-warm Cache for Critical Paths
+### No Warm-up Required
 
-If first-call latency matters, pre-warm the caches during application bootstrap:
+Unlike libraries that use lazy initialisation, StringManipulation uses compile-time constants. There is no first-call penalty, so no warm-up is needed:
 
 ```php
-// In bootstrap.php or service provider
-StringManipulation::removeAccents('warmup');
-StringManipulation::searchWords('warmup');
+// First call is just as fast as subsequent calls
+$result = StringManipulation::removeAccents($userInput);
 ```
 
 ---
@@ -211,7 +207,7 @@ The library outperforms common alternatives:
 
 | Library/Approach | removeAccents equivalent | Notes |
 |:-----------------|:-------------------------|:------|
-| StringManipulation | ~450,000 ops/sec | Optimised strtr() |
+| StringManipulation | ~750,000 ops/sec | Pre-computed constant with strtr() |
 | Manual preg_replace | ~150,000 ops/sec | Multiple regex passes |
 | iconv transliteration | ~200,000 ops/sec | System-dependent |
 | Multiple str_replace | ~100,000 ops/sec | Linear per pattern |
