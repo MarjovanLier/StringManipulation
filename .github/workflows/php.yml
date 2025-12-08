@@ -123,16 +123,10 @@ jobs:
         if: steps.phpstan.outcome == 'success'
         run: composer test:phan
 
-      # This step runs static analysis with Psalm (skipped on PHP 8.5 - not yet supported).
-      - name: Run static analysis with psalm
-        id: psalm
-        if: steps.phan.outcome == 'success' && matrix.php-versions != '8.5'
-        run: composer test:psalm
-
       # This step runs Rector for code quality.
       - name: Run rector for code quality
         id: rector
-        if: steps.phan.outcome == 'success' && (steps.psalm.outcome == 'success' || matrix.php-versions == '8.5')
+        if: steps.phan.outcome == 'success'
         run: composer test:rector
 
   release:

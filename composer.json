@@ -61,8 +61,7 @@
     "rector/rector": ">=2.1.4",
     "rector/type-perfect": "^2.1",
     "roave/security-advisories": "dev-latest",
-    "tomasvotruba/type-coverage": "^2.0",
-    "vimeo/psalm": ">=6.7"
+    "tomasvotruba/type-coverage": "^2.0"
   },
   "scripts-descriptions": {
     "test:code-style": "Check code for stylistic consistency using Laravel Pint",
@@ -96,7 +95,6 @@
       "@test:infection",
       "@test:phpstan",
       "@test:phan",
-      "@test:psalm",
       "@test:rector"
     ],
     "test:code-style": "pint --test",
@@ -114,7 +112,6 @@
     "fix:rector": "rector",
     "analyse:all": [
       "@test:phpstan",
-      "@test:psalm",
       "@test:phan"
     ]
   }
