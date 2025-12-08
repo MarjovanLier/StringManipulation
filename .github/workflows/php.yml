@@ -117,16 +117,10 @@ jobs:
         if: steps.infection.outcome == 'success'
         run: composer test:phpstan
 
-      # This step runs static analysis with Phan.
-      - name: Run static analysis with phan
-        id: phan
-        if: steps.phpstan.outcome == 'success'
-        run: composer test:phan
-
       # This step runs Rector for code quality.
       - name: Run rector for code quality
         id: rector
-        if: steps.phan.outcome == 'success'
+        if: steps.phpstan.outcome == 'success'
         run: composer test:rector
 
   release:
