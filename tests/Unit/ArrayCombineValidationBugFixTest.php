@@ -6,50 +6,17 @@ namespace MarjovanLier\StringManipulation\Tests\Unit;
 
 use MarjovanLier\StringManipulation\StringManipulation;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 /**
  * Regression tests for array_combine validation bug fix in StringManipulation.
  *
  * CRITICAL BUG: Potential fatal errors from mismatched array lengths in array_combine()
- * FIX: Added validation with LogicException for mismatched arrays
+ * FIX: Pre-computed constant mappings eliminate runtime array_combine() calls
  *
  * @internal
  */
 final class ArrayCombineValidationBugFixTest extends TestCase
 {
-    /**
-     * Reset static cache between tests to ensure clean test state.
-     */
-    #[\Override]
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->resetStaticCache();
-    }
-
-    #[\Override]
-    protected function tearDown(): void
-    {
-        $this->resetStaticCache();
-        parent::tearDown();
-    }
-
-    /**
-     * Reset static cache properties to ensure clean test state.
-     * @psalm-suppress UnusedMethodCall
-     */
-    private function resetStaticCache(): void
-    {
-        $reflectionClass = new ReflectionClass(StringManipulation::class);
-
-        $reflectionProperty = $reflectionClass->getProperty('searchWordsMapping');
-        $reflectionProperty->setValue(null, []);
-
-        $accentsReplacement = $reflectionClass->getProperty('accentsReplacement');
-        $accentsReplacement->setValue(null, []);
-    }
-
     /**
      * Test that array_combine() validation works correctly with proper arrays.
      */
@@ -77,11 +44,11 @@ final class ArrayCombineValidationBugFixTest extends TestCase
      */
     public function testArrayCombineValidationStaticCachingHappyFlow(): void
     {
-        // First call - builds the static cache
+        // First call - uses pre-computed constant
         $result1 = StringManipulation::searchWords('Café');
         self::assertEquals('cafe', $result1);
 
-        // Second call - uses cached arrays
+        // Second call - uses same constant
         $result2 = StringManipulation::searchWords('Résumé');
         self::assertEquals('resume', $result2);
 
@@ -120,15 +87,11 @@ final class ArrayCombineValidationBugFixTest extends TestCase
      */
     public function testArrayCombineValidationMismatchedArraysNegativeFlow(): void
     {
-        // Reset cache to ensure clean test
-        $this->resetStaticCache();
-
         // Test normal operation - should not throw exception
         $result = StringManipulation::searchWords('café');
         self::assertEquals('cafe', $result);
 
         // Test removeAccents as well
-        $this->resetStaticCache();
         $result = StringManipulation::removeAccents('café');
         self::assertEquals('cafe', $result);
     }
@@ -183,9 +146,6 @@ final class ArrayCombineValidationBugFixTest extends TestCase
      */
     public function testArrayCombineValidationConcurrentCallsNegativeFlow(): void
     {
-        // Reset to ensure clean state
-        $this->resetStaticCache();
-
         // Simulate concurrent-like calls by rapidly switching between methods
         $callCount = 0;
         for ($i = 0; $i < 10; ++$i) {

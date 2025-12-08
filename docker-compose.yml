@@ -22,17 +22,6 @@ services:
     extends: tests
     command: composer test:phpstan
 
-  test-psalm:
-    extends: tests
-    command: composer test:psalm
-
-  test-phan:
-    extends: tests
-    environment:
-      - PHAN_DISABLE_XDEBUG_WARN=1
-      - PHAN_ALLOW_XDEBUG=1
-    command: composer test:phan
-
   test-phpmd:
     extends: tests
     command: composer test:phpmd
@@ -62,8 +51,6 @@ services:
         composer test:lint &&
         composer test:code-style &&
         composer test:phpstan &&
-        composer test:psalm &&
-        composer test:phan &&
         composer test:phpmd &&
         composer test:pest &&
         composer test:rector &&

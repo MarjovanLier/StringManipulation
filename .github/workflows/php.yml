@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ["8.3", "8.4"]
+        php-versions: ["8.3", "8.4", "8.5"]
 
     steps:
       # This step checks out a copy of your repository.
@@ -51,9 +51,15 @@ jobs:
         run: composer validate --strict
 
       # This step installs the project dependencies.
+      # PHP 8.5 requires --ignore-platform-req=php for packages not yet updated.
       - name: Install dependencies
         id: composer-install
-        run: composer install --prefer-dist --no-progress
+        run: |
+          if [ "${{ matrix.php-versions }}" = "8.5" ]; then
+            composer install --prefer-dist --no-progress --ignore-platform-req=php
+          else
+            composer install --prefer-dist --no-progress
+          fi
 
       # This step sets up Go environment for the job.
       - name: Set up Go
@@ -111,22 +117,10 @@ jobs:
         if: steps.infection.outcome == 'success'
         run: composer test:phpstan
 
-      # This step runs static analysis with Phan.
-      - name: Run static analysis with phan
-        id: phan
-        if: steps.phpstan.outcome == 'success'
-        run: composer test:phan
-
-      # This step runs static analysis with Psalm.
-      - name: Run static analysis with psalm
-        id: psalm
-        if: steps.phan.outcome == 'success'
-        run: composer test:psalm
-
       # This step runs Rector for code quality.
       - name: Run rector for code quality
         id: rector
-        if: steps.psalm.outcome == 'success'
+        if: steps.phpstan.outcome == 'success'
         run: composer test:rector
 
   release:

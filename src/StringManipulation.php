@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MarjovanLier\StringManipulation;
 
 use DateTime;
-use LogicException;
 
 /**
  * Class StringManipulation.
@@ -35,44 +34,22 @@ final class StringManipulation
     use UnicodeMappings;
 
     /**
-     * Static property to cache accent replacement mapping for performance optimisation.
-     * This is populated lazily in the removeAccents() method and reused across calls.
-     * Uses associative array for O(1) character lookup with strtr().
-     *
-     * @var array<string, string>
-     */
-    private static array $accentsReplacement = [];
-
-    /**
-     * Static property to cache combined transformation mapping for searchWords() optimization.
-     * Includes accent removal, special character replacement, and case conversion in single pass.
-     * Uses associative array for O(1) character lookup with strtr().
-     *
-     * @var array<string, string>
-     */
-    private static array $searchWordsMapping = [];
-
-
-    /**
      * Transforms a string into a format suitable for database searching.
      *
      * This function performs several transformations on the input string to make it suitable for
      * searching within a database using a single-pass algorithm for optimal O(n) performance.
      * The transformations include:
-     * - Name fixing standards (handles Mc/Mac prefixes and common prefixes)
      * - Converting to lowercase for case-insensitive search
      * - Replacing special characters with spaces (e.g., '{', '}', '(', ')', etc.)
      * - Removing accents from characters for normalized search
      * - Reducing multiple spaces to a single space
      *
-     * Optimization: Uses combined character mapping with strtr() for O(1) lookup performance
-     * instead of multiple string passes, achieving ~4-5x performance improvement.
+     * Optimization: Uses pre-computed SEARCH_WORDS_MAPPING constant for O(1) lookup with strtr().
+     * All mappings are defined at compile-time, eliminating runtime array construction.
      *
      * @param null|string $words The input string to be transformed for search. If null, returns null.
      *
      * @return null|string The transformed string suitable for database search, or null if input was null.
-     *
-     * @throws LogicException If REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO arrays have different lengths.
      *
      * @example
      * searchWords('John_Doe@Example.com'); // Returns 'john doe example com'
@@ -87,47 +64,11 @@ final class StringManipulation
             return null;
         }
 
-        // Build combined transformation mapping on first call
-        if (self::$searchWordsMapping === []) {
-            // Start with accent removal mappings (apply strtolower to ensure all replacements are lowercase)
-            $from = [...self::REMOVE_ACCENTS_FROM, '  '];
-            $toArray = array_map(strtolower(...), [...self::REMOVE_ACCENTS_TO, ' ']);
-
-            if (count($from) !== count($toArray)) {
-                throw new LogicException('REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO arrays must have the same length.');
-            }
-
-            $accentMapping = array_combine($from, $toArray);
-
-            // Add special character replacements
-            $specialChars = [
-                '{' => ' ', '}' => ' ', '(' => ' ', ')' => ' ',
-                '/' => ' ', '\\' => ' ', '@' => ' ', ':' => ' ',
-                '"' => ' ', '?' => ' ', ',' => ' ', '.' => ' ', '_' => ' ',
-            ];
-
-            // Add uppercase to lowercase mappings for common ASCII letters
-            $uppercaseMapping = [];
-            for ($i = 65; $i <= 90; ++$i) { // A-Z
-                $uppercaseMapping[chr($i)] = chr($i + 32); // to a-z
-            }
-
-            // Combine all mappings for single-pass transformation
-            self::$searchWordsMapping = array_merge(
-                $accentMapping,
-                $specialChars,
-                $uppercaseMapping,
-            );
-        }
-
-        // Apply basic name fixing for Mc/Mac prefixes before character transformation
-        $words = self::applyBasicNameFix($words);
-
-        // Single-pass character transformation with strtr() for O(1) lookup
-        $words = strtr($words, self::$searchWordsMapping);
+        // Single-pass character transformation with strtr() using pre-computed constant
+        $result = strtr(trim($words), self::SEARCH_WORDS_MAPPING);
 
         // Final cleanup: reduce multiple spaces to single space and trim
-        return trim(preg_replace('# {2,}#', ' ', $words) ?? '');
+        return trim(preg_replace('# {2,}#', ' ', $result) ?? '');
     }
 
 
@@ -148,8 +89,6 @@ final class StringManipulation
      * @param null|string $lastName The last name to be fixed. If null, returns null.
      *
      * @return null|string The fixed last name according to the standards, or null if input was null.
-     *
-     * @throws LogicException If REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO arrays have different lengths.
      *
      * @example
      * nameFix('mcdonald'); // Returns 'McDonald'
@@ -241,38 +180,19 @@ final class StringManipulation
     /**
      * Removes accents and special characters from a string.
      *
-     * This function uses the predefined constants REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO
-     * to build an associative array for character replacement. It uses strtr() for O(1)
-     * character lookup performance instead of str_replace() which performs O(k) linear search.
-     *
-     * For performance optimisation, the replacement mapping is cached in a static property.
+     * This function uses the pre-computed ACCENT_MAPPING constant for O(1) character
+     * lookup with strtr(). The mapping is defined at compile-time, eliminating
+     * runtime array construction overhead.
      *
      * @param string $str The input string from which accents and special characters need to be removed.
      *
      * @return string The transformed string without accents and special characters.
      *
-     * @throws LogicException If REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO arrays have different lengths.
-     *
-     * @see REMOVE_ACCENTS_FROM
-     * @see REMOVE_ACCENTS_TO
+     * @see ACCENT_MAPPING
      */
     public static function removeAccents(string $str): string
     {
-        // Build associative array for strtr() on first call
-        if (self::$accentsReplacement === []) {
-            $from = [...self::REMOVE_ACCENTS_FROM, '  '];
-            $toArray = [...self::REMOVE_ACCENTS_TO, ' '];
-
-            if (count($from) !== count($toArray)) {
-                throw new LogicException('REMOVE_ACCENTS_FROM and REMOVE_ACCENTS_TO arrays must have the same length.');
-            }
-
-            // Combine parallel arrays into associative array for O(1) lookup
-            self::$accentsReplacement = array_combine($from, $toArray);
-        }
-
-        // Use strtr() for O(1) character lookup instead of str_replace() O(k) search
-        return strtr($str, self::$accentsReplacement);
+        return strtr($str, self::ACCENT_MAPPING);
     }
 
 
@@ -477,38 +397,5 @@ final class StringManipulation
     private static function isValidSecond(int $second): bool
     {
         return $second >= 0 && $second <= 59;
-    }
-
-
-    /**
-     * Apply basic name fixing for searchWords() optimization.
-     *
-     * This method performs minimal transformations needed for searchWords().
-     * For searchWords(), we want simple normalization including selective Mac/Mc prefix handling.
-     *
-     * @param string $name The input string to apply basic fixes to.
-     *
-     * @return string The string with basic transformations applied.
-     */
-    private static function applyBasicNameFix(string $name): string
-    {
-        // Trim whitespace first
-        $name = trim($name);
-
-        // Apply Mac/Mc prefix fixes for searchWords - only for specific contexts
-        // Only apply spacing when Mac/Mc is after non-letter characters (like @ or .)
-        // but not after letters or hyphens (preserves MacArthur-MacDonald as is)
-
-        // Look for 'mc' that should be spaced (after @, ., etc but not after letters/hyphens)
-        if (str_contains(strtolower($name), 'mc')) {
-            $name = preg_replace('/(?<=[^a-z-])mc(?=[a-z])/i', 'mc ', $name) ?? $name;
-        }
-
-        // Look for 'mac' that should be spaced (after @, ., etc but not after letters/hyphens)
-        if (str_contains(strtolower($name), 'mac')) {
-            return preg_replace('/(?<=[^a-z-])mac(?=[a-z])/i', 'mac ', $name) ?? $name;
-        }
-
-        return $name;
     }
 }

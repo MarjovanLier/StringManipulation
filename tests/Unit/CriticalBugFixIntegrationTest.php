@@ -6,58 +6,22 @@ namespace MarjovanLier\StringManipulation\Tests\Unit;
 
 use MarjovanLier\StringManipulation\StringManipulation;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 /**
  * Integration tests for both critical bug fixes working together.
  *
  * Tests that both the uppercase accent mapping fix and array validation fix
- * work correctly in combination.
+ * work correctly in combination. Uses pre-computed constants, no cache reset needed.
  *
  * @internal
  */
 final class CriticalBugFixIntegrationTest extends TestCase
 {
     /**
-     * Reset static cache between tests to ensure clean test state.
-     */
-    #[\Override]
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->resetStaticCache();
-    }
-
-    #[\Override]
-    protected function tearDown(): void
-    {
-        $this->resetStaticCache();
-        parent::tearDown();
-    }
-
-    /**
-     * Reset static cache properties to ensure clean test state.
-     * @psalm-suppress UnusedMethodCall
-     */
-    private function resetStaticCache(): void
-    {
-        $reflectionClass = new ReflectionClass(StringManipulation::class);
-
-        $reflectionProperty = $reflectionClass->getProperty('searchWordsMapping');
-        $reflectionProperty->setValue(null, []);
-
-        $accentsReplacement = $reflectionClass->getProperty('accentsReplacement');
-        $accentsReplacement->setValue(null, []);
-    }
-
-    /**
      * Test that both fixes work together correctly.
      */
     public function testBothFixesIntegrationHappyFlow(): void
     {
-        // Reset cache to ensure clean test
-        $this->resetStaticCache();
-
         // Test the specific case mentioned in the bug report
         $result = StringManipulation::searchWords('À');
         self::assertEquals('a', $result, "The critical bug case: searchWords('À') must return 'a', not 'A'");
