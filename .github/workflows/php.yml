@@ -51,9 +51,15 @@ jobs:
         run: composer validate --strict
 
       # This step installs the project dependencies.
+      # PHP 8.5 requires --ignore-platform-req=php for packages not yet updated.
       - name: Install dependencies
         id: composer-install
-        run: composer install --prefer-dist --no-progress
+        run: |
+          if [ "${{ matrix.php-versions }}" = "8.5" ]; then
+            composer install --prefer-dist --no-progress --ignore-platform-req=php
+          else
+            composer install --prefer-dist --no-progress
+          fi
 
       # This step sets up Go environment for the job.
       - name: Set up Go
