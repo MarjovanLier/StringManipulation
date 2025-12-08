@@ -6,50 +6,17 @@ namespace MarjovanLier\StringManipulation\Tests\Unit;
 
 use MarjovanLier\StringManipulation\StringManipulation;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 /**
  * Regression tests for uppercase accent mapping bug fix in StringManipulation.
  *
  * CRITICAL BUG: Previously searchWords('À') returned 'A' instead of 'a'
- * FIX: Apply strtolower() to REMOVE_ACCENTS_TO values
+ * FIX: Pre-computed SEARCH_WORDS_MAPPING constant with lowercase values
  *
  * @internal
  */
 final class UppercaseAccentMappingBugFixTest extends TestCase
 {
-    /**
-     * Reset static cache between tests to ensure clean test state.
-     */
-    #[\Override]
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->resetStaticCache();
-    }
-
-    #[\Override]
-    protected function tearDown(): void
-    {
-        $this->resetStaticCache();
-        parent::tearDown();
-    }
-
-    /**
-     * Reset static cache properties to ensure clean test state.
-     * @psalm-suppress UnusedMethodCall
-     */
-    private function resetStaticCache(): void
-    {
-        $reflectionClass = new ReflectionClass(StringManipulation::class);
-
-        $reflectionProperty = $reflectionClass->getProperty('searchWordsMapping');
-        $reflectionProperty->setValue(null, []);
-
-        $accentsReplacement = $reflectionClass->getProperty('accentsReplacement');
-        $accentsReplacement->setValue(null, []);
-    }
-
     /**
      * Test that uppercase accented characters in searchWords() properly convert to lowercase.
      */
