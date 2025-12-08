@@ -1,0 +1,74 @@
+# Site settings
+title: StringManipulation
+description: High-performance PHP 8.3+ string manipulation library featuring O(n) algorithms with up to 5x speed improvements
+baseurl: "/StringManipulation"
+url: "https://marjovanlier.github.io"
+
+# Theme
+remote_theme: just-the-docs/just-the-docs@v0.10.1
+
+# Colour scheme
+color_scheme: light
+
+# Logo
+logo: "/assets/images/logo.svg"
+
+# Aux links
+aux_links:
+  "GitHub":
+    - "https://github.com/MarjovanLier/StringManipulation"
+  "Packagist":
+    - "https://packagist.org/packages/marjovanlier/stringmanipulation"
+
+aux_links_new_tab: true
+
+# Footer
+footer_content: "Copyright &copy; 2024 Marjo Wenzel van Lier. Distributed under the MIT License."
+
+# Back to top link
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# Heading anchor links
+heading_anchors: true
+
+# Search
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 3
+  preview_words_before: 5
+  preview_words_after: 10
+  tokenizer_separator: /[\s/]+/
+  rel_url: true
+  button: false
+
+# Navigation
+nav_sort: case_insensitive
+
+# Collections for pages
+collections:
+  api:
+    permalink: "/:collection/:path/"
+    output: true
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "api"
+    values:
+      layout: "default"
+      parent: "API Reference"
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor

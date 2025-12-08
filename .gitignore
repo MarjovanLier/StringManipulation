@@ -27,6 +27,8 @@
 !README.md
 !CONTRIBUTING.md
 !CHANGELOG.md
+!docs/
+!docs/**
 
 # ========================================
 # SOURCE CODE & TESTS
