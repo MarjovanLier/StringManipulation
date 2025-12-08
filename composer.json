@@ -58,12 +58,10 @@
     "phpstan/extension-installer": ">=1.4.3",
     "phpstan/phpstan": ">=2.1.22",
     "phpstan/phpstan-strict-rules": ">=2.0.6",
-    "psalm/plugin-phpunit": "^0.19.3",
     "rector/rector": ">=2.1.4",
     "rector/type-perfect": "^2.1",
     "roave/security-advisories": "dev-latest",
-    "tomasvotruba/type-coverage": "^2.0",
-    "vimeo/psalm": ">=6.7"
+    "tomasvotruba/type-coverage": "^2.0"
   },
   "scripts-descriptions": {
     "test:code-style": "Check code for stylistic consistency using Laravel Pint",
