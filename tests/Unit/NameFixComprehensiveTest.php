@@ -68,7 +68,7 @@ final class NameFixComprehensiveTest extends TestCase
         ];
 
         foreach ($names as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for input: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for input: '%s'", $input));
         }
     }
 
@@ -107,7 +107,7 @@ final class NameFixComprehensiveTest extends TestCase
         ];
 
         foreach ($names as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for input: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for input: '%s'", $input));
         }
     }
 
@@ -137,7 +137,7 @@ final class NameFixComprehensiveTest extends TestCase
         ];
 
         foreach ($names as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for input: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for input: '%s'", $input));
         }
     }
 
@@ -157,7 +157,7 @@ final class NameFixComprehensiveTest extends TestCase
         ];
 
         foreach ($names as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for input: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for input: '%s'", $input));
         }
     }
 
@@ -174,7 +174,7 @@ final class NameFixComprehensiveTest extends TestCase
         ];
 
         foreach ($names as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for input: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for input: '%s'", $input));
         }
     }
 
@@ -210,7 +210,7 @@ final class NameFixComprehensiveTest extends TestCase
         ];
 
         foreach ($names as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for input: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for input: '%s'", $input));
         }
     }
 
@@ -244,7 +244,7 @@ final class NameFixComprehensiveTest extends TestCase
         ];
 
         foreach ($names as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for input: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for input: '%s'", $input));
         }
     }
 
@@ -285,7 +285,7 @@ final class NameFixComprehensiveTest extends TestCase
         ];
 
         foreach ($names as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for input: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for input: '%s'", $input));
         }
     }
 
@@ -325,7 +325,7 @@ final class NameFixComprehensiveTest extends TestCase
         ];
 
         foreach ($names as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for input: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for input: '%s'", $input));
         }
     }
 

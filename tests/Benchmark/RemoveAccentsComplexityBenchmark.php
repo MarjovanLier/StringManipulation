@@ -51,15 +51,15 @@ final class RemoveAccentsComplexityBenchmark
                 $result = StringManipulation::removeAccents($testString);
             }
 
-            $start = microtime(true);
+            $start = \microtime(true);
             for ($i = 0; $i < self::ITERATIONS; ++$i) {
                 $result = StringManipulation::removeAccents($testString);
             }
 
-            $duration = microtime(true) - $start;
+            $duration = \microtime(true) - $start;
 
             // Consume the result so the pure calls cannot be optimised away.
-            $checksum += strlen($result);
+            $checksum += \strlen($result);
 
             $durationMs = $duration * 1000.0;
             $opsPerSec = (float) self::ITERATIONS / $duration;
@@ -69,14 +69,14 @@ final class RemoveAccentsComplexityBenchmark
             if ($previousTime !== null && $previousLength !== null) {
                 $expected = $length / $previousLength;
                 $actual = $durationMs / $previousTime;
-                $complexityRatio = sprintf('%.2fx (expected: %.2fx)', $actual, $expected);
+                $complexityRatio = \sprintf('%.2fx (expected: %.2fx)', $actual, $expected);
             }
 
-            echo sprintf(
+            echo \sprintf(
                 "%d\t\t%.2f\t\t%s\t%.2f\t\t%s\n",
                 $length,
                 $durationMs,
-                number_format($opsPerSec, 0),
+                \number_format($opsPerSec, 0),
                 $usPerOp,
                 $complexityRatio,
             );
@@ -99,8 +99,8 @@ final class RemoveAccentsComplexityBenchmark
      */
     private static function makeString(int $length): string
     {
-        $string = str_repeat(self::BASE, max(0, (int) ceil($length / strlen(self::BASE))));
-        return substr($string, 0, $length);
+        $string = \str_repeat(self::BASE, \max(0, (int) \ceil($length / \strlen(self::BASE))));
+        return \substr($string, 0, $length);
     }
 }
 
@@ -108,7 +108,7 @@ final class RemoveAccentsComplexityBenchmark
 if (PHP_SAPI === 'cli' && isset($_SERVER['SCRIPT_FILENAME'])) {
     /** @var string $scriptName */
     $scriptName = $_SERVER['SCRIPT_FILENAME'];
-    if (basename(__FILE__) === basename($scriptName)) {
+    if (\basename(__FILE__) === \basename($scriptName)) {
         RemoveAccentsComplexityBenchmark::run();
     }
 }

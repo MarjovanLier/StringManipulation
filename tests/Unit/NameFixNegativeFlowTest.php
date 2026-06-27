@@ -59,7 +59,7 @@ final class NameFixNegativeFlowTest extends TestCase
         ];
 
         foreach ($malformedCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for malformed input: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for malformed input: '%s'", $input));
         }
     }
 
@@ -89,15 +89,15 @@ final class NameFixNegativeFlowTest extends TestCase
             'mcd' => 'McD', // Current implementation triggers Mc
 
             // Maximum reasonable name length stress test
-            str_repeat('a', 1000) => ucfirst(str_repeat('a', 1000)),
-            str_repeat('mac', 100) => str_repeat('Mac', 100),
+            \str_repeat('a', 1000) => \ucfirst(\str_repeat('a', 1000)),
+            \str_repeat('mac', 100) => \str_repeat('Mac', 100),
 
             // Memory boundary - very long with processing
-            'mac' . str_repeat('donald-mac', 50) . 'donald' => 'Mac' . str_repeat('Donald-Mac', 50) . 'Donald',
+            'mac' . \str_repeat('donald-mac', 50) . 'donald' => 'Mac' . \str_repeat('Donald-Mac', 50) . 'Donald',
         ];
 
         foreach ($boundaryCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for boundary case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for boundary case: '%s'", $input));
         }
     }
 
@@ -131,7 +131,7 @@ final class NameFixNegativeFlowTest extends TestCase
             '%n%n%n%n' => '%n%n%n%n',
 
             // Buffer overflow patterns
-            str_repeat('A', 10000) => ucfirst(strtolower(str_repeat('A', 10000))), // Should not crash
+            \str_repeat('A', 10000) => \ucfirst(\strtolower(\str_repeat('A', 10000))), // Should not crash
 
             // Unicode exploitation attempts
             '\u202eadmin' => '\u202eadmin', // Right-to-left override
@@ -139,7 +139,7 @@ final class NameFixNegativeFlowTest extends TestCase
         ];
 
         foreach ($securityCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for security test: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for security test: '%s'", $input));
         }
     }
 
@@ -171,7 +171,7 @@ final class NameFixNegativeFlowTest extends TestCase
 
         foreach ($encodingCases as $input => $expectedOutput) {
             $result = StringManipulation::nameFix($input);
-            self::assertIsString($result, sprintf("Result should be string for input: '%s'", $input));
+            self::assertIsString($result, \sprintf("Result should be string for input: '%s'", $input));
             // Note: $expectedOutput shows intended behaviour but exact match
             // not tested due to encoding handling complexity
             unset($expectedOutput); // Explicitly acknowledge variable for PHPMD
@@ -185,31 +185,31 @@ final class NameFixNegativeFlowTest extends TestCase
     {
         $regexStressCases = [
             // Catastrophic backtracking patterns
-            str_repeat('a', 1000) . 'b' => ucfirst(str_repeat('a', 1000)) . 'B',
+            \str_repeat('a', 1000) . 'b' => \ucfirst(\str_repeat('a', 1000)) . 'B',
 
             // Prefix repetition stress
-            str_repeat('mac', 200) => str_repeat('Mac', 200),
-            str_repeat('van der ', 100) . 'name' => str_repeat('van der ', 100) . 'Name',
+            \str_repeat('mac', 200) => \str_repeat('Mac', 200),
+            \str_repeat('van der ', 100) . 'name' => \str_repeat('van der ', 100) . 'Name',
 
             // Complex nested patterns
             'van-der-van-der-van-der-smith' => 'van-der-van-der-van-der-Smith',
             'mac-mc-mac-mc-donald' => 'Mac-Mc-Mac-Mc-Donald',
 
             // Alternating case stress
-            str_repeat('aB', 500) => ucfirst(str_repeat('ab', 500)),
+            \str_repeat('aB', 500) => \ucfirst(\str_repeat('ab', 500)),
 
             // Unicode regex stress
-            str_repeat('café', 100) => ucwords(str_repeat('cafe', 100)),
+            \str_repeat('café', 100) => \ucwords(\str_repeat('cafe', 100)),
         ];
 
         foreach ($regexStressCases as $input => $expectedOutput) {
-            $startTime = microtime(true);
+            $startTime = \microtime(true);
             $result = StringManipulation::nameFix($input);
-            $duration = microtime(true) - $startTime;
+            $duration = \microtime(true) - $startTime;
 
             // Should complete within reasonable time (1 second)
-            self::assertLessThan(1.0, $duration, sprintf("Processing took too long for input: '%s'", $input));
-            self::assertIsString($result, sprintf("Result should be string for: '%s'", $input));
+            self::assertLessThan(1.0, $duration, \sprintf("Processing took too long for input: '%s'", $input));
+            self::assertIsString($result, \sprintf("Result should be string for: '%s'", $input));
             // Note: $expectedOutput available for validation but performance timing is primary concern
             unset($expectedOutput); // Explicitly acknowledge variable for PHPMD
         }
@@ -257,17 +257,17 @@ final class NameFixNegativeFlowTest extends TestCase
         ];
 
         foreach ($numericCases as $key => $data) {
-            if (is_array($data)) {
+            if (\is_array($data)) {
                 [$input, $expected] = $data;
-                self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for numeric case: '%s'", $input));
+                self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for numeric case: '%s'", $input));
                 continue;
             }
 
             // Extract actual input from prefixed key
-            $underscorePos = strpos($key, '_');
-            $input = substr($key, $underscorePos !== false ? $underscorePos + 1 : 0);
+            $underscorePos = \strpos($key, '_');
+            $input = \substr($key, $underscorePos !== false ? $underscorePos + 1 : 0);
             $expected = $data;
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for numeric case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for numeric case: '%s'", $input));
         }
     }
 
@@ -289,8 +289,8 @@ final class NameFixNegativeFlowTest extends TestCase
             " \x0B\x0C " => "\x0c", // Vertical tab, form feed
 
             // Extreme spacing
-            str_repeat(' ', 1000) => '',
-            'a' . str_repeat(' ', 1000) . 'b' => 'A B',
+            \str_repeat(' ', 1000) => '',
+            'a' . \str_repeat(' ', 1000) . 'b' => 'A B',
 
             // Non-breaking spaces
             "\xC2\xA0" => "\xC2\xA0", // Non-breaking space
@@ -310,7 +310,7 @@ final class NameFixNegativeFlowTest extends TestCase
         ];
 
         foreach ($whitespaceCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for whitespace case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for whitespace case: '%s'", $input));
         }
     }
 
@@ -360,7 +360,7 @@ final class NameFixNegativeFlowTest extends TestCase
         ];
 
         foreach ($specialCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for special character: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for special character: '%s'", $input));
         }
     }
 
@@ -398,7 +398,7 @@ final class NameFixNegativeFlowTest extends TestCase
         ];
 
         foreach ($compositionCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for composition case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for composition case: '%s'", $input));
         }
     }
 
@@ -410,27 +410,27 @@ final class NameFixNegativeFlowTest extends TestCase
     {
         $performanceCases = [
             // Regex backtracking potential
-            str_repeat('(', 1000) . 'name' . str_repeat(')', 1000),
-            str_repeat('[', 500) . 'test' . str_repeat(']', 500),
+            \str_repeat('(', 1000) . 'name' . \str_repeat(')', 1000),
+            \str_repeat('[', 500) . 'test' . \str_repeat(']', 500),
 
             // Long prefix chains
-            str_repeat('van der ', 200) . 'surname',
-            str_repeat('mac', 300) . 'surname',
+            \str_repeat('van der ', 200) . 'surname',
+            \str_repeat('mac', 300) . 'surname',
 
             // Complex character combinations
-            str_repeat('àáâãäåæçèéêëìíîï', 100),
-            str_repeat('ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏ', 100),
+            \str_repeat('àáâãäåæçèéêëìíîï', 100),
+            \str_repeat('ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏ', 100),
         ];
 
         foreach ($performanceCases as $performanceCase) {
-            $startTime = microtime(true);
+            $startTime = \microtime(true);
             $result = StringManipulation::nameFix($performanceCase);
-            $duration = microtime(true) - $startTime;
+            $duration = \microtime(true) - $startTime;
 
             // Should complete within 2 seconds even for extreme cases
-            self::assertLessThan(2.0, $duration, "Performance degraded for input length: " . (string) strlen($performanceCase));
+            self::assertLessThan(2.0, $duration, "Performance degraded for input length: " . (string) \strlen($performanceCase));
             self::assertIsString($result, 'Result should always be a string');
-            self::assertLessThanOrEqual(strlen($performanceCase) * 2, strlen($result), 'Result should not be excessively longer than input');
+            self::assertLessThanOrEqual(\strlen($performanceCase) * 2, \strlen($result), 'Result should not be excessively longer than input');
         }
     }
 

@@ -48,8 +48,8 @@ final class NameFixBenchmark
 
     private static function benchmarkName(int $index, string $name): void
     {
-        $length = strlen($name);
-        echo sprintf("Test Name %d (Length: %d chars):\n", $index, $length);
+        $length = \strlen($name);
+        echo \sprintf("Test Name %d (Length: %d chars):\n", $index, $length);
         echo "Input:  '{$name}'\n";
 
         for ($i = 0; $i < self::WARMUP; ++$i) {
@@ -58,20 +58,20 @@ final class NameFixBenchmark
 
         /** @psalm-suppress UnusedVariable */
         $result = '';
-        $start = microtime(true);
+        $start = \microtime(true);
         for ($i = 0; $i < self::ITERATIONS; ++$i) {
             $result = StringManipulation::nameFix($name);
         }
 
-        $duration = microtime(true) - $start;
+        $duration = \microtime(true) - $start;
 
         $opsPerSecond = (float) self::ITERATIONS / $duration;
         $usPerOp = ($duration * 1_000_000.0) / (float) self::ITERATIONS;
 
         echo "Output: '{$result}'\n";
-        echo 'Duration: ' . number_format($duration, 4) . " seconds\n";
-        echo 'Operations/second: ' . number_format($opsPerSecond, 0) . "\n";
-        echo 'Microseconds/operation: ' . number_format($usPerOp, 2) . "\n\n";
+        echo 'Duration: ' . \number_format($duration, 4) . " seconds\n";
+        echo 'Operations/second: ' . \number_format($opsPerSecond, 0) . "\n";
+        echo 'Microseconds/operation: ' . \number_format($usPerOp, 2) . "\n\n";
     }
 
     private static function printOptimizationNotes(): void
@@ -88,7 +88,7 @@ final class NameFixBenchmark
 if (PHP_SAPI === 'cli' && isset($_SERVER['SCRIPT_FILENAME'])) {
     /** @var string $scriptName */
     $scriptName = $_SERVER['SCRIPT_FILENAME'];
-    if (basename(__FILE__) === basename($scriptName)) {
+    if (\basename(__FILE__) === \basename($scriptName)) {
         NameFixBenchmark::run();
     }
 }

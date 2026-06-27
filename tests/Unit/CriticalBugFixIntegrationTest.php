@@ -46,8 +46,8 @@ final class CriticalBugFixIntegrationTest extends TestCase
     {
         // Test with problematic inputs that previously could cause issues
         $problematicInputs = [
-            'À' . str_repeat('x', 1000),  // Uppercase accent + long string
-            str_repeat('ÀÁÇ', 500),       // Many uppercase accents
+            'À' . \str_repeat('x', 1000),  // Uppercase accent + long string
+            \str_repeat('ÀÁÇ', 500),       // Many uppercase accents
             'À' . "\x00\x01\x02" . 'Ç',  // Uppercase accents with binary data
         ];
 
@@ -59,6 +59,6 @@ final class CriticalBugFixIntegrationTest extends TestCase
         }
 
         // Every problematic input must be handled and yield a result
-        self::assertCount(count($problematicInputs), $results);
+        self::assertCount(\count($problematicInputs), $results);
     }
 }

@@ -64,11 +64,11 @@ final class RemoveAccentsBenchmark
      */
     private static function buildTestStrings(): array
     {
-        $medium = str_repeat(
+        $medium = \str_repeat(
             'Thîs ís à lóngér strîng wîth múltîplé àccénts ànd spéciàl chàràcters like ñ, ç, ü, ä, ö. ',
             10,
         );
-        $long = str_repeat(
+        $long = \str_repeat(
             'Ëxtrémély lóng tést strîng wîth númérôús àccéntéd chàràctérs fôr pérfôrmàncé téstîng. ',
             100,
         );
@@ -84,29 +84,29 @@ final class RemoveAccentsBenchmark
      */
     private static function benchmarkString(string $label, string $input): void
     {
-        $length = strlen($input);
-        echo sprintf("%s string (Length: %d chars):\n", ucfirst($label), $length);
+        $length = \strlen($input);
+        echo \sprintf("%s string (Length: %d chars):\n", \ucfirst($label), $length);
 
         $sink = 0;
         for ($j = 0; $j < self::WARMUP; ++$j) {
-            $sink += strlen(StringManipulation::removeAccents($input));
+            $sink += \strlen(StringManipulation::removeAccents($input));
         }
 
         $result = '';
-        $start = microtime(true);
+        $start = \microtime(true);
         for ($j = 0; $j < self::ITERATIONS; ++$j) {
             $result = StringManipulation::removeAccents($input);
         }
 
-        $duration = microtime(true) - $start;
-        $sink += strlen($result);
+        $duration = \microtime(true) - $start;
+        $sink += \strlen($result);
 
         $opsPerSecond = (float) self::ITERATIONS / $duration;
         $usPerOp = ($duration * 1_000_000.0) / (float) self::ITERATIONS;
 
-        echo '  Duration: ' . number_format($duration, 4) . " seconds\n";
-        echo '  Operations/second: ' . number_format($opsPerSecond, 0) . "\n";
-        echo '  Microseconds/operation: ' . number_format($usPerOp, 2) . "\n";
+        echo '  Duration: ' . \number_format($duration, 4) . " seconds\n";
+        echo '  Operations/second: ' . \number_format($opsPerSecond, 0) . "\n";
+        echo '  Microseconds/operation: ' . \number_format($usPerOp, 2) . "\n";
         echo '  Output checksum: ' . $sink . " chars\n\n";
     }
 
@@ -128,7 +128,7 @@ final class RemoveAccentsBenchmark
 if (PHP_SAPI === 'cli' && isset($_SERVER['SCRIPT_FILENAME'])) {
     /** @var string $scriptName */
     $scriptName = $_SERVER['SCRIPT_FILENAME'];
-    if (basename(__FILE__) === basename($scriptName)) {
+    if (\basename(__FILE__) === \basename($scriptName)) {
         RemoveAccentsBenchmark::run();
     }
 }

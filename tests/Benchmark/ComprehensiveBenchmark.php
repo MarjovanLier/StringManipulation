@@ -50,7 +50,7 @@ final class ComprehensiveBenchmark
 
         foreach (self::METHODS as $method) {
             echo "Method: {$method}()\n";
-            echo str_repeat('-', 25) . "\n";
+            echo \str_repeat('-', 25) . "\n";
 
             foreach (self::TEST_DATA as $label => $testString) {
                 self::benchmarkMethod($method, $label, $testString);
@@ -65,7 +65,7 @@ final class ComprehensiveBenchmark
      */
     private static function benchmarkMethod(string $method, string $label, string $testString): void
     {
-        $length = strlen($testString);
+        $length = \strlen($testString);
 
         // Warmup
         for ($i = 0; $i < 100; ++$i) {
@@ -74,8 +74,8 @@ final class ComprehensiveBenchmark
 
         // Benchmark
         $iterations = 25000;
-        $startTime = microtime(true);
-        $startMemory = memory_get_usage();
+        $startTime = \microtime(true);
+        $startMemory = \memory_get_usage();
 
         /** @psalm-suppress UnusedVariable */
         $result = '';
@@ -83,22 +83,22 @@ final class ComprehensiveBenchmark
             $result = self::callMethod($method, $testString);
         }
 
-        $endTime = microtime(true);
-        $endMemory = memory_get_usage();
+        $endTime = \microtime(true);
+        $endMemory = \memory_get_usage();
 
         $duration = $endTime - $startTime;
         $memoryUsed = $endMemory - $startMemory;
         $opsPerSecond = (float) $iterations / $duration;
 
         echo "{$label} ({$length} chars):\n";
-        echo "  Operations/second: " . number_format($opsPerSecond, 0) . "\n";
-        echo "  Microseconds/op: " . number_format(($duration * 1000000.0) / (float) $iterations, 2) . "\n";
-        echo "  Memory: " . number_format((float) $memoryUsed / 1024.0, 2) . " KB\n";
+        echo "  Operations/second: " . \number_format($opsPerSecond, 0) . "\n";
+        echo "  Microseconds/op: " . \number_format(($duration * 1000000.0) / (float) $iterations, 2) . "\n";
+        echo "  Memory: " . \number_format((float) $memoryUsed / 1024.0, 2) . " KB\n";
 
         // Show sample transformation
         $resultDisplay = "  Result: '{$result}'\n\n";
-        if (strlen($result) > 60) {
-            $resultDisplay = "  Result: '" . substr($result, 0, 60) . "...'\n\n";
+        if (\strlen($result) > 60) {
+            $resultDisplay = "  Result: '" . \substr($result, 0, 60) . "...'\n\n";
         }
 
         echo $resultDisplay;
@@ -151,7 +151,7 @@ final class ComprehensiveBenchmark
 if (PHP_SAPI === 'cli' && isset($_SERVER['SCRIPT_FILENAME'])) {
     /** @var string $scriptName */
     $scriptName = $_SERVER['SCRIPT_FILENAME'];
-    if (basename(__FILE__) === basename($scriptName)) {
+    if (\basename(__FILE__) === \basename($scriptName)) {
         ComprehensiveBenchmark::run();
     }
 }

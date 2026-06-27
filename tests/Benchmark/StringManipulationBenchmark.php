@@ -53,31 +53,31 @@ final class StringManipulationBenchmark
         echo "strReplace Benchmark:\n";
 
         // Single character replacement
-        $start = microtime(true);
+        $start = \microtime(true);
         for ($i = 0; $i < self::ITERATIONS; ++$i) {
             StringManipulation::strReplace('o', 'a', self::TEST_STRINGS['simple']);
         }
 
-        $singleCharTime = microtime(true) - $start;
-        echo "  Single character replacement: " . number_format($singleCharTime * 1000.0, 3) . " ms\n";
+        $singleCharTime = \microtime(true) - $start;
+        echo "  Single character replacement: " . \number_format($singleCharTime * 1000.0, 3) . " ms\n";
 
         // Array replacement
-        $start = microtime(true);
+        $start = \microtime(true);
         for ($i = 0; $i < self::ITERATIONS; ++$i) {
             StringManipulation::strReplace(['e', 'o'], ['a', 'i'], self::TEST_STRINGS['simple']);
         }
 
-        $arrayTime = microtime(true) - $start;
-        echo "  Array replacement: " . number_format($arrayTime * 1000.0, 3) . " ms\n";
+        $arrayTime = \microtime(true) - $start;
+        echo "  Array replacement: " . \number_format($arrayTime * 1000.0, 3) . " ms\n";
 
         // Long string replacement
-        $start = microtime(true);
+        $start = \microtime(true);
         for ($i = 0; $i < self::ITERATIONS; ++$i) {
             StringManipulation::strReplace('dolor', 'happiness', self::TEST_STRINGS['long']);
         }
 
-        $longStringTime = microtime(true) - $start;
-        echo "  Long string replacement: " . number_format($longStringTime * 1000.0, 3) . " ms\n\n";
+        $longStringTime = \microtime(true) - $start;
+        echo "  Long string replacement: " . \number_format($longStringTime * 1000.0, 3) . " ms\n\n";
     }
 
     /**
@@ -90,32 +90,32 @@ final class StringManipulationBenchmark
         $sink = 0;
 
         // First call (populates cache)
-        $start = microtime(true);
+        $start = \microtime(true);
         $result = StringManipulation::removeAccents(self::TEST_STRINGS['accented']);
-        $firstCallTime = microtime(true) - $start;
-        $sink += strlen($result);
-        echo "  First call (cache population): " . number_format($firstCallTime * 1000.0, 3) . " ms\n";
+        $firstCallTime = \microtime(true) - $start;
+        $sink += \strlen($result);
+        echo "  First call (cache population): " . \number_format($firstCallTime * 1000.0, 3) . " ms\n";
 
         // Subsequent calls (using cache)
-        $start = microtime(true);
+        $start = \microtime(true);
         for ($i = 0; $i < self::ITERATIONS; ++$i) {
             $result = StringManipulation::removeAccents(self::TEST_STRINGS['accented']);
         }
 
-        $cachedTime = microtime(true) - $start;
-        $sink += strlen($result);
-        echo "  Cached calls: " . number_format($cachedTime * 1000.0, 3) . " ms\n";
+        $cachedTime = \microtime(true) - $start;
+        $sink += \strlen($result);
+        echo "  Cached calls: " . \number_format($cachedTime * 1000.0, 3) . " ms\n";
 
         // Long string with accents
-        $longAccented = str_repeat(self::TEST_STRINGS['accented'], 10);
-        $start = microtime(true);
+        $longAccented = \str_repeat(self::TEST_STRINGS['accented'], 10);
+        $start = \microtime(true);
         for ($i = 0; $i < self::ITERATIONS / 10; ++$i) {
             $result = StringManipulation::removeAccents($longAccented);
         }
 
-        $longTime = microtime(true) - $start;
-        $sink += strlen($result);
-        echo "  Long string: " . number_format($longTime * 1000.0, 3) . " ms\n";
+        $longTime = \microtime(true) - $start;
+        $sink += \strlen($result);
+        echo "  Long string: " . \number_format($longTime * 1000.0, 3) . " ms\n";
         echo "  Output checksum: {$sink} chars\n\n";
     }
 
@@ -135,13 +135,13 @@ final class StringManipulationBenchmark
         ];
 
         foreach ($testNames as $name => $input) {
-            $start = microtime(true);
+            $start = \microtime(true);
             for ($i = 0; $i < self::ITERATIONS; ++$i) {
                 StringManipulation::nameFix($input);
             }
 
-            $time = microtime(true) - $start;
-            echo sprintf('  %s: ', $name) . number_format($time * 1000.0, 3) . " ms\n";
+            $time = \microtime(true) - $start;
+            echo \sprintf('  %s: ', $name) . \number_format($time * 1000.0, 3) . " ms\n";
         }
 
         echo "\n";
@@ -155,13 +155,13 @@ final class StringManipulationBenchmark
         echo "searchWords Benchmark:\n";
 
         foreach (self::TEST_STRINGS as $type => $string) {
-            $start = microtime(true);
+            $start = \microtime(true);
             for ($i = 0; $i < self::ITERATIONS; ++$i) {
                 StringManipulation::searchWords($string);
             }
 
-            $time = microtime(true) - $start;
-            echo sprintf('  %s string: ', $type) . number_format($time * 1000.0, 3) . " ms\n";
+            $time = \microtime(true) - $start;
+            echo \sprintf('  %s string: ', $type) . \number_format($time * 1000.0, 3) . " ms\n";
         }
 
         echo "\n";
@@ -175,14 +175,14 @@ final class StringManipulationBenchmark
         echo "utf8Ansi Benchmark:\n";
 
         $result = '';
-        $start = microtime(true);
+        $start = \microtime(true);
         for ($i = 0; $i < self::ITERATIONS; ++$i) {
             $result = StringManipulation::utf8Ansi(self::TEST_STRINGS['unicode']);
         }
 
-        $time = microtime(true) - $start;
-        echo "  Unicode escape decoding: " . number_format($time * 1000.0, 3) . " ms\n";
-        echo "  Output length: " . strlen($result) . " chars\n\n";
+        $time = \microtime(true) - $start;
+        echo "  Unicode escape decoding: " . \number_format($time * 1000.0, 3) . " ms\n";
+        echo "  Output length: " . \strlen($result) . " chars\n\n";
     }
 
     /**
@@ -201,13 +201,13 @@ final class StringManipulationBenchmark
 
         foreach ($testDates as $type => $data) {
             [$date, $format] = $data;
-            $start = microtime(true);
+            $start = \microtime(true);
             for ($i = 0; $i < self::ITERATIONS; ++$i) {
                 StringManipulation::isValidDate($date, $format);
             }
 
-            $time = microtime(true) - $start;
-            echo sprintf('  %s: ', $type) . number_format($time * 1000.0, 3) . " ms\n";
+            $time = \microtime(true) - $start;
+            echo \sprintf('  %s: ', $type) . \number_format($time * 1000.0, 3) . " ms\n";
         }
 
         echo "\n";
@@ -218,7 +218,7 @@ final class StringManipulationBenchmark
 if (PHP_SAPI === 'cli' && isset($_SERVER['SCRIPT_FILENAME'])) {
     /** @var string $scriptName */
     $scriptName = $_SERVER['SCRIPT_FILENAME'];
-    if (basename(__FILE__) === basename($scriptName)) {
+    if (\basename(__FILE__) === \basename($scriptName)) {
         StringManipulationBenchmark::run();
     }
 }

@@ -69,7 +69,7 @@ final class ArrayCombineValidationBugFixTest extends TestCase
         $testInputs = [
             'a', 'ab', 'abc', // Small inputs
             'café résumé naïve', // Medium input with multiple accents
-            str_repeat('àáâãäå', 100), // Large input
+            \str_repeat('àáâãäå', 100), // Large input
         ];
 
         $results = [];
@@ -80,7 +80,7 @@ final class ArrayCombineValidationBugFixTest extends TestCase
         }
 
         // Every input must yield a normalised result without throwing
-        self::assertCount(count($testInputs), $results);
+        self::assertCount(\count($testInputs), $results);
     }
 
     /**
@@ -127,9 +127,9 @@ final class ArrayCombineValidationBugFixTest extends TestCase
     {
         // Test various inputs that might stress the array combination logic
         $stressTestInputs = [
-            str_repeat('àáâãäåæçèéêëìíîïñòóôõöøùúûüý', 50), // Many different accents
-            'àá' . str_repeat('x', 1000) . 'éè', // Accents at start/end with large middle
-            str_repeat('àx', 1000), // Alternating pattern
+            \str_repeat('àáâãäåæçèéêëìíîïñòóôõöøùúûüý', 50), // Many different accents
+            'àá' . \str_repeat('x', 1000) . 'éè', // Accents at start/end with large middle
+            \str_repeat('àx', 1000), // Alternating pattern
         ];
 
         $results = [];
@@ -140,7 +140,7 @@ final class ArrayCombineValidationBugFixTest extends TestCase
         }
 
         // Every stress input must complete and yield a result
-        self::assertCount(count($stressTestInputs), $results);
+        self::assertCount(\count($stressTestInputs), $results);
     }
 
     /**

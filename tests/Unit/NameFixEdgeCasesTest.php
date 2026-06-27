@@ -57,7 +57,7 @@ final class NameFixEdgeCasesTest extends TestCase
         ];
 
         foreach ($unicodeCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for Unicode case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for Unicode case: '%s'", $input));
         }
     }
 
@@ -93,7 +93,7 @@ final class NameFixEdgeCasesTest extends TestCase
         ];
 
         foreach ($punctuationCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for punctuation case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for punctuation case: '%s'", $input));
         }
     }
 
@@ -134,7 +134,7 @@ final class NameFixEdgeCasesTest extends TestCase
         ];
 
         foreach ($prefixCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for prefix case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for prefix case: '%s'", $input));
         }
     }
 
@@ -175,7 +175,7 @@ final class NameFixEdgeCasesTest extends TestCase
         ];
 
         foreach ($boundaryCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for boundary case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for boundary case: '%s'", $input));
         }
     }
 
@@ -215,7 +215,7 @@ final class NameFixEdgeCasesTest extends TestCase
         ];
 
         foreach ($diacriticCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for diacritic case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for diacritic case: '%s'", $input));
         }
     }
 
@@ -240,8 +240,8 @@ final class NameFixEdgeCasesTest extends TestCase
             "de\u2002la\u2002hoya" => 'de\u2002la\u2002hoya',
 
             // Extreme spacing scenarios
-            'a' . str_repeat(' ', 100) . 'b' => 'A B',
-            'van' . str_repeat(' ', 50) . 'der' . str_repeat(' ', 50) . 'saar' => 'van der Saar',
+            'a' . \str_repeat(' ', 100) . 'b' => 'A B',
+            'van' . \str_repeat(' ', 50) . 'der' . \str_repeat(' ', 50) . 'saar' => 'van der Saar',
 
             // Tabs mixed with spaces
             "van\t der \tsaar" => "van\t der \tSaar",
@@ -253,7 +253,7 @@ final class NameFixEdgeCasesTest extends TestCase
         ];
 
         foreach ($spacingCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for spacing case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for spacing case: '%s'", $input));
         }
     }
 
@@ -302,7 +302,7 @@ final class NameFixEdgeCasesTest extends TestCase
         ];
 
         foreach ($formatCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for format case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for format case: '%s'", $input));
         }
     }
 
@@ -336,11 +336,11 @@ final class NameFixEdgeCasesTest extends TestCase
             "DE\u2002LA\u2002HOYA-O'BRIEN" => 'de\u2002la\u2002hoya-O\'brien',
 
             // Performance edge with multiple conditions
-            str_repeat('mác-', 100) . 'dónald' => str_repeat('Mac-', 100) . 'Donald',
+            \str_repeat('mác-', 100) . 'dónald' => \str_repeat('Mac-', 100) . 'Donald',
         ];
 
         foreach ($multiEdgeCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for multi-edge case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for multi-edge case: '%s'", $input));
         }
     }
 
@@ -379,7 +379,7 @@ final class NameFixEdgeCasesTest extends TestCase
         ];
 
         foreach ($historicalCases as $input => $expected) {
-            self::assertEquals($expected, StringManipulation::nameFix($input), sprintf("Failed for historical case: '%s'", $input));
+            self::assertEquals($expected, StringManipulation::nameFix($input), \sprintf("Failed for historical case: '%s'", $input));
         }
     }
 
@@ -391,23 +391,23 @@ final class NameFixEdgeCasesTest extends TestCase
         // Generate complex test cases
         $complexCases = [
             // Deep nesting with unicode
-            str_repeat('van der ', 50) . 'ñáme',
-            str_repeat('mac', 100) . 'dónald',
-            str_repeat("o'brien-", 20) . 'smith',
+            \str_repeat('van der ', 50) . 'ñáme',
+            \str_repeat('mac', 100) . 'dónald',
+            \str_repeat("o'brien-", 20) . 'smith',
 
             // Mixed everything
-            'VAN DER ' . str_repeat('CAFÉ-', 30) . 'MÜLLER-O\'BRIEN',
+            'VAN DER ' . \str_repeat('CAFÉ-', 30) . 'MÜLLER-O\'BRIEN',
         ];
 
         foreach ($complexCases as $complexCase) {
-            $startTime = microtime(true);
+            $startTime = \microtime(true);
             $result = StringManipulation::nameFix($complexCase);
-            $duration = microtime(true) - $startTime;
+            $duration = \microtime(true) - $startTime;
 
             // Should complete quickly even for complex edge cases
-            self::assertLessThan(0.5, $duration, "Edge case processing too slow for: " . substr($complexCase, 0, 50) . '...');
+            self::assertLessThan(0.5, $duration, "Edge case processing too slow for: " . \substr($complexCase, 0, 50) . '...');
             self::assertIsString($result, 'Result should be string');
-            self::assertGreaterThan(0, strlen($result), 'Result should not be empty for non-empty input');
+            self::assertGreaterThan(0, \strlen($result), 'Result should not be empty for non-empty input');
         }
     }
 }

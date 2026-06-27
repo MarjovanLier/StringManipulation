@@ -59,7 +59,7 @@ final class UppercaseAccentMappingBugFixTest extends TestCase
             self::assertEquals(
                 $expected,
                 $result,
-                sprintf("Failed: searchWords('%s') should return '%s' but got '%s'", $input, $expected, $result ?? 'null'),
+                \sprintf("Failed: searchWords('%s') should return '%s' but got '%s'", $input, $expected, $result ?? 'null'),
             );
         }
     }
@@ -92,7 +92,7 @@ final class UppercaseAccentMappingBugFixTest extends TestCase
             self::assertEquals(
                 $expected,
                 $result,
-                sprintf("Failed: searchWords('%s') should return '%s' but got '%s'", $input, $expected, $result ?? 'null'),
+                \sprintf("Failed: searchWords('%s') should return '%s' but got '%s'", $input, $expected, $result ?? 'null'),
             );
         }
     }
@@ -117,7 +117,7 @@ final class UppercaseAccentMappingBugFixTest extends TestCase
             self::assertEquals(
                 $expected,
                 $result,
-                sprintf("Failed: searchWords('%s') should return '%s' but got '%s'", $input, $expected, $result ?? 'null'),
+                \sprintf("Failed: searchWords('%s') should return '%s' but got '%s'", $input, $expected, $result ?? 'null'),
             );
         }
     }
@@ -164,7 +164,7 @@ final class UppercaseAccentMappingBugFixTest extends TestCase
             self::assertEquals(
                 $expected,
                 $result,
-                sprintf("Failed: removeAccents('%s') should return '%s' but got '%s'", $input, $expected, $result),
+                \sprintf("Failed: removeAccents('%s') should return '%s' but got '%s'", $input, $expected, $result),
             );
         }
     }
@@ -192,7 +192,7 @@ final class UppercaseAccentMappingBugFixTest extends TestCase
             self::assertEquals(
                 $expected,
                 $result,
-                sprintf("Failed: removeAccents('%s') should return '%s' but got '%s'", $input, $expected, $result),
+                \sprintf("Failed: removeAccents('%s') should return '%s' but got '%s'", $input, $expected, $result),
             );
         }
     }
@@ -277,11 +277,11 @@ final class UppercaseAccentMappingBugFixTest extends TestCase
         }
 
         // Test with very long strings containing uppercase accents
-        $longAccentString = str_repeat('ÀÆ', 1000); // À->A, Æ->AE (net +1 char per 2)
+        $longAccentString = \str_repeat('ÀÆ', 1000); // À->A, Æ->AE (net +1 char per 2)
         $result = StringManipulation::removeAccents($longAccentString);
         self::assertStringNotContainsString('À', $result);
         self::assertStringContainsString('A', $result);
         // Length should be longer due to 'AE' replacement for 'Æ' (2000 chars -> 3000 chars)
-        self::assertEquals(3000, strlen($result));
+        self::assertEquals(3000, \strlen($result));
     }
 }

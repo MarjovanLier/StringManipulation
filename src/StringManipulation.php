@@ -65,10 +65,10 @@ final class StringManipulation
         }
 
         // Single-pass character transformation with strtr() using pre-computed constant
-        $result = strtr(trim($words), self::SEARCH_WORDS_MAPPING);
+        $result = \strtr(\trim($words), self::SEARCH_WORDS_MAPPING);
 
         // Final cleanup: reduce multiple spaces to single space and trim
-        return trim(preg_replace('# {2,}#', ' ', $result) ?? '');
+        return \trim(\preg_replace('# {2,}#', ' ', $result) ?? '');
     }
 
 
@@ -103,45 +103,45 @@ final class StringManipulation
         }
 
         // First pass: basic cleaning and character conversion
-        $lastName = trim(self::utf8Ansi($lastName));
+        $lastName = \trim(self::utf8Ansi($lastName));
         $lastName = self::removeAccents($lastName);
-        $lastName = (preg_replace('# {2,}#', ' ', $lastName) ?? '');
+        $lastName = (\preg_replace('# {2,}#', ' ', $lastName) ?? '');
 
         // Convert to lowercase for processing
-        $lowerLastName = strtolower($lastName);
+        $lowerLastName = \strtolower($lastName);
 
         // Track if we need Mc/Mac fixes (optimized: single check each)
         // Updated regex to handle cases like "789macarthur" where mac/mc follows digits
         // Use \b for word boundary but allow digits before mac/mc
-        $mcFix = str_contains($lowerLastName, 'mc') && preg_match('#(?<!\p{L})mc(?! )#u', $lowerLastName) === 1;
-        $macFix = str_contains($lowerLastName, 'mac') && preg_match('#(?<!\p{L})mac(?! )#u', $lowerLastName) === 1;
+        $mcFix = \str_contains($lowerLastName, 'mc') && \preg_match('#(?<!\p{L})mc(?! )#u', $lowerLastName) === 1;
+        $macFix = \str_contains($lowerLastName, 'mac') && \preg_match('#(?<!\p{L})mac(?! )#u', $lowerLastName) === 1;
 
         // Apply spacing for Mc/Mac if needed
         if ($mcFix) {
-            $lowerLastName = str_replace('mc', 'mc ', $lowerLastName);
+            $lowerLastName = \str_replace('mc', 'mc ', $lowerLastName);
         }
 
         if ($macFix) {
-            $lowerLastName = str_replace('mac', 'mac ', $lowerLastName);
+            $lowerLastName = \str_replace('mac', 'mac ', $lowerLastName);
         }
 
         // Single pass: capitalize words in hyphenated names
-        $lastName = implode('-', array_map(ucwords(...), explode('-', $lowerLastName)));
+        $lastName = \implode('-', \array_map(ucwords(...), \explode('-', $lowerLastName)));
 
         // Single pass: fix common prefixes to lowercase
-        $lastName = preg_replace_callback(
+        $lastName = \preg_replace_callback(
             '#\b(van|von|den|der|des|de|du|la|le)\b#i',
-            static fn(array $matches): string => strtolower($matches[1]),
+            static fn(array $matches): string => \strtolower($matches[1]),
             $lastName,
         ) ?? '';
 
         // Remove spacing for Mc/Mac if we added it
         if ($mcFix) {
-            $lastName = str_replace('Mc ', 'Mc', $lastName);
+            $lastName = \str_replace('Mc ', 'Mc', $lastName);
         }
 
         if ($macFix) {
-            return str_replace('Mac ', 'Mac', $lastName);
+            return \str_replace('Mac ', 'Mac', $lastName);
         }
 
         return $lastName;
@@ -173,7 +173,7 @@ final class StringManipulation
             return '';
         }
 
-        return strtr($value, self::UTF8_ANSI2);
+        return \strtr($value, self::UTF8_ANSI2);
     }
 
 
@@ -192,7 +192,7 @@ final class StringManipulation
      */
     public static function removeAccents(string $str): string
     {
-        return strtr($str, self::ACCENT_MAPPING);
+        return \strtr($str, self::ACCENT_MAPPING);
     }
 
 
@@ -229,10 +229,10 @@ final class StringManipulation
 
         // Optimize single character replacements using strtr which is faster for this case
         if (\is_string($search) && \is_string($replace) && \strlen($search) === 1) {
-            return strtr($subject, [$search => $replace]);
+            return \strtr($subject, [$search => $replace]);
         }
 
-        return str_replace($search, $replace, $subject);
+        return \str_replace($search, $replace, $subject);
     }
 
 
@@ -276,7 +276,7 @@ final class StringManipulation
         /**
          * @var array{year: int, month: int, day: int, hour: int, minute: int, second: int} $dateParts
          */
-        $dateParts = date_parse($dateTime->format('Y-m-d H:i:s'));
+        $dateParts = \date_parse($dateTime->format('Y-m-d H:i:s'));
 
         return self::isValidTimePart($dateParts);
     }
@@ -305,7 +305,7 @@ final class StringManipulation
      */
     public static function trim(string $string, string $characters = " \t\n\r\0\x0B"): string
     {
-        return trim($string, $characters);
+        return \trim($string, $characters);
     }
 
 
@@ -330,7 +330,7 @@ final class StringManipulation
     private static function isValidTimePart(array $dateParts): bool
     {
         // First check if the date parts form a valid date
-        if (!checkdate($dateParts['month'], $dateParts['day'], $dateParts['year'])) {
+        if (!\checkdate($dateParts['month'], $dateParts['day'], $dateParts['year'])) {
             return false;
         }
 

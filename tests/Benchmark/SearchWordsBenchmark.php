@@ -50,11 +50,11 @@ final class SearchWordsBenchmark
      */
     private static function buildTestStrings(): array
     {
-        $long = str_repeat(
+        $long = \str_repeat(
             'MacDonald_O\'Sullivan{@email.com}(phone:123)/accénts_ànd_spécial_çhàrs. ',
             10,
         );
-        $veryLong = str_repeat(
+        $veryLong = \str_repeat(
             'Very_Long_Complex{String}@With(Many)Special/Characters\\And:Accents_Like_café_résumé_naïve. ',
             50,
         );
@@ -67,9 +67,9 @@ final class SearchWordsBenchmark
 
     private static function benchmarkString(string $label, string $input): void
     {
-        $length = strlen($input);
-        echo sprintf("%s (%d chars):\n", ucwords(str_replace('_', ' ', $label)), $length);
-        echo '  Sample: ' . substr($input, 0, 60) . "...\n";
+        $length = \strlen($input);
+        echo \sprintf("%s (%d chars):\n", \ucwords(\str_replace('_', ' ', $label)), $length);
+        echo '  Sample: ' . \substr($input, 0, 60) . "...\n";
 
         for ($i = 0; $i < self::WARMUP; ++$i) {
             StringManipulation::searchWords($input);
@@ -77,20 +77,20 @@ final class SearchWordsBenchmark
 
         /** @psalm-suppress UnusedVariable */
         $result = '';
-        $start = microtime(true);
+        $start = \microtime(true);
         for ($i = 0; $i < self::ITERATIONS; ++$i) {
             $result = StringManipulation::searchWords($input) ?? '';
         }
 
-        $duration = microtime(true) - $start;
+        $duration = \microtime(true) - $start;
 
         $opsPerSecond = (float) self::ITERATIONS / $duration;
         $usPerOp = ($duration * 1_000_000.0) / (float) self::ITERATIONS;
 
-        echo '  Duration: ' . number_format($duration, 4) . " seconds\n";
-        echo '  Operations/second: ' . number_format($opsPerSecond, 0) . "\n";
-        echo '  Microseconds/operation: ' . number_format($usPerOp, 2) . "\n";
-        echo "  Result: '" . substr($result, 0, 50) . "...'\n\n";
+        echo '  Duration: ' . \number_format($duration, 4) . " seconds\n";
+        echo '  Operations/second: ' . \number_format($opsPerSecond, 0) . "\n";
+        echo '  Microseconds/operation: ' . \number_format($usPerOp, 2) . "\n";
+        echo "  Result: '" . \substr($result, 0, 50) . "...'\n\n";
     }
 
     private static function printOptimizationNotes(): void
@@ -107,7 +107,7 @@ final class SearchWordsBenchmark
 if (PHP_SAPI === 'cli' && isset($_SERVER['SCRIPT_FILENAME'])) {
     /** @var string $scriptName */
     $scriptName = $_SERVER['SCRIPT_FILENAME'];
-    if (basename(__FILE__) === basename($scriptName)) {
+    if (\basename(__FILE__) === \basename($scriptName)) {
         SearchWordsBenchmark::run();
     }
 }
