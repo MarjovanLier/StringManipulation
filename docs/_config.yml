@@ -1,6 +1,6 @@
 # Site settings
 title: StringManipulation
-description: High-performance PHP 8.3+ string manipulation library featuring O(n) algorithms with up to 5x speed improvements
+description: High-performance PHP 8.4+ string manipulation library featuring O(n) algorithms with up to 5x speed improvements
 baseurl: "/StringManipulation"
 url: "https://marjovanlier.github.io"
 

@@ -228,7 +228,7 @@ final class StringManipulation
         }
 
         // Optimize single character replacements using strtr which is faster for this case
-        if (is_string($search) && is_string($replace) && strlen($search) === 1) {
+        if (\is_string($search) && \is_string($replace) && \strlen($search) === 1) {
             return strtr($subject, [$search => $replace]);
         }
 

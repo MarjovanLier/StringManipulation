@@ -28,7 +28,7 @@ composer require marjovanlier/stringmanipulation
 
 ### Requirements
 
-- **PHP 8.3+** with strict typing
+- **PHP 8.4+** with strict typing
 - **mbstring extension** for multi-byte string operations
 - **intl extension** for internationalisation support
 

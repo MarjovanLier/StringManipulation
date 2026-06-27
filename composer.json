@@ -1,6 +1,6 @@
 {
   "name": "marjovanlier/stringmanipulation",
-  "description": "High-performance PHP 8.3+ string manipulation library featuring O(n) algorithms with up to 5x speed improvements. Provides Unicode-aware operations including searchWords(), nameFix(), utf8Ansi(), removeAccents(), and isValidDate() with comprehensive testing infrastructure.",
+  "description": "High-performance PHP 8.4+ string manipulation library featuring O(n) algorithms with up to 5x speed improvements. Provides Unicode-aware operations including searchWords(), nameFix(), utf8Ansi(), removeAccents(), and isValidDate() with comprehensive testing infrastructure.",
   "keywords": [
     "string manipulation",
     "performance",
@@ -43,7 +43,7 @@
   },
   "minimum-stability": "stable",
   "require": {
-    "php": "^8.3"
+    "php": "^8.4"
   },
   "require-dev": {
     "enlightn/security-checker": ">=2.0",
@@ -72,7 +72,7 @@
     "test:phpstan": "Perform advanced static analysis with PHPStan for type checking, null safety, and logic validation",
     "test:pest": "Run comprehensive Pest test suite with mutation testing, strict type checking and edge case coverage",
     "test:psalm": "Execute Psalm static analysis for advanced type inference, purity checking, and security validation",
-    "test:rector": "Analyse code for modernisation opportunities and PHP 8.3+ feature adoption using Rector rules",
+    "test:rector": "Analyse code for modernisation opportunities and PHP 8.4+ feature adoption using Rector rules",
     "test:vulnerabilities-check": "Scan all dependencies for known CVE vulnerabilities and security advisories using Enlightn Security Checker",
     "fix:code-style": "Automatically fix code style issues with Pint",
     "fix:rector": "Apply Rector refactorings to improve code quality",

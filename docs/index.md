@@ -2,14 +2,14 @@
 layout: default
 title: Home
 nav_order: 1
-description: "High-performance PHP 8.3+ string manipulation library featuring O(n) algorithms with up to 5x speed improvements"
+description: "High-performance PHP 8.4+ string manipulation library featuring O(n) algorithms with up to 5x speed improvements"
 permalink: /
 ---
 
 # StringManipulation
 {: .fs-9 }
 
-High-performance PHP 8.3+ string manipulation library featuring O(n) algorithms with up to 5x speed improvements.
+High-performance PHP 8.4+ string manipulation library featuring O(n) algorithms with up to 5x speed improvements.
 {: .fs-6 .fw-300 }
 
 [Get Started]({{ site.baseurl }}/getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
@@ -19,7 +19,7 @@ High-performance PHP 8.3+ string manipulation library featuring O(n) algorithms 
 
 ## Overview
 
-The **StringManipulation** library is a toolkit designed for complex and efficient string handling in PHP 8.3+. Following a recent suite of O(n) optimisations, the library delivers **2-5x faster performance**, making it one of the most powerful and reliable solutions for developers who require speed and precision.
+The **StringManipulation** library is a toolkit designed for complex and efficient string handling in PHP 8.4+. Following a recent suite of O(n) optimisations, the library delivers **2-5x faster performance**, making it one of the most powerful and reliable solutions for developers who require speed and precision.
 
 ### Key Features
 
@@ -92,7 +92,7 @@ Methods like `searchWords()` perform all transformations in a single pass, minim
 
 ## System Requirements
 
-- PHP 8.3 or later (strict typing enabled)
+- PHP 8.4 or later (strict typing enabled)
 - `mbstring` extension for multi-byte string operations
 - `intl` extension for internationalisation and advanced Unicode support
 

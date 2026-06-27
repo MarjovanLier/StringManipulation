@@ -2,7 +2,7 @@
 # yaml-language-server: $schema=https://docs.coderabbit.ai/schema/schema.v2.json
 
 # CodeRabbit Configuration
-# StringManipulation PHP 8.3+ Library
+# StringManipulation PHP 8.4+ Library
 # Enforces strict quality standards: PHPStan MAX, SOLID principles, PER-CS2.0
 
 # Language and Tone
@@ -54,8 +54,8 @@ reviews:
         Review PHP code for adherence to PER Coding Style 2.0 guidelines.
         Ensure proper namespace usage, code organisation, and separation
         of concerns. Verify that SOLID principles are followed and
-        encourage FOOP techniques—such as immutable data, pure functions,
-        and functional composition—to improve maintainability,
+        encourage FOOP techniques (such as immutable data, pure functions,
+        and functional composition) to improve maintainability,
         testability, and performance.
 
         Specific checks:
@@ -64,7 +64,7 @@ reviews:
         - Final classes with static methods where appropriate
         - Comprehensive docblocks with @param, @return, and @example tags
         - No methods exceeding 100 lines (PHPMD rule)
-        - PHP 8.3+ features and patterns
+        - PHP 8.4+ features and patterns
         - Proper error handling and null safety
 
     - path: "tests/**/*.php"

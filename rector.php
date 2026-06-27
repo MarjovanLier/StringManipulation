@@ -20,9 +20,9 @@ return RectorConfig::configure()
         TypedPropertyFromAssignsRector::class,
         AddVoidReturnTypeWhereNoReturnRector::class,
     ])
-    ->withPhpVersion(PhpVersion::PHP_83)
+    ->withPhpVersion(PhpVersion::PHP_84)
     ->withSets([
-        LevelSetList::UP_TO_PHP_83,
+        LevelSetList::UP_TO_PHP_84,
         SetList::CODING_STYLE,
         SetList::EARLY_RETURN,
         SetList::INSTANCEOF,

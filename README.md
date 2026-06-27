@@ -15,7 +15,7 @@
 
 ## Introduction
 
-Welcome to the `StringManipulation` library, a high-performance PHP 8.3+ toolkit designed for complex and efficient
+Welcome to the `StringManipulation` library, a high-performance PHP 8.4+ toolkit designed for complex and efficient
 string handling. Following a recent suite of O(n) optimisations, the library is now **2-5x faster**, making it one of
 the most powerful and reliable solutions for developers who require speed and precision in their PHP applications.
 
@@ -201,7 +201,7 @@ of tools to ensure stability and correctness.
 
 ### Docker-Based Testing (Recommended)
 
-For a consistent and reliable testing environment, we recommend using Docker. Our Docker setup includes PHP 8.3 with all
+For a consistent and reliable testing environment, we recommend using Docker. Our Docker setup includes PHP 8.4 with all
 required extensions:
 
 ```bash
@@ -217,7 +217,7 @@ docker-compose run --rm test-infection    # Mutation testing
 
 ### Local Testing
 
-If you have a local PHP 8.3+ environment configured:
+If you have a local PHP 8.4+ environment configured:
 
 ```bash
 # Complete test suite
@@ -243,7 +243,7 @@ composer tests
 
 ## System Requirements
 
-- **PHP 8.3 or later** (strict typing enabled)
+- **PHP 8.4 or later** (strict typing enabled)
 - **`mbstring` extension** for multi-byte string operations
 - **`intl` extension** for internationalisation and advanced Unicode support
 - **Enabled `declare(strict_types=1);`** for robust type safety
