@@ -72,14 +72,15 @@ final class ArrayCombineValidationBugFixTest extends TestCase
             str_repeat('àáâãäå', 100), // Large input
         ];
 
+        $results = [];
         foreach ($testInputs as $testInput) {
             // These should all work without throwing LogicException
             StringManipulation::searchWords($testInput);
-            StringManipulation::removeAccents($testInput);
+            $results[] = StringManipulation::removeAccents($testInput);
         }
 
-        // Test passes if we reach this point without exceptions
-        self::expectNotToPerformAssertions();
+        // Every input must yield a normalised result without throwing
+        self::assertCount(count($testInputs), $results);
     }
 
     /**
@@ -131,14 +132,15 @@ final class ArrayCombineValidationBugFixTest extends TestCase
             str_repeat('àx', 1000), // Alternating pattern
         ];
 
+        $results = [];
         foreach ($stressTestInputs as $stressTestInput) {
             // These should all complete without fatal errors
             StringManipulation::searchWords($stressTestInput);
-            StringManipulation::removeAccents($stressTestInput);
+            $results[] = StringManipulation::removeAccents($stressTestInput);
         }
 
-        // Test passes if we reach this point without fatal errors
-        self::expectNotToPerformAssertions();
+        // Every stress input must complete and yield a result
+        self::assertCount(count($stressTestInputs), $results);
     }
 
     /**
@@ -148,15 +150,17 @@ final class ArrayCombineValidationBugFixTest extends TestCase
     {
         // Simulate concurrent-like calls by rapidly switching between methods
         $callCount = 0;
+        $results = '';
         for ($i = 0; $i < 10; ++$i) {
             StringManipulation::searchWords('café' . (string) $i);
             ++$callCount;
 
-            StringManipulation::removeAccents('résumé' . (string) $i);
+            $results .= StringManipulation::removeAccents('résumé' . (string) $i);
             ++$callCount;
         }
 
         // All calls should have succeeded without validation errors
         self::assertSame(20, $callCount, 'All concurrent-like calls completed successfully');
+        self::assertNotSame('', $results, 'Each removeAccents call returned output');
     }
 }

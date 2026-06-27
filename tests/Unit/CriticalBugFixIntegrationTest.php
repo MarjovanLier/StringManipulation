@@ -51,13 +51,14 @@ final class CriticalBugFixIntegrationTest extends TestCase
             'À' . "\x00\x01\x02" . 'Ç',  // Uppercase accents with binary data
         ];
 
+        $results = [];
         foreach ($problematicInputs as $problematicInput) {
             // Both methods should handle these gracefully
             StringManipulation::searchWords($problematicInput);
-            StringManipulation::removeAccents($problematicInput);
+            $results[] = StringManipulation::removeAccents($problematicInput);
         }
 
-        // Test passes if we reach this point without exceptions
-        self::expectNotToPerformAssertions();
+        // Every problematic input must be handled and yield a result
+        self::assertCount(count($problematicInputs), $results);
     }
 }

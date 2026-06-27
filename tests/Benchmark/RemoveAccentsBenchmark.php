@@ -87,23 +87,27 @@ final class RemoveAccentsBenchmark
         $length = strlen($input);
         echo sprintf("%s string (Length: %d chars):\n", ucfirst($label), $length);
 
+        $sink = 0;
         for ($j = 0; $j < self::WARMUP; ++$j) {
-            StringManipulation::removeAccents($input);
+            $sink += strlen(StringManipulation::removeAccents($input));
         }
 
+        $result = '';
         $start = microtime(true);
         for ($j = 0; $j < self::ITERATIONS; ++$j) {
-            StringManipulation::removeAccents($input);
+            $result = StringManipulation::removeAccents($input);
         }
 
         $duration = microtime(true) - $start;
+        $sink += strlen($result);
 
         $opsPerSecond = (float) self::ITERATIONS / $duration;
         $usPerOp = ($duration * 1_000_000.0) / (float) self::ITERATIONS;
 
         echo '  Duration: ' . number_format($duration, 4) . " seconds\n";
         echo '  Operations/second: ' . number_format($opsPerSecond, 0) . "\n";
-        echo '  Microseconds/operation: ' . number_format($usPerOp, 2) . "\n\n";
+        echo '  Microseconds/operation: ' . number_format($usPerOp, 2) . "\n";
+        echo '  Output checksum: ' . $sink . " chars\n\n";
     }
 
     /**

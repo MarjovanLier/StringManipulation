@@ -87,30 +87,36 @@ final class StringManipulationBenchmark
     {
         echo "removeAccents Benchmark:\n";
 
+        $sink = 0;
+
         // First call (populates cache)
         $start = microtime(true);
-        StringManipulation::removeAccents(self::TEST_STRINGS['accented']);
+        $result = StringManipulation::removeAccents(self::TEST_STRINGS['accented']);
         $firstCallTime = microtime(true) - $start;
+        $sink += strlen($result);
         echo "  First call (cache population): " . number_format($firstCallTime * 1000.0, 3) . " ms\n";
 
         // Subsequent calls (using cache)
         $start = microtime(true);
         for ($i = 0; $i < self::ITERATIONS; ++$i) {
-            StringManipulation::removeAccents(self::TEST_STRINGS['accented']);
+            $result = StringManipulation::removeAccents(self::TEST_STRINGS['accented']);
         }
 
         $cachedTime = microtime(true) - $start;
+        $sink += strlen($result);
         echo "  Cached calls: " . number_format($cachedTime * 1000.0, 3) . " ms\n";
 
         // Long string with accents
         $longAccented = str_repeat(self::TEST_STRINGS['accented'], 10);
         $start = microtime(true);
         for ($i = 0; $i < self::ITERATIONS / 10; ++$i) {
-            StringManipulation::removeAccents($longAccented);
+            $result = StringManipulation::removeAccents($longAccented);
         }
 
         $longTime = microtime(true) - $start;
-        echo "  Long string: " . number_format($longTime * 1000.0, 3) . " ms\n\n";
+        $sink += strlen($result);
+        echo "  Long string: " . number_format($longTime * 1000.0, 3) . " ms\n";
+        echo "  Output checksum: {$sink} chars\n\n";
     }
 
     /**
@@ -168,13 +174,15 @@ final class StringManipulationBenchmark
     {
         echo "utf8Ansi Benchmark:\n";
 
+        $result = '';
         $start = microtime(true);
         for ($i = 0; $i < self::ITERATIONS; ++$i) {
-            StringManipulation::utf8Ansi(self::TEST_STRINGS['unicode']);
+            $result = StringManipulation::utf8Ansi(self::TEST_STRINGS['unicode']);
         }
 
         $time = microtime(true) - $start;
-        echo "  Unicode escape decoding: " . number_format($time * 1000.0, 3) . " ms\n\n";
+        echo "  Unicode escape decoding: " . number_format($time * 1000.0, 3) . " ms\n";
+        echo "  Output length: " . strlen($result) . " chars\n\n";
     }
 
     /**
