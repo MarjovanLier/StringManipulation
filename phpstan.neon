@@ -3,7 +3,7 @@ parameters:
     paths:
         - src/
     tmpDir: .phpstan
-    phpVersion: 80300
+    phpVersion: 80400
     treatPhpDocTypesAsCertain: false
     tipsOfTheDay: false
     reportWrongPhpDocTypeInVarTag: true

@@ -8,7 +8,7 @@ Thank you for your interest in contributing to StringManipulation! This document
 
 - Docker and Docker Compose
 - Git
-- PHP 8.3+ (optional, only for local development without Docker)
+- PHP 8.4+ (optional, only for local development without Docker)
 
 ### Setting Up Pre-commit Hooks
 

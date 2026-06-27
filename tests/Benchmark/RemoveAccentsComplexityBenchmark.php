@@ -40,21 +40,26 @@ final class RemoveAccentsComplexityBenchmark
 
         $previousTime = null;
         $previousLength = null;
+        $checksum = 0;
 
         foreach (self::LENGTHS as $length) {
             $testString = self::makeString($length);
+            $result = '';
 
             // Warmup
             for ($i = 0; $i < self::WARMUP; ++$i) {
-                StringManipulation::removeAccents($testString);
+                $result = StringManipulation::removeAccents($testString);
             }
 
             $start = microtime(true);
             for ($i = 0; $i < self::ITERATIONS; ++$i) {
-                StringManipulation::removeAccents($testString);
+                $result = StringManipulation::removeAccents($testString);
             }
 
             $duration = microtime(true) - $start;
+
+            // Consume the result so the pure calls cannot be optimised away.
+            $checksum += strlen($result);
 
             $durationMs = $duration * 1000.0;
             $opsPerSec = (float) self::ITERATIONS / $duration;
@@ -80,6 +85,8 @@ final class RemoveAccentsComplexityBenchmark
             $previousLength = $length;
         }
 
+        echo "\nChecksum (prevents dead-code elimination): " . (string) $checksum . "\n";
+
         echo "\nInterpretation:\n";
         echo "- If complexity is O(n), time should scale linearly with input size\n";
         echo "- Actual ratio should be close to expected ratio\n";
@@ -92,7 +99,7 @@ final class RemoveAccentsComplexityBenchmark
      */
     private static function makeString(int $length): string
     {
-        $string = str_repeat(self::BASE, (int) ceil($length / strlen(self::BASE)));
+        $string = str_repeat(self::BASE, max(0, (int) ceil($length / strlen(self::BASE))));
         return substr($string, 0, $length);
     }
 }

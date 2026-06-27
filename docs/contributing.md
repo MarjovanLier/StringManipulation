@@ -24,7 +24,7 @@ We welcome contributions to the StringManipulation library! Whether you're fixin
 
 ### Prerequisites
 
-- PHP 8.3 or later
+- PHP 8.4 or later
 - Docker and Docker Compose (recommended for testing)
 - Git
 - Composer
@@ -84,7 +84,7 @@ Use descriptive branch names:
 ### PHP Standards
 
 - **Strict typing**: All files must include `declare(strict_types=1);`
-- **PHP 8.3+**: Use modern PHP features
+- **PHP 8.4+**: Use modern PHP features
 - **PSR-4 autoloading**: Follow namespace conventions
 - **Final classes**: Prefer final classes with static methods
 - **Typed parameters**: Always use explicit type declarations

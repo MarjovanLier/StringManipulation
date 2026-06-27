@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-High-performance PHP 8.3+ string manipulation library with zero production dependencies. Single final class (`StringManipulation`) exposing static methods optimised with pre-computed character mappings for O(1) lookups via `strtr()`.
+High-performance PHP 8.4+ string manipulation library with zero production dependencies. Single final class (`StringManipulation`) exposing static methods optimised with pre-computed character mappings for O(1) lookups via `strtr()`.
 
 ## Build & Test Commands
 
-**Always use Docker** to ensure consistent PHP 8.3 + AST extension environment.
+**Always use Docker** to ensure consistent PHP 8.4 + AST extension environment.
 
 | Task | Docker | Local |
 |------|--------|-------|
@@ -82,4 +82,4 @@ Mutation testing target MSI: 88%.
 
 ## CI
 
-GitHub Actions runs the test matrix against PHP 8.3, 8.4, and 8.5 with vulnerability scanning (osv-scanner + Enlightn).
+GitHub Actions runs the test matrix against PHP 8.4 and 8.5 with vulnerability scanning (osv-scanner + Enlightn).
